@@ -12,27 +12,7 @@ namespace csMatrix
         /// <summary>
         /// Storage array for the Matrix data.
         /// </summary>
-        double[] data;
-
-        /// <summary>
-        /// Number of rows in this Matrix
-        /// </summary>
-        int rows;
-
-        /// <summary>
-        /// Number of columns in this Matrix
-        /// </summary>
-        int columns;
-
-        /// <summary>
-        /// Number of elements in this Matrix
-        /// </summary>
-        int size;
-
-        /// <summary>
-        /// Number of rows in this Matrix
-        /// </summary>
-        int[] dimensions;
+        protected double[] data;
         #endregion
 
         #region Constructors
@@ -43,6 +23,11 @@ namespace csMatrix
         /// <param name="columns">The number of columns to initialise the Matrix with.</param>
         public Matrix(int rows, int columns)
         {
+            this.Rows = rows;
+            this.Columns = columns;
+            Size = rows * columns;
+            Dimensions = new int[] { Rows, Columns };
+            data = new double[Size];
         }
 
         /// <summary>
@@ -54,6 +39,8 @@ namespace csMatrix
         /// <param name="value">The value to fill the Matrix with.</param>
         public Matrix(int rows, int columns, double value) : this(rows, columns)
         {
+            for (int i = 0; i < Size; i++)
+                data[i] = value;
         }
 
         /// <summary>
@@ -81,6 +68,14 @@ namespace csMatrix
         /// <param name="array">The array to specify values for a new Matrix.</param>
         public Matrix(double[,] array) : this(array.GetLength(0), array.GetLength(1))
         {
+            int index = 0;
+            for (int row = 0; row < Rows; row++)
+            {
+                for (int column = 0; column < Columns; column++)
+                {
+                    data[index++] = array[row, column];
+                }
+            }
         }
 
         /// <summary>
@@ -89,6 +84,8 @@ namespace csMatrix
         /// <param name="m">The existing Matrix to specify values for a new Matrix.</param>
         public Matrix(Matrix m) : this(m.Rows, m.Columns)
         {
+            for (int i = 0; i < Size; i++)
+                data[i] = m.data[i];
         }
         #endregion
 
@@ -102,22 +99,22 @@ namespace csMatrix
         /// Get the dimensions of this Matrix in a single-dimensional array of the form
         /// [rows,columns].
         /// </summary>
-        public int[] Dimensions => dimensions;
+        public int[] Dimensions { get; }
 
         /// <summary>
         /// Get the number of rows in this Matrix.
         /// </summary>
-        public int Rows => rows;
+        public int Rows { get; }
 
         /// <summary>
         /// Get the number of columns in this Matrix.
         /// </summary>
-        public int Columns => columns;
+        public int Columns { get; }
 
         /// <summary>
         /// Get the total number of elements in this Matrix.
         /// </summary>
-        public int Size => size;
+        public int Size { get; }
         #endregion
 
         #region Indexers
