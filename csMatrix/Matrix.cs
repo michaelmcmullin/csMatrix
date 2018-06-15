@@ -23,6 +23,10 @@ namespace csMatrix
         /// <param name="columns">The number of columns to initialise the Matrix with.</param>
         public Matrix(int rows, int columns)
         {
+            if (rows < 1 || columns < 1)
+            {
+                throw new ArgumentException("A Matrix instance must have dimensions of at least 1");
+            }
             this.Rows = rows;
             this.Columns = columns;
             Size = rows * columns;

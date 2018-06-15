@@ -75,5 +75,16 @@ namespace csMatrix.Tests
             Assert.Equal(value, m2[rows - 1, columns - 1]);
             Assert.Equal(value, m2[1, 1]);
         }
+
+        [Theory]
+        [InlineData(-3, 5)]
+        [InlineData(3, -5)]
+        [InlineData(-3, -5)]
+        public void MatrixConstructorNegativeIntInt(int rows, int columns)
+        {
+            Assert.Throws<ArgumentException>(() => new Matrix(rows, columns));
+        }
+
+
     }
 }
