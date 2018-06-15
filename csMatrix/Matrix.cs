@@ -145,6 +145,24 @@ namespace csMatrix
         {
             return data.GetEnumerator();
         }
+
+        /// <summary>
+        /// Swap two rows in this Matrix.
+        /// </summary>
+        /// <param name="row1">The first row to swap.</param>
+        /// <param name="row2">The second row to swap.</param>
+        public void SwapRows(int row1, int row2)
+        {
+        }
+
+        /// <summary>
+        /// Swap two columns in this Matrix.
+        /// </summary>
+        /// <param name="column1">The first column to swap.</param>
+        /// <param name="column2">The second column to swap.</param>
+        public void SwapColumns(int column1, int column2)
+        {
+        }
         #endregion
     }
 }
