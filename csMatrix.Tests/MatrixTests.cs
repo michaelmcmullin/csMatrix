@@ -141,5 +141,23 @@ namespace csMatrix.Tests
             Assert.Equal(size, m.Size);
         }
         #endregion
+
+        #region Methods
+        [Theory]
+        [InlineData(1, 2)]
+        [InlineData(2, 1)]
+        [InlineData(5, 2)]
+        public void MatrixGetEnumerator(int rows, int columns)
+        {
+            Matrix m = new Matrix(rows, columns);
+            int size = 0;
+            foreach(double element in m)
+            {
+                size++;
+            }
+            Assert.Equal(m.Size, size);
+        }
+
+        #endregion
     }
 }
