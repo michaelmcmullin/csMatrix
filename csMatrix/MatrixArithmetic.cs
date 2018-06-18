@@ -7,7 +7,7 @@ namespace csMatrix
     /// <summary>
     /// Methods for arithmetic operations on Matrices. All methods produce a new Matrix instance.
     /// </summary>
-    class MatrixArithmetic
+    public class MatrixArithmetic
     {
         /// <summary>
         /// Add two matrices together.
@@ -17,6 +17,7 @@ namespace csMatrix
         /// <returns>The result of adding the two matrices together.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
         /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Add(Matrix m1, Matrix m2)
         {
             throw new NotImplementedException();
@@ -28,6 +29,7 @@ namespace csMatrix
         /// <param name="m">The Matrix to add numbers to.</param>
         /// <param name="scalar">The number to add to each element in a Matrix.</param>
         /// <returns>The result of adding the number to each element in a Matrix.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Add(Matrix m1, double scalar)
         {
             throw new NotImplementedException();
@@ -38,6 +40,7 @@ namespace csMatrix
         /// </summary>
         /// <param name="m1">The Matrix to negate.</param>
         /// <returns>The result of negating every element in the given Matrix.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Negate(Matrix m1)
         {
             throw new NotImplementedException();
