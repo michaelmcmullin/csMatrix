@@ -54,6 +54,7 @@ namespace csMatrix
         /// <returns>The result of subtracting the second Matrix from the first.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
         /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Subtract(Matrix m1, Matrix m2)
         {
             throw new NotImplementedException();
@@ -65,6 +66,7 @@ namespace csMatrix
         /// <param name="m">The Matrix to subtract from the number.</param>
         /// <param name="scalar">The number to subtract from each element in a Matrix.</param>
         /// <returns>The result of subracting a given number from each element.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Subtract(Matrix m, double scalar)
         {
             throw new NotImplementedException();
@@ -78,6 +80,7 @@ namespace csMatrix
         /// <returns>An n*p Matrix that is the product of m1 and m2.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when the number of columns in the
         /// first Matrix don't match the number of rows in the second Matrix.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Multiply(Matrix m1, Matrix m2)
         {
             throw new NotImplementedException();
@@ -89,6 +92,7 @@ namespace csMatrix
         /// <param name="m">The Matrix to apply multiplication to.</param>
         /// <param name="scalar">The scalar value to multiply each element of the Matrix by.</param>
         /// <returns>A Matrix representing the scalar multiplication of m * scalar.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Multiply(Matrix m, double scalar)
         {
             throw new NotImplementedException();
@@ -100,6 +104,7 @@ namespace csMatrix
         /// <param name="m">The Matrix to apply division to.</param>
         /// <param name="scalar">The scalar value to divide each element of the Matrix by.</param>
         /// <returns>A Matrix representing the scalar division of m / scalar.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Divide(Matrix m, double scalar)
         {
             throw new NotImplementedException();
