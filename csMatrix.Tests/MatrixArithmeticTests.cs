@@ -1,173 +1,124 @@
-﻿using System;
-using Xunit;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace csMatrix.Tests
+namespace csMatrix
 {
-    public class MatrixArithmeticTests
+    /// <summary>
+    /// Methods for arithmetic operations on Matrices. All methods produce a new Matrix instance.
+    /// </summary>
+    public class MatrixArithmetic
     {
-        Matrix m1, m2, m3;
-
-        public MatrixArithmeticTests()
+        /// <summary>
+        /// Add two matrices together.
+        /// </summary>
+        /// <param name="m1">The first Matrix to add.</param>
+        /// <param name="m2">The second Matrix to add.</param>
+        /// <returns>The result of adding the two matrices together.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public static Matrix Add(Matrix m1, Matrix m2)
         {
-            m1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } });
-            m2 = new Matrix(new double[,] { { 7.0, 8.0, 9.0 }, { 10.0, 11.0, 12.0 } });
-            m3 = new Matrix(new double[,] { { 1.0, 2.0 }, { 3.0, 4.0 }, { 5.0, 6.0 } });
+            if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
+            if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
+            throw new NotImplementedException();
         }
 
-        #region Addition
-        [Fact]
-        public void MatrixArithmeticAddMatrixMatrix()
+        /// <summary>
+        /// Add a number to each element in a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to add numbers to.</param>
+        /// <param name="scalar">The number to add to each element in a Matrix.</param>
+        /// <returns>The result of adding the number to each element in a Matrix.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Add(Matrix m, double scalar)
         {
-            Matrix m = MatrixArithmetic.Add(m1, m2);
-            Matrix expected = new Matrix(new double[,] { { 8.0, 10.0, 12.0 }, { 14.0, 16.0, 18.0 } });
-            Assert.Equal(expected, m);
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
+            throw new NotImplementedException();
         }
 
-        [Fact]
-        public void MatrixArithmeticAddMatrixMatrixInvalidDimensions()
+        /// <summary>
+        /// Unary negative operator.
+        /// </summary>
+        /// <param name="m">The Matrix to negate.</param>
+        /// <returns>The result of negating every element in the given Matrix.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Negate(Matrix m)
         {
-            Assert.Throws<InvalidMatrixDimensionsException>(() => MatrixArithmetic.Add(m1, m3));
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
+            throw new NotImplementedException();
         }
 
-        [Fact]
-        public void MatrixArithmeticAddMatrixNull()
+        /// <summary>
+        /// Subtract one Matrix from another.
+        /// </summary>
+        /// <param name="m1">The first Matrix to subtract from.</param>
+        /// <param name="m2">The second Matrix to subtract from the first.</param>
+        /// <returns>The result of subtracting the second Matrix from the first.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public static Matrix Subtract(Matrix m1, Matrix m2)
         {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Add(m1, null));
+            if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
+            if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot subtract Matrices with different dimensions");
+            throw new NotImplementedException();
         }
 
-        [Fact]
-        public void MatrixArithmeticAddNullMatrix()
+        /// <summary>
+        /// Subtract a number from each element in a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to subtract from the number.</param>
+        /// <param name="scalar">The number to subtract from each element in a Matrix.</param>
+        /// <returns>The result of subracting a given number from each element.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Subtract(Matrix m, double scalar)
         {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Add(null, m1));
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
+            throw new NotImplementedException();
         }
 
-        [Fact]
-        public void MatrixArithmeticAddMatrixScalar()
+        /// <summary>
+        /// Multiply two matrices together.
+        /// </summary>
+        /// <param name="m1">An n*m dimension Matrix.</param>
+        /// <param name="m2">An m*p dimension Matrix.</param>
+        /// <returns>An n*p Matrix that is the product of m1 and m2.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the number of columns in the
+        /// first Matrix don't match the number of rows in the second Matrix.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public static Matrix Multiply(Matrix m1, Matrix m2)
         {
-            Matrix m = MatrixArithmetic.Add(m1, 3.0);
-            Matrix expected = new Matrix(new double[,] { { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
-            Assert.Equal(expected, m);
+            if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
+            if (m1.Columns != m2.Rows) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
+            throw new NotImplementedException();
         }
 
-        [Fact]
-        public void MatrixArithmeticAddNullScalar()
+        /// <summary>
+        /// Scalar multiplication of a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to apply multiplication to.</param>
+        /// <param name="scalar">The scalar value to multiply each element of the Matrix by.</param>
+        /// <returns>A Matrix representing the scalar multiplication of m * scalar.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Multiply(Matrix m, double scalar)
         {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Add(null, 3.0));
-        }
-        #endregion
-
-        #region Subtraction/Negation
-        [Fact]
-        public void MatrixArithmeticNegate()
-        {
-            Matrix m = MatrixArithmetic.Negate(m1);
-            Matrix expected = new Matrix(new double[,] { { -1.0, -2.0, -3.0 }, { -4.0, -5.0, -6.0 } });
-            Assert.Equal(expected, m);
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
+            throw new NotImplementedException();
         }
 
-        [Fact]
-        public void MatrixArithmeticNegateNull()
+        /// <summary>
+        /// Scalar division of a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to apply division to.</param>
+        /// <param name="scalar">The scalar value to divide each element of the Matrix by.</param>
+        /// <returns>A Matrix representing the scalar division of m / scalar.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Divide(Matrix m, double scalar)
         {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Negate(null));
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
+            throw new NotImplementedException();
         }
-
-        [Fact]
-        public void MatrixArithmeticSubtractMatrixMatrix()
-        {
-            Matrix m = MatrixArithmetic.Subtract(m2, m1);
-            Matrix expected = new Matrix(new double[,] { { 6.0, 6.0, 6.0 }, { 6.0, 6.0, 6.0 } });
-            Assert.Equal(expected, m);
-        }
-
-        [Fact]
-        public void MatrixArithmeticSubtractMatrixMatrixInvalidDimensions()
-        {
-            Assert.Throws<InvalidMatrixDimensionsException>(() => MatrixArithmetic.Subtract(m1, m3));
-        }
-
-        [Fact]
-        public void MatrixArithmeticSubtractMatrixNull()
-        {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Subtract(m1, null));
-        }
-
-        [Fact]
-        public void MatrixArithmeticSubtractNullMatrix()
-        {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Subtract(null, m1));
-        }
-
-        [Fact]
-        public void MatrixArithmeticSubtractMatrixScalar()
-        {
-            Matrix m = MatrixArithmetic.Subtract(m2, 3.0);
-            Matrix expected = new Matrix(new double[,] { { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
-            Assert.Equal(expected, m);
-        }
-
-        [Fact]
-        public void MatrixArithmeticSubtractNullScalar()
-        {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Subtract(null, 3.0));
-        }
-        #endregion
-
-        #region Multiplication
-        [Fact]
-        public void MatrixArithmeticMultiplyMatrixMatrix()
-        {
-            Matrix m = MatrixArithmetic.Multiply(m1, m3);
-            Matrix expected = new Matrix(new double[,] { { 22.0, 28.0 }, { 49.0, 64.0 } });
-            Assert.Equal(expected, m);
-        }
-
-        [Fact]
-        public void MatrixArithmeticMultiplyMatrixMatrixInvalidDimensions()
-        {
-            Assert.Throws<InvalidMatrixDimensionsException>(() => MatrixArithmetic.Multiply(m1, m2));
-        }
-
-        [Fact]
-        public void MatrixArithmeticMultiplyMatrixNull()
-        {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Multiply(m1, null));
-        }
-
-        [Fact]
-        public void MatrixArithmeticMultiplyNullMatrix()
-        {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Multiply(null, m1));
-        }
-
-        [Fact]
-        public void MatrixArithmeticMultiplyMatrixScalar()
-        {
-            Matrix m = MatrixArithmetic.Multiply(m1, 3.0);
-            Matrix expected = new Matrix(new double[,] { { 3.0, 6.0, 9.0 }, { 12.0, 15.0, 18.0 } });
-            Assert.Equal(expected, m);
-        }
-
-        [Fact]
-        public void MatrixArithmeticMultiplyNullScalar()
-        {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Multiply(null, 3.0));
-        }
-        #endregion
-
-        #region Division
-        [Fact]
-        public void MatrixArithmeticDivideMatrixScalar()
-        {
-            Matrix m = MatrixArithmetic.Divide(m1, 2.0);
-            Matrix expected = new Matrix(new double[,] { { 0.5, 1.0, 1.5 }, { 2.0, 2.5, 3.0 } });
-            Assert.Equal(expected, m);
-        }
-
-        [Fact]
-        public void MatrixArithmeticDivideNullScalar()
-        {
-            Assert.Throws<NullReferenceException>(() => MatrixArithmetic.Divide(null, 2.0));
-        }
-        #endregion
     }
 }
