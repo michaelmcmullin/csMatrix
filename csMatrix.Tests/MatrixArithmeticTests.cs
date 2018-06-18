@@ -22,7 +22,13 @@ namespace csMatrix
         {
             if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
             if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m1);
+            for (int row = 0; row < result.Rows; row++) {
+                for (int column = 0; column < result.Columns; column++) {
+                    result[row, column] += m2[row, column];
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -35,7 +41,15 @@ namespace csMatrix
         public static Matrix Add(Matrix m, double scalar)
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m);
+            for (int row = 0; row < result.Rows; row++)
+            {
+                for (int column = 0; column < result.Columns; column++)
+                {
+                    result[row, column] += scalar;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -47,7 +61,15 @@ namespace csMatrix
         public static Matrix Negate(Matrix m)
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m);
+            for (int row = 0; row < result.Rows; row++)
+            {
+                for (int column = 0; column < result.Columns; column++)
+                {
+                    result[row, column] *= -1;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -63,7 +85,15 @@ namespace csMatrix
         {
             if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
             if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot subtract Matrices with different dimensions");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m1);
+            for (int row = 0; row < result.Rows; row++)
+            {
+                for (int column = 0; column < result.Columns; column++)
+                {
+                    result[row, column] -= m2[row, column];
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -76,7 +106,15 @@ namespace csMatrix
         public static Matrix Subtract(Matrix m, double scalar)
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m);
+            for (int row = 0; row < result.Rows; row++)
+            {
+                for (int column = 0; column < result.Columns; column++)
+                {
+                    result[row, column] -= scalar;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -91,8 +129,18 @@ namespace csMatrix
         public static Matrix Multiply(Matrix m1, Matrix m2)
         {
             if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
-            if (m1.Columns != m2.Rows) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
-            throw new NotImplementedException();
+            if (m1.Rows != m2.Columns) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
+            Matrix result = new Matrix(m1.Rows, m2.Columns);
+            for (int row = 0; row < m1.Rows; row++) {
+                for (int column = 0; column < m2.Columns; column++) {
+                    double sum = 0;
+                    for (int i = 0; i < m2.Rows; i++) {
+                        sum += (m1[row, i] * m2[i, column]);
+                    }
+                    result[row, column] = sum;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -105,7 +153,15 @@ namespace csMatrix
         public static Matrix Multiply(Matrix m, double scalar)
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m);
+            for (int row = 0; row < result.Rows; row++)
+            {
+                for (int column = 0; column < result.Columns; column++)
+                {
+                    result[row, column] *= scalar;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -118,7 +174,15 @@ namespace csMatrix
         public static Matrix Divide(Matrix m, double scalar)
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m);
+            for (int row = 0; row < result.Rows; row++)
+            {
+                for (int column = 0; column < result.Columns; column++)
+                {
+                    result[row, column] /= scalar;
+                }
+            }
+            return result;
         }
     }
 }
