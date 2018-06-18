@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 
 namespace csMatrix
@@ -144,6 +144,17 @@ namespace csMatrix
         public IEnumerator GetEnumerator()
         {
             return data.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Checks if this Matrix has the same dimensions as another.
+        /// </summary>
+        /// <returns><c>true</c>, if this Matrix has the same dimensions as the
+        /// other Matrix, <c>false</c> otherwise.</returns>
+        /// <param name="m">A second Matrix to compare to this instance.</param>
+        public bool hasSameDimensions(Matrix m)
+        {
+            return (this.Rows == m.Rows && this.Columns == m.Columns);
         }
 
         /// <summary>
