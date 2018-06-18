@@ -20,6 +20,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Add(Matrix m1, Matrix m2)
         {
+            if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
             throw new NotImplementedException();
         }
 
@@ -30,19 +31,21 @@ namespace csMatrix
         /// <param name="scalar">The number to add to each element in a Matrix.</param>
         /// <returns>The result of adding the number to each element in a Matrix.</returns>
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
-        public static Matrix Add(Matrix m1, double scalar)
+        public static Matrix Add(Matrix m, double scalar)
         {
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
             throw new NotImplementedException();
         }
 
         /// <summary>
         /// Unary negative operator.
         /// </summary>
-        /// <param name="m1">The Matrix to negate.</param>
+        /// <param name="m">The Matrix to negate.</param>
         /// <returns>The result of negating every element in the given Matrix.</returns>
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
-        public static Matrix Negate(Matrix m1)
+        public static Matrix Negate(Matrix m)
         {
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
             throw new NotImplementedException();
         }
 
@@ -57,6 +60,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Subtract(Matrix m1, Matrix m2)
         {
+            if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
             throw new NotImplementedException();
         }
 
@@ -69,6 +73,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Subtract(Matrix m, double scalar)
         {
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
             throw new NotImplementedException();
         }
 
@@ -83,6 +88,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Multiply(Matrix m1, Matrix m2)
         {
+            if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
             throw new NotImplementedException();
         }
 
@@ -95,6 +101,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Multiply(Matrix m, double scalar)
         {
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
             throw new NotImplementedException();
         }
 
@@ -107,6 +114,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Divide(Matrix m, double scalar)
         {
+            if (m == null) throw new NullReferenceException("Matrix cannot be null");
             throw new NotImplementedException();
         }
 
