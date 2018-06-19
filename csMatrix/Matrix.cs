@@ -12,7 +12,7 @@ namespace csMatrix
         /// <summary>
         /// Storage array for the Matrix data.
         /// </summary>
-        protected double[] data;
+        private double[] data;
         #endregion
 
         #region Constructors
@@ -133,6 +133,20 @@ namespace csMatrix
         {
             get { return data[(row * Columns) + column]; }
             set { data[(row * Columns) + column] = value; }
+        }
+
+        /// <summary>
+        /// Indexer to directly access a position within an unrolled Matrix.
+        /// </summary>
+        /// <param name="index">The index within the complete Matrix, starting from
+        /// row 0, column 0, and progressing through each row.</returns>
+        /// <remarks>Matrices are zero-indexed. Providing a single-index alternative
+        /// allows a simple way to iterate through the entire Matrix data in a single
+        /// loop.</remarks>
+        public double this[int index]
+        {
+            get { return data[index]; }
+            set { data[index] = value; }
         }
         #endregion
 

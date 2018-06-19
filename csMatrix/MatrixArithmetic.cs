@@ -23,12 +23,9 @@ namespace csMatrix
             if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
             if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
             Matrix result = new Matrix(m1);
-            for (int row = 0; row < result.Rows; row++)
+            for (int i = 0; i < result.Size; i++)
             {
-                for (int column = 0; column < result.Columns; column++)
-                {
-                    result[row, column] += m2[row, column];
-                }
+                result[i] += m2[i];
             }
             return result;
         }
@@ -44,12 +41,9 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int row = 0; row < result.Rows; row++)
+            for (int i = 0; i < result.Size; i++)
             {
-                for (int column = 0; column < result.Columns; column++)
-                {
-                    result[row, column] += scalar;
-                }
+                result[i] += scalar;
             }
             return result;
         }
@@ -64,12 +58,9 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int row = 0; row < result.Rows; row++)
+            for (int i = 0; i < result.Size; i++)
             {
-                for (int column = 0; column < result.Columns; column++)
-                {
-                    result[row, column] *= -1;
-                }
+                result[i] = -result[i];
             }
             return result;
         }
@@ -88,12 +79,9 @@ namespace csMatrix
             if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
             if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot subtract Matrices with different dimensions");
             Matrix result = new Matrix(m1);
-            for (int row = 0; row < result.Rows; row++)
+            for (int i = 0; i < result.Size; i++)
             {
-                for (int column = 0; column < result.Columns; column++)
-                {
-                    result[row, column] -= m2[row, column];
-                }
+                result[i] -= m2[i];
             }
             return result;
         }
@@ -109,12 +97,9 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int row = 0; row < result.Rows; row++)
+            for (int i = 0; i < result.Size; i++)
             {
-                for (int column = 0; column < result.Columns; column++)
-                {
-                    result[row, column] -= scalar;
-                }
+                result[i] -= scalar;
             }
             return result;
         }
@@ -159,12 +144,9 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int row = 0; row < result.Rows; row++)
+            for (int i = 0; i < result.Size; i++)
             {
-                for (int column = 0; column < result.Columns; column++)
-                {
-                    result[row, column] *= scalar;
-                }
+                result[i] *= scalar;
             }
             return result;
         }
@@ -180,12 +162,9 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int row = 0; row < result.Rows; row++)
+            for (int i = 0; i < result.Size; i++)
             {
-                for (int column = 0; column < result.Columns; column++)
-                {
-                    result[row, column] /= scalar;
-                }
+                result[i] /= scalar;
             }
             return result;
         }
