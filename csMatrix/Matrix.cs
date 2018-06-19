@@ -162,8 +162,25 @@ namespace csMatrix
         /// </summary>
         /// <param name="row1">The first row to swap.</param>
         /// <param name="row2">The second row to swap.</param>
+        /// <exception cref="IndexOutOfRangeException">Thrown when called with non-existent rows.</exception>
+        /// <remarks>This method updates the instance it's called on.</remarks>
         public void SwapRows(int row1, int row2)
         {
+            if (row1 >= Rows || row2 >= Rows)
+                throw new IndexOutOfRangeException("SwapRow method called with non-existent rows.");
+
+            if (row1 == row2) return;
+
+            double[] tmp = new double[Columns];
+            int indexRow1 = row1 * Columns;
+            int indexRow2 = row2 * Columns;
+
+            for (int i = 0; i < Columns; i++)
+            {
+                tmp[i] = data[indexRow1 + i];
+                data[indexRow1 + i] = data[indexRow2 + i];
+                data[indexRow2 + i] = tmp[i];
+            }
         }
 
         /// <summary>
@@ -171,8 +188,25 @@ namespace csMatrix
         /// </summary>
         /// <param name="column1">The first column to swap.</param>
         /// <param name="column2">The second column to swap.</param>
+        /// <exception cref="IndexOutOfRangeException">Thrown when called with non-existent columns.</exception>
+        /// <remarks>This method updates the instance it's called on.</remarks>
         public void SwapColumns(int column1, int column2)
         {
+            if (column1 >= Columns || column2 >= Columns)
+                throw new IndexOutOfRangeException("SwapColumns method called with non-existent columns.");
+
+            if (column1 == column2) return;
+
+            int indexColumn1 = column1, indexColumn2 = column2;
+            double tmp;
+            for (int i = 0; i < Rows; i++)
+            {
+                tmp = data[indexColumn1];
+                data[indexColumn1] = data[indexColumn2];
+                data[indexColumn2] = tmp;
+                indexColumn1 += Columns;
+                indexColumn2 += Columns;
+            }
         }
         #endregion
     }
