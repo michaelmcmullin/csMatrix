@@ -156,7 +156,75 @@ namespace csMatrix
         }
         #endregion
 
+        #region Operators
+        /// <summary>
+        /// Override the == operator to compare Matrix values.
+        /// </summary>
+        /// <param name="m1">The first Matrix to compare.</param>
+        /// <param name="m2">The second Matrix to compare.</param>
+        /// <returns>True if the values of both matrices match.</returns>
+        public static bool operator ==(Matrix m1, Matrix m2)
+        {
+            return m1.Equals(m2);
+        }
+
+        /// <summary>
+        /// Override the != operator to compare Matrix values.
+        /// </summary>
+        /// <param name="m1">The first Matrix to compare.</param>
+        /// <param name="m2">The second Matrix to compare.</param>
+        /// <returns>True if the values of both matrices differ.</returns>
+        public static bool operator !=(Matrix m1, Matrix m2)
+        {
+            return !(m1 == m2);
+        }
+        #endregion
+
         #region Methods
+        /// <summary>
+        /// Override the Object.Equals method to compare Matrix values.
+        /// </summary>
+        /// <param name="obj">The object to compare to this Matrix.</param>
+        /// <returns>True if obj is a Matrix, and its values match the current
+        /// Matrix values.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            Matrix m = obj as Matrix;
+            return this.Equals(m);
+        }
+
+        /// <summary>
+        /// Compare this Matrix with a second Matrix by its element's values.
+        /// </summary>
+        /// <param name="m">The Matrix to compare to this one.</param>
+        /// <returns>True if both matrices contain the same elements.</returns>
+        public bool Equals(Matrix m)
+        {
+            if (object.ReferenceEquals(null, m)) return false;
+            if (ReferenceEquals(this, m)) return true;
+
+            if (!this.HasSameDimensions(m)) return false;
+
+            for (int row = 0; row < Rows; row++)
+            {
+                for (int column = 0; column < Columns; column++)
+                {
+                    if (this[row, column] != m[row, column]) return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Override the default hash code.
+        /// </summary>
+        /// <returns>A bitwise XOR based on rows and columns of this Matrix.</returns>
+        public override int GetHashCode()
+        {
+            return Rows ^ Columns;
+        }
+
         /// <summary>
         /// Implement the GetEnumerator method to run against the data array.
         /// </summary>
@@ -172,7 +240,7 @@ namespace csMatrix
         /// <returns><c>true</c>, if this Matrix has the same dimensions as the
         /// other Matrix, <c>false</c> otherwise.</returns>
         /// <param name="m">A second Matrix to compare to this instance.</param>
-        public bool hasSameDimensions(Matrix m)
+        public bool HasSameDimensions(Matrix m)
         {
             return (this.Rows == m.Rows && this.Columns == m.Columns);
         }

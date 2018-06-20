@@ -22,7 +22,7 @@ namespace csMatrix
         public static void Add(Matrix m1, Matrix m2)
         {
             if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
-            if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
+            if (!m1.HasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
             for (int i = 0; i < m1.Size; i++)
             {
                 m1[i] += m2[i];
@@ -69,7 +69,7 @@ namespace csMatrix
         public static void Subtract(Matrix m1, Matrix m2)
         {
             if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
-            if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot subtract Matrices with different dimensions");
+            if (!m1.HasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot subtract Matrices with different dimensions");
             for (int i = 0; i < m1.Size; i++)
             {
                 m1[i] -= m2[i];
