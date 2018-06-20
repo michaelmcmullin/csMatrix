@@ -21,6 +21,7 @@ namespace csMatrix
         /// </summary>
         /// <param name="rows">The number of rows to initialise the Matrix with.</param>
         /// <param name="columns">The number of columns to initialise the Matrix with.</param>
+        /// <exception cref="ArgumentException">Thrown when the supplied dimensions are less than 1.</exception>
         public Matrix(int rows, int columns)
         {
             if (rows < 1 || columns < 1)
@@ -41,6 +42,7 @@ namespace csMatrix
         /// <param name="rows">The number of rows to initialise the Matrix with.</param>
         /// <param name="cols">The number of columns to initialise the Matrix with.</param>
         /// <param name="value">The value to fill the Matrix with.</param>
+        /// <exception cref="ArgumentException">Thrown when the supplied dimensions are less than 1.</exception>
         public Matrix(int rows, int columns, double value) : this(rows, columns)
         {
             for (int i = 0; i < Size; i++)
@@ -52,6 +54,7 @@ namespace csMatrix
         /// </summary>
         /// <param name="dimensions">The number of rows and columns to initialise the
         /// Matrix with. There will be an equal number of rows and columns.</param>
+        /// <exception cref="ArgumentException">Thrown when the supplied dimensions are less than 1.</exception>
         public Matrix(int dimensions) : this(dimensions, dimensions)
         {
         }
@@ -62,6 +65,7 @@ namespace csMatrix
         /// <param name="dimensions">The number of rows and columns to initialise the
         /// Matrix with. There will be an equal number of rows and columns.</param>
         /// <param name="value">The value to fill the Matrix with.</param>
+        /// <exception cref="ArgumentException">Thrown when the supplied dimensions are less than 1.</exception>
         public Matrix(int dimensions, double value) : this(dimensions, dimensions, value)
         {
         }
@@ -70,6 +74,7 @@ namespace csMatrix
         /// Constructor to create a new Matrix based on an existing two-dimensional array.
         /// </summary>
         /// <param name="array">The array to specify values for a new Matrix.</param>
+        /// <exception cref="NullReferenceException">Thrown when the array is null.</exception>
         public Matrix(double[,] array) : this(array.GetLength(0), array.GetLength(1))
         {
             int index = 0;
@@ -86,6 +91,7 @@ namespace csMatrix
         /// Constructor to create a new Matrix based on an existing Matrix.
         /// </summary>
         /// <param name="m">The existing Matrix to specify values for a new Matrix.</param>
+        /// <exception cref="NullReferenceException">Thrown when Matrix m is null.</exception>
         public Matrix(Matrix m) : this(m.Rows, m.Columns)
         {
             for (int i = 0; i < Size; i++)
@@ -180,21 +186,7 @@ namespace csMatrix
         /// <remarks>This method updates the instance it's called on.</remarks>
         public void SwapRows(int row1, int row2)
         {
-            if (row1 >= Rows || row2 >= Rows)
-                throw new IndexOutOfRangeException("SwapRow method called with non-existent rows.");
-
-            if (row1 == row2) return;
-
-            double[] tmp = new double[Columns];
-            int indexRow1 = row1 * Columns;
-            int indexRow2 = row2 * Columns;
-
-            for (int i = 0; i < Columns; i++)
-            {
-                tmp[i] = data[indexRow1 + i];
-                data[indexRow1 + i] = data[indexRow2 + i];
-                data[indexRow2 + i] = tmp[i];
-            }
+            MatrixMutators.SwapRows(this, row1, row2);
         }
 
         /// <summary>
@@ -206,21 +198,7 @@ namespace csMatrix
         /// <remarks>This method updates the instance it's called on.</remarks>
         public void SwapColumns(int column1, int column2)
         {
-            if (column1 >= Columns || column2 >= Columns)
-                throw new IndexOutOfRangeException("SwapColumns method called with non-existent columns.");
-
-            if (column1 == column2) return;
-
-            int indexColumn1 = column1, indexColumn2 = column2;
-            double tmp;
-            for (int i = 0; i < Rows; i++)
-            {
-                tmp = data[indexColumn1];
-                data[indexColumn1] = data[indexColumn2];
-                data[indexColumn2] = tmp;
-                indexColumn1 += Columns;
-                indexColumn2 += Columns;
-            }
+            MatrixMutators.SwapColumns(this, column1, column2);
         }
         #endregion
     }

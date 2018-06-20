@@ -64,6 +64,13 @@ namespace csMatrix.Tests
         }
 
         [Fact]
+        public void MatrixConstructorDoubleArrayNull()
+        {
+            double[,] arr = null;
+            Assert.Throws<NullReferenceException>(() => new Matrix(arr));
+        }
+
+        [Fact]
         public void MatrixConstructorMatrix()
         {
             int rows = 3, columns = 2;
@@ -75,6 +82,13 @@ namespace csMatrix.Tests
             Assert.Equal(value, m2[0, 0]);
             Assert.Equal(value, m2[rows - 1, columns - 1]);
             Assert.Equal(value, m2[1, 1]);
+        }
+
+        [Fact]
+        public void MatrixConstructorMatrixNull()
+        {
+            Matrix m1 = null;
+            Assert.Throws<NullReferenceException>(() => new Matrix(m1));
         }
 
         [Theory]

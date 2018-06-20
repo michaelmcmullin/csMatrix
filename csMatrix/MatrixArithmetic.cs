@@ -23,10 +23,7 @@ namespace csMatrix
             if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
             if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
             Matrix result = new Matrix(m1);
-            for (int i = 0; i < result.Size; i++)
-            {
-                result[i] += m2[i];
-            }
+            MatrixMutators.Add(result, m2);
             return result;
         }
 
@@ -41,10 +38,7 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int i = 0; i < result.Size; i++)
-            {
-                result[i] += scalar;
-            }
+            MatrixMutators.Add(result, scalar);
             return result;
         }
 
@@ -58,10 +52,7 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int i = 0; i < result.Size; i++)
-            {
-                result[i] = -result[i];
-            }
+            MatrixMutators.Negate(result);
             return result;
         }
 
@@ -79,10 +70,7 @@ namespace csMatrix
             if (m1 == null || m2 == null) throw new NullReferenceException("Matrix cannot be null");
             if (!m1.hasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot subtract Matrices with different dimensions");
             Matrix result = new Matrix(m1);
-            for (int i = 0; i < result.Size; i++)
-            {
-                result[i] -= m2[i];
-            }
+            MatrixMutators.Subtract(result, m2);
             return result;
         }
 
@@ -97,10 +85,7 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int i = 0; i < result.Size; i++)
-            {
-                result[i] -= scalar;
-            }
+            MatrixMutators.Subtract(result, scalar);
             return result;
         }
 
@@ -144,10 +129,7 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int i = 0; i < result.Size; i++)
-            {
-                result[i] *= scalar;
-            }
+            MatrixMutators.Multiply(result, scalar);
             return result;
         }
 
@@ -162,10 +144,7 @@ namespace csMatrix
         {
             if (m == null) throw new NullReferenceException("Matrix cannot be null");
             Matrix result = new Matrix(m);
-            for (int i = 0; i < result.Size; i++)
-            {
-                result[i] /= scalar;
-            }
+            MatrixMutators.Divide(result, scalar);
             return result;
         }
     }
