@@ -5,6 +5,15 @@ namespace csMatrix.Tests
 {
     public class MatrixTests
     {
+        Matrix testMatrix1, testMatrix2, testMatrix3;
+
+        public MatrixTests()
+        {
+            testMatrix1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } });
+            testMatrix2 = new Matrix(new double[,] { { 7.0, 8.0, 9.0 }, { 10.0, 11.0, 12.0 } });
+            testMatrix3 = new Matrix(new double[,] { { 1.0, 2.0 }, { 3.0, 4.0 }, { 5.0, 6.0 } });
+        }
+
         #region Constructors
         [Fact]
         public void MatrixConstructorIntInt()
@@ -59,7 +68,7 @@ namespace csMatrix.Tests
             Matrix m = new Matrix(arr);
             Assert.Equal(rows, m.Rows);
             Assert.Equal(columns, m.Columns);
-            Assert.Equal(arr[0,0], m[0, 0]);
+            Assert.Equal(arr[0, 0], m[0, 0]);
             Assert.Equal(arr[rows - 1, columns - 1], m[rows - 1, columns - 1]);
         }
 
@@ -157,6 +166,165 @@ namespace csMatrix.Tests
         #endregion
 
         #region Methods
+        #region Addition
+        [Fact]
+        public void MatrixAddMatrixMatrix()
+        {
+            Matrix m1 = Matrix.Add(testMatrix1, testMatrix2);
+            Matrix m2 = new Matrix(testMatrix1); m2.Add(testMatrix2);
+            Matrix m3 = testMatrix1 + testMatrix2;
+            Matrix expected = new Matrix(new double[,] { { 8.0, 10.0, 12.0 }, { 14.0, 16.0, 18.0 } });
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, m2);
+            Assert.Equal(expected, m3);
+        }
+
+        [Fact]
+        public void MatrixAddMatrixMatrixInvalidDimensions()
+        {
+            Assert.Throws<InvalidMatrixDimensionsException>(() => Matrix.Add(testMatrix1, testMatrix3));
+            Matrix m1 = new Matrix(testMatrix1);
+            Assert.Throws<InvalidMatrixDimensionsException>(() => m1.Add(testMatrix3));
+            Assert.Throws<InvalidMatrixDimensionsException>(() => testMatrix1 + testMatrix3);
+        }
+
+        [Fact]
+        public void MatrixAddMatrixNull()
+        {
+            Assert.Throws<NullReferenceException>(() => Matrix.Add(testMatrix1, null));
+            Matrix m1 = new Matrix(testMatrix1);
+            Assert.Throws<NullReferenceException>(() => m1.Add(null));
+            Assert.Throws<NullReferenceException>(() => m1 + null);
+        }
+
+        [Fact]
+        public void MatrixAddNullMatrix()
+        {
+            Assert.Throws<NullReferenceException>(() => Matrix.Add(null, testMatrix1));
+            Matrix m1 = null;
+            Assert.Throws<NullReferenceException>(() => m1.Add(testMatrix1));
+            Assert.Throws<NullReferenceException>(() => m1 + testMatrix1);
+        }
+
+        [Fact]
+        public void MatrixAddMatrixScalar()
+        {
+            double scalar = 3.0;
+            Matrix m1 = Matrix.Add(testMatrix1, scalar);
+            Matrix m2 = new Matrix(testMatrix1); m2.Add(scalar);
+            Matrix m3 = testMatrix1 + scalar;
+            Matrix m4 = scalar + testMatrix1;
+
+            Matrix expected = new Matrix(new double[,] { { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, m2);
+            Assert.Equal(expected, m3);
+            Assert.Equal(expected, m4);
+        }
+
+        [Fact]
+        public void MatrixAddNullScalar()
+        {
+            double scalar = 3.0;
+            Assert.Throws<NullReferenceException>(() => Matrix.Add(null, scalar));
+            Matrix m1 = null;
+            Assert.Throws<NullReferenceException>(() => m1.Add(scalar));
+            Assert.Throws<NullReferenceException>(() => m1 + scalar);
+            Assert.Throws<NullReferenceException>(() => scalar + m1);
+        }
+        #endregion
+
+        #region Subtraction/Negation
+        [Fact]
+        public void MatrixNegate()
+        {
+            Matrix m1 = Matrix.Negate(testMatrix1);
+            Matrix m2 = new Matrix(testMatrix1); m2.Negate();
+            Matrix m3 = -testMatrix1;
+
+            Matrix expected = new Matrix(new double[,] { { -1.0, -2.0, -3.0 }, { -4.0, -5.0, -6.0 } });
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, m2);
+            Assert.Equal(expected, m3);
+        }
+
+        [Fact]
+        public void MatrixNegateNull()
+        {
+            Assert.Throws<NullReferenceException>(() => Matrix.Negate(null));
+            Matrix m1 = null;
+            Assert.Throws<NullReferenceException>(() => m1.Negate());
+            Assert.Throws<NullReferenceException>(() => -m1);
+        }
+
+        [Fact]
+        public void MatrixSubtractMatrixMatrix()
+        {
+            Matrix m1 = Matrix.Subtract(testMatrix2, testMatrix1);
+            Matrix m2 = new Matrix(testMatrix2); m2.Subtract(testMatrix1);
+            Matrix m3 = testMatrix2 - testMatrix1;
+            Matrix expected = new Matrix(new double[,] { { 6.0, 6.0, 6.0 }, { 6.0, 6.0, 6.0 } });
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, m2);
+            Assert.Equal(expected, m3);
+        }
+
+        [Fact]
+        public void MatrixSubtractMatrixMatrixInvalidDimensions()
+        {
+            Assert.Throws<InvalidMatrixDimensionsException>(() => Matrix.Subtract(testMatrix1, testMatrix3));
+            Matrix m1 = new Matrix(testMatrix1);
+            Assert.Throws<InvalidMatrixDimensionsException>(() => m1.Subtract(testMatrix3));
+            Assert.Throws<InvalidMatrixDimensionsException>(() => testMatrix1 - testMatrix3);
+        }
+
+        [Fact]
+        public void MatrixSubtractMatrixNull()
+        {
+            Assert.Throws<NullReferenceException>(() => Matrix.Subtract(testMatrix1, null));
+            Matrix m1 = new Matrix(testMatrix1);
+            Assert.Throws<NullReferenceException>(() => m1.Subtract(null));
+            Assert.Throws<NullReferenceException>(() => m1 - null);
+        }
+
+        [Fact]
+        public void MatrixSubtractNullMatrix()
+        {
+            Assert.Throws<NullReferenceException>(() => Matrix.Subtract(null, testMatrix1));
+            Matrix m1 = null;
+            Assert.Throws<NullReferenceException>(() => m1.Subtract(testMatrix1));
+            Assert.Throws<NullReferenceException>(() => m1 - testMatrix1);
+        }
+
+        [Fact]
+        public void MatrixSubtractMatrixScalar()
+        {
+            double scalar = 3.0;
+            Matrix m1 = Matrix.Subtract(testMatrix1, scalar);
+            Matrix m2 = new Matrix(testMatrix1); m2.Subtract(scalar);
+            Matrix m3 = testMatrix1 - scalar;
+            Matrix m4 = scalar - testMatrix1;
+
+            Matrix expected = new Matrix(new double[,] { { -2.0, -1.0, 0.0 }, { 1.0, 2.0, 3.0 } });
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, m2);
+            Assert.Equal(expected, m3);
+            Assert.Equal(expected, m4);
+        }
+
+        [Fact]
+        public void MatrixSubtractNullScalar()
+        {
+            double scalar = 3.0;
+            Assert.Throws<NullReferenceException>(() => Matrix.Subtract(null, scalar));
+            Matrix m1 = null;
+            Assert.Throws<NullReferenceException>(() => m1.Subtract(scalar));
+            Assert.Throws<NullReferenceException>(() => m1 - scalar);
+            Assert.Throws<NullReferenceException>(() => scalar - m1);
+        }
+
+        #endregion
+
         [Fact]
         public void MatrixEquals()
         {

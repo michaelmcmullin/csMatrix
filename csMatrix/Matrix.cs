@@ -178,9 +178,150 @@ namespace csMatrix
         {
             return !(m1 == m2);
         }
+
+        /// <summary>
+        /// Add two matrices together.
+        /// </summary>
+        /// <param name="m1">The first Matrix to add.</param>
+        /// <param name="m2">The second Matrix to add.</param>
+        /// <returns>The result of adding the two matrices together.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public static Matrix operator +(Matrix m1, Matrix m2)
+        {
+            return MatrixArithmetic.Add(m1, m2);
+        }
+
+        /// <summary>
+        /// Add a number to each element in a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to add numbers to.</param>
+        /// <param name="scalar">The number to add to each element in a Matrix.</param>
+        /// <returns>The result of adding the number to each element in a Matrix.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix operator +(Matrix m1, double scalar)
+        {
+            return MatrixArithmetic.Add(m1, scalar);
+        }
+
+        /// <summary>
+        /// Add a number to each element in a Matrix.
+        /// </summary>
+        /// <param name="scalar">The number to add to each element in a Matrix.</param>
+        /// <param name="m">The Matrix to add numbers to.</param>
+        /// <returns>The result of adding the number to each element in a Matrix.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix operator +(double scalar, Matrix m1)
+        {
+            return MatrixArithmetic.Add(m1, scalar);
+        }
+
+        /// <summary>
+        /// Unary negative operator.
+        /// </summary>
+        /// <param name="m">The Matrix to negate.</param>
+        /// <returns>The result of negating every element in the given Matrix.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix operator -(Matrix m)
+        {
+            return MatrixArithmetic.Negate(m);
+        }
+
+        /// <summary>
+        /// Subtract one Matrix from another.
+        /// </summary>
+        /// <param name="m1">The first Matrix to subtract from.</param>
+        /// <param name="m2">The second Matrix to subtract from the first.</param>
+        /// <returns>The result of subtracting the second Matrix from the first.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public static Matrix operator -(Matrix m1, Matrix m2)
+        {
+            return MatrixArithmetic.Subtract(m1, m2);
+        }
+
+        /// <summary>
+        /// Subtract a number from each element in a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to subtract from the number.</param>
+        /// <param name="scalar">The number to subtract from each element in a Matrix.</param>
+        /// <returns>The result of subracting a given number from each element.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix operator -(Matrix m, double scalar)
+        {
+            return MatrixArithmetic.Subtract(m, scalar);
+        }
+
+        /// <summary>
+        /// Subtract a number from each element in a Matrix.
+        /// </summary>
+        /// <param name="scalar">The number to subtract from each element in a Matrix.</param>
+        /// <param name="m">The Matrix to subtract from the number.</param>
+        /// <returns>The result of subracting a given number from each element.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix operator -(double scalar, Matrix m)
+        {
+            return MatrixArithmetic.Subtract(m, scalar);
+        }
         #endregion
 
         #region Methods
+        #region Instance Methods
+        /// <summary>
+        /// Add a Matrix to this instance.
+        /// </summary>
+        /// <param name="m">The Matrix to add to this one.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public void Add(Matrix m)
+        {
+            MatrixMutators.Add(this, m);
+        }
+
+        /// <summary>
+        /// Add a number to each element in this Matrix.
+        /// </summary>
+        /// <param name="scalar">The number to add to each element in a Matrix.</param>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public void Add(double scalar)
+        {
+            MatrixMutators.Add(this, scalar);
+        }
+
+        /// <summary>
+        /// Unary negative operator, negates every element in this Matrix.
+        /// </summary>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public void Negate()
+        {
+            MatrixMutators.Negate(this);
+        }
+
+        /// <summary>
+        /// Subtract a Matrix from this instance.
+        /// </summary>
+        /// <param name="m">The Matrix to subtract from this instance.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public void Subtract(Matrix m)
+        {
+            MatrixMutators.Subtract(this, m);
+        }
+
+        /// <summary>
+        /// Subtract a number from each element in this Matrix.
+        /// </summary>
+        /// <param name="scalar">The number to subtract from each element in this Matrix.</param>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public void Subtract(double scalar)
+        {
+            MatrixMutators.Subtract(this, scalar);
+        }
+
         /// <summary>
         /// Override the Object.Equals method to compare Matrix values.
         /// </summary>
@@ -268,6 +409,72 @@ namespace csMatrix
         {
             MatrixMutators.SwapColumns(this, column1, column2);
         }
+        #endregion
+
+        #region Static Methods
+        /// <summary>
+        /// Add two matrices together.
+        /// </summary>
+        /// <param name="m1">The first Matrix to add.</param>
+        /// <param name="m2">The second Matrix to add.</param>
+        /// <returns>The result of adding the two matrices together.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public static Matrix Add(Matrix m1, Matrix m2)
+        {
+            return MatrixArithmetic.Add(m1, m2);
+        }
+
+        /// <summary>
+        /// Add a number to each element in a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to add numbers to.</param>
+        /// <param name="scalar">The number to add to each element in a Matrix.</param>
+        /// <returns>The result of adding the number to each element in a Matrix.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Add(Matrix m, double scalar)
+        {
+            return MatrixArithmetic.Add(m, scalar);
+        }
+
+        /// <summary>
+        /// Unary negative operator.
+        /// </summary>
+        /// <param name="m">The Matrix to negate.</param>
+        /// <returns>The result of negating every element in the given Matrix.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Negate(Matrix m)
+        {
+            return MatrixArithmetic.Negate(m);
+        }
+
+        /// <summary>
+        /// Subtract one Matrix from another.
+        /// </summary>
+        /// <param name="m1">The first Matrix to subtract from.</param>
+        /// <param name="m2">The second Matrix to subtract from the first.</param>
+        /// <returns>The result of subtracting the second Matrix from the first.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public static Matrix Subtract(Matrix m1, Matrix m2)
+        {
+            return MatrixArithmetic.Subtract(m1, m2);
+        }
+
+        /// <summary>
+        /// Subtract a number from each element in a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to subtract from the number.</param>
+        /// <param name="scalar">The number to subtract from each element in a Matrix.</param>
+        /// <returns>The result of subracting a given number from each element.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Subtract(Matrix m, double scalar)
+        {
+            return MatrixArithmetic.Subtract(m, scalar);
+        }
+        #endregion
         #endregion
     }
 }
