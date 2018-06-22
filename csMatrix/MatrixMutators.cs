@@ -8,7 +8,7 @@ namespace csMatrix
     /// Methods designed to mutate an existing Matrix. Useful in situations where
     /// creating a new Matrix is expensive.
     /// </summary>
-    public class MatrixMutators
+    internal class MatrixMutators
     {
         #region Arithmetic
         /// <summary>

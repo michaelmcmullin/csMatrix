@@ -7,7 +7,7 @@ namespace csMatrix
     /// <summary>
     /// Methods for arithmetic operations on Matrices. All methods produce a new Matrix instance.
     /// </summary>
-    public class MatrixArithmetic
+    internal class MatrixArithmetic
     {
         /// <summary>
         /// Add two matrices together.
