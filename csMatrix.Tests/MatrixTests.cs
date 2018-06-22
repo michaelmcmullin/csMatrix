@@ -494,6 +494,15 @@ namespace csMatrix.Tests
             Matrix m = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
             Assert.Throws<IndexOutOfRangeException>(() => m.SwapColumns(m.Columns, 0));
         }
+
+        [Fact]
+        public void MatrixFill()
+        {
+            Matrix m = new Matrix(2, 2);
+            m.Fill(1.5);
+            Matrix expected = new Matrix(new double[,] { { 1.5, 1.5 }, { 1.5, 1.5 } });
+            Assert.Equal(expected, m);
+        }
         #endregion
     }
 }

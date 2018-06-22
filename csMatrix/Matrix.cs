@@ -500,6 +500,15 @@ namespace csMatrix
         {
             MatrixMutators.SwapColumns(this, column1, column2);
         }
+
+        /// <summary>
+        /// Fills this Matrix with a given number.
+        /// </summary>
+        /// <param name="number">The number to assign to every element in the Matrix.</param>
+        public void Fill(double number)
+        {
+            MatrixMutators.Fill(this, number);
+        }
         #endregion
 
         #region Static Methods
