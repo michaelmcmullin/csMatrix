@@ -1,2 +1,9 @@
 language: csharp
-solution: csMatrix.sln
+dist: trusty
+mono: none
+dotnet: 2.0
+install:
+- dotnet restore
+script:
+- dotnet build
+- dotnet test csMatrix.Tests/csMatrix.Tests.csproj
