@@ -322,9 +322,94 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => m1 - scalar);
             Assert.Throws<NullReferenceException>(() => scalar - m1);
         }
-
         #endregion
 
+        #region Multiplication
+        [Fact]
+        public void MatrixMultiplyMatrixMatrix()
+        {
+            Matrix m1 = Matrix.Multiply(testMatrix1, testMatrix3);
+            Matrix m2 = testMatrix1 * testMatrix3;
+            Matrix expected = new Matrix(new double[,] { { 22.0, 28.0 }, { 49.0, 64.0 } });
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, m2);
+        }
+
+        [Fact]
+        public void MatrixMultiplyMatrixMatrixInvalidDimensions()
+        {
+            Assert.Throws<InvalidMatrixDimensionsException>(() => Matrix.Multiply(testMatrix1, testMatrix2));
+            Matrix m1 = new Matrix(testMatrix1);
+            Assert.Throws<InvalidMatrixDimensionsException>(() => testMatrix1 * testMatrix2);
+        }
+
+        [Fact]
+        public void MatrixMultiplyMatrixNull()
+        {
+            Assert.Throws<NullReferenceException>(() => Matrix.Multiply(testMatrix1, null));
+            Matrix m1 = null;
+            Assert.Throws<NullReferenceException>(() => testMatrix1 * m1);
+        }
+
+        [Fact]
+        public void MatrixMultiplyNullMatrix()
+        {
+            Assert.Throws<NullReferenceException>(() => Matrix.Multiply(null, testMatrix1));
+            Matrix m1 = null;
+            Assert.Throws<NullReferenceException>(() => m1 * testMatrix1);
+        }
+
+        [Fact]
+        public void MatrixMultiplyMatrixScalar()
+        {
+            double scalar = 3.0;
+            Matrix m1 = Matrix.Multiply(testMatrix1, scalar);
+            Matrix m2 = new Matrix(testMatrix1); m2.Multiply(scalar);
+            Matrix m3 = testMatrix1 * scalar;
+            Matrix m4 = scalar * testMatrix1;
+            Matrix expected = new Matrix(new double[,] { { 3.0, 6.0, 9.0 }, { 12.0, 15.0, 18.0 } });
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, m2);
+            Assert.Equal(expected, m3);
+            Assert.Equal(expected, m4);
+        }
+
+        [Fact]
+        public void MatrixMultiplyNullScalar()
+        {
+            double scalar = 3.0;
+            Assert.Throws<NullReferenceException>(() => Matrix.Multiply(null, scalar));
+            Matrix m1 = null;
+            Assert.Throws<NullReferenceException>(() => m1.Multiply(scalar));
+            Assert.Throws<NullReferenceException>(() => m1 * scalar);
+        }
+        #endregion
+
+        #region Division
+        [Fact]
+        public void MatrixDivideMatrixScalar()
+        {
+            double scalar = 2.0;
+            Matrix m1 = Matrix.Divide(testMatrix1, scalar);
+            Matrix m2 = new Matrix(testMatrix1); m2.Divide(scalar);
+            Matrix m3 = testMatrix1 / scalar;
+            Matrix expected = new Matrix(new double[,] { { 0.5, 1.0, 1.5 }, { 2.0, 2.5, 3.0 } });
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, m2);
+            Assert.Equal(expected, m3);
+        }
+
+        [Fact]
+        public void MatrixDivideNullScalar()
+        {
+            double scalar = 2.0;
+            Assert.Throws<NullReferenceException>(() => Matrix.Divide(null, scalar));
+            Matrix m = null;
+            Assert.Throws<NullReferenceException>(() => m.Divide(scalar));
+            Assert.Throws<NullReferenceException>(() => m / scalar);
+        }
+        #endregion
+ 
         [Fact]
         public void MatrixEquals()
         {

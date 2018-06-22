@@ -265,6 +265,56 @@ namespace csMatrix
         {
             return MatrixArithmetic.Subtract(m, scalar);
         }
+
+        /// <summary>
+        /// Multiply two matrices together.
+        /// </summary>
+        /// <param name="m1">An n*m dimension Matrix.</param>
+        /// <param name="m2">An m*p dimension Matrix.</param>
+        /// <returns>An n*p Matrix that is the product of m1 and m2.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the number of columns in the
+        /// first Matrix don't match the number of rows in the second Matrix.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public static Matrix operator *(Matrix m1, Matrix m2)
+        {
+            return MatrixArithmetic.Multiply(m1, m2);
+        }
+
+        /// <summary>
+        /// Scalar multiplication of a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to apply multiplication to.</param>
+        /// <param name="scalar">The scalar value to multiply each element of the Matrix by.</param>
+        /// <returns>A Matrix representing the scalar multiplication of m * scalar.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix operator *(Matrix m, double scalar)
+        {
+            return MatrixArithmetic.Multiply(m, scalar);
+        }
+
+        /// <summary>
+        /// Scalar multiplication of a Matrix.
+        /// </summary>
+        /// <param name="scalar">The scalar value to multiply each element of the Matrix by.</param>
+        /// <param name="m">The Matrix to apply multiplication to.</param>
+        /// <returns>A Matrix representing the scalar multiplication of m * scalar.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix operator *(double scalar, Matrix m)
+        {
+            return MatrixArithmetic.Multiply(m, scalar);
+        }
+
+        /// <summary>
+        /// Scalar division of a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to apply division to.</param>
+        /// <param name="scalar">The scalar value to divide each element of the Matrix by.</param>
+        /// <returns>A Matrix representing the scalar division of m / scalar.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix operator /(Matrix m, double scalar)
+        {
+            return MatrixArithmetic.Divide(m, scalar);
+        }
         #endregion
 
         #region Methods
@@ -320,6 +370,26 @@ namespace csMatrix
         public void Subtract(double scalar)
         {
             MatrixMutators.Subtract(this, scalar);
+        }
+
+        /// <summary>
+        /// Scalar multiplication of this Matrix instance.
+        /// </summary>
+        /// <param name="scalar">The scalar value to multiply each element of the Matrix by.</param>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public void Multiply(double scalar)
+        {
+            MatrixMutators.Multiply(this, scalar);
+        }
+
+        /// <summary>
+        /// Scalar division of this Matrix instance.
+        /// </summary>
+        /// <param name="scalar">The scalar value to divide each element of the Matrix by.</param>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public void Divide(double scalar)
+        {
+            MatrixMutators.Divide(this, scalar);
         }
 
         /// <summary>
@@ -473,6 +543,44 @@ namespace csMatrix
         public static Matrix Subtract(Matrix m, double scalar)
         {
             return MatrixArithmetic.Subtract(m, scalar);
+        }
+
+        /// <summary>
+        /// Multiply two matrices together.
+        /// </summary>
+        /// <param name="m1">An n*m dimension Matrix.</param>
+        /// <param name="m2">An m*p dimension Matrix.</param>
+        /// <returns>An n*p Matrix that is the product of m1 and m2.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the number of columns in the
+        /// first Matrix don't match the number of rows in the second Matrix.</exception>
+        /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        public static Matrix Multiply(Matrix m1, Matrix m2)
+        {
+            return MatrixArithmetic.Multiply(m1, m2);
+        }
+
+        /// <summary>
+        /// Scalar multiplication of a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to apply multiplication to.</param>
+        /// <param name="scalar">The scalar value to multiply each element of the Matrix by.</param>
+        /// <returns>A Matrix representing the scalar multiplication of m * scalar.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Multiply(Matrix m, double scalar)
+        {
+            return MatrixArithmetic.Multiply(m, scalar);
+        }
+
+        /// <summary>
+        /// Scalar division of a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to apply division to.</param>
+        /// <param name="scalar">The scalar value to divide each element of the Matrix by.</param>
+        /// <returns>A Matrix representing the scalar division of m / scalar.</returns>
+        /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
+        public static Matrix Divide(Matrix m, double scalar)
+        {
+            return MatrixArithmetic.Divide(m, scalar);
         }
         #endregion
         #endregion
