@@ -426,21 +426,6 @@ namespace csMatrix
         public bool Equals(Matrix m)
         {
             return Arithmetic.Equals(this, m);
-            /*
-            if (object.ReferenceEquals(null, m)) return false;
-            if (ReferenceEquals(this, m)) return true;
-
-            if (!this.HasSameDimensions(m)) return false;
-
-            for (int row = 0; row < Rows; row++)
-            {
-                for (int column = 0; column < Columns; column++)
-                {
-                    if (this[row, column] != m[row, column]) return false;
-                }
-            }
-            return true;
-            */
         }
 
         /// <summary>
