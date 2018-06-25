@@ -17,6 +17,11 @@ namespace csMatrix
         #endregion
 
         #region Constructors
+        static Matrix()
+        {
+            Arithmetic = new csMatrix.Arithmetic.Basic();
+        }
+
         /// <summary>
         /// Constructor to create a new Matrix while specifying the number of rows and columns.
         /// </summary>
@@ -101,6 +106,11 @@ namespace csMatrix
         #endregion
 
         #region Properties
+        /// <summary>
+        /// The class used to perform Matrix arithmetic operations
+        /// </summary>
+        public static IMatrixArithmetic Arithmetic { get; set; }
+
         /// <summary>
         /// Indicates whether or not this Matrix row and column dimensions are equal.
         /// </summary>
@@ -191,7 +201,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix operator +(Matrix m1, Matrix m2)
         {
-            return MatrixArithmetic.Add(m1, m2);
+            return Matrix.Add(m1, m2);
         }
 
         /// <summary>
@@ -203,7 +213,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix operator +(Matrix m1, double scalar)
         {
-            return MatrixArithmetic.Add(m1, scalar);
+            return Matrix.Add(m1, scalar);
         }
 
         /// <summary>
@@ -215,7 +225,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix operator +(double scalar, Matrix m1)
         {
-            return MatrixArithmetic.Add(m1, scalar);
+            return Matrix.Add(m1, scalar);
         }
 
         /// <summary>
@@ -226,7 +236,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix operator -(Matrix m)
         {
-            return MatrixArithmetic.Negate(m);
+            return Matrix.Negate(m);
         }
 
         /// <summary>
@@ -240,7 +250,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix operator -(Matrix m1, Matrix m2)
         {
-            return MatrixArithmetic.Subtract(m1, m2);
+            return Matrix.Subtract(m1, m2);
         }
 
         /// <summary>
@@ -252,7 +262,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix operator -(Matrix m, double scalar)
         {
-            return MatrixArithmetic.Subtract(m, scalar);
+            return Matrix.Subtract(m, scalar);
         }
 
         /// <summary>
@@ -264,7 +274,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix operator -(double scalar, Matrix m)
         {
-            return MatrixArithmetic.Subtract(m, scalar);
+            return Matrix.Subtract(m, scalar);
         }
 
         /// <summary>
@@ -278,7 +288,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix operator *(Matrix m1, Matrix m2)
         {
-            return MatrixArithmetic.Multiply(m1, m2);
+            return Matrix.Multiply(m1, m2);
         }
 
         /// <summary>
@@ -290,7 +300,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix operator *(Matrix m, double scalar)
         {
-            return MatrixArithmetic.Multiply(m, scalar);
+            return Matrix.Multiply(m, scalar);
         }
 
         /// <summary>
@@ -302,7 +312,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix operator *(double scalar, Matrix m)
         {
-            return MatrixArithmetic.Multiply(m, scalar);
+            return Matrix.Multiply(m, scalar);
         }
 
         /// <summary>
@@ -314,7 +324,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix operator /(Matrix m, double scalar)
         {
-            return MatrixArithmetic.Divide(m, scalar);
+            return Matrix.Divide(m, scalar);
         }
         #endregion
 
@@ -329,7 +339,8 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public void Add(Matrix m)
         {
-            MatrixMutators.Add(this, m);
+            if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
+            Arithmetic.Add(this, m);
         }
 
         /// <summary>
@@ -339,7 +350,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Add(double scalar)
         {
-            MatrixMutators.Add(this, scalar);
+            Arithmetic.Add(this, scalar);
         }
 
         /// <summary>
@@ -348,7 +359,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Negate()
         {
-            MatrixMutators.Negate(this);
+            Arithmetic.Negate(this);
         }
 
         /// <summary>
@@ -360,7 +371,8 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public void Subtract(Matrix m)
         {
-            MatrixMutators.Subtract(this, m);
+            if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
+            Arithmetic.Subtract(this, m);
         }
 
         /// <summary>
@@ -370,7 +382,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Subtract(double scalar)
         {
-            MatrixMutators.Subtract(this, scalar);
+            Arithmetic.Subtract(this, scalar);
         }
 
         /// <summary>
@@ -380,7 +392,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Multiply(double scalar)
         {
-            MatrixMutators.Multiply(this, scalar);
+            Arithmetic.Multiply(this, scalar);
         }
 
         /// <summary>
@@ -390,7 +402,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Divide(double scalar)
         {
-            MatrixMutators.Divide(this, scalar);
+            Arithmetic.Divide(this, scalar);
         }
 
         /// <summary>
@@ -413,6 +425,8 @@ namespace csMatrix
         /// <returns>True if both matrices contain the same elements.</returns>
         public bool Equals(Matrix m)
         {
+            return Arithmetic.Equals(this, m);
+            /*
             if (object.ReferenceEquals(null, m)) return false;
             if (ReferenceEquals(this, m)) return true;
 
@@ -426,6 +440,7 @@ namespace csMatrix
                 }
             }
             return true;
+            */
         }
 
         /// <summary>
@@ -523,7 +538,10 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Add(Matrix m1, Matrix m2)
         {
-            return MatrixArithmetic.Add(m1, m2);
+            if (!m1.HasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
+            Matrix result = new Matrix(m1);
+            Arithmetic.Add(result, m2);
+            return result;
         }
 
         /// <summary>
@@ -535,7 +553,9 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Add(Matrix m, double scalar)
         {
-            return MatrixArithmetic.Add(m, scalar);
+            Matrix result = new Matrix(m);
+            Arithmetic.Add(result, scalar);
+            return result;
         }
 
         /// <summary>
@@ -546,7 +566,9 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Negate(Matrix m)
         {
-            return MatrixArithmetic.Negate(m);
+            Matrix result = new Matrix(m);
+            Arithmetic.Negate(result);
+            return result;
         }
 
         /// <summary>
@@ -560,7 +582,10 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Subtract(Matrix m1, Matrix m2)
         {
-            return MatrixArithmetic.Subtract(m1, m2);
+            if (!m1.HasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot subtract Matrices with different dimensions");
+            Matrix result = new Matrix(m1);
+            Arithmetic.Subtract(result, m2);
+            return result;
         }
 
         /// <summary>
@@ -572,7 +597,9 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Subtract(Matrix m, double scalar)
         {
-            return MatrixArithmetic.Subtract(m, scalar);
+            Matrix result = new Matrix(m);
+            Arithmetic.Subtract(result, scalar);
+            return result;
         }
 
         /// <summary>
@@ -586,7 +613,8 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Multiply(Matrix m1, Matrix m2)
         {
-            return MatrixArithmetic.Multiply(m1, m2);
+            if (m1.Rows != m2.Columns) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
+            return Arithmetic.Multiply(m1, m2);
         }
 
         /// <summary>
@@ -598,7 +626,9 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Multiply(Matrix m, double scalar)
         {
-            return MatrixArithmetic.Multiply(m, scalar);
+            Matrix result = new Matrix(m);
+            Arithmetic.Multiply(result, scalar);
+            return result;
         }
 
         /// <summary>
@@ -610,7 +640,9 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public static Matrix Divide(Matrix m, double scalar)
         {
-            return MatrixArithmetic.Divide(m, scalar);
+            Matrix result = new Matrix(m);
+            Arithmetic.Divide(result, scalar);
+            return result;
         }
         #endregion
         #endregion

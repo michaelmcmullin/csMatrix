@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace csMatrix
+﻿namespace csMatrix
 {
     /// <summary>
     /// Interface that Matrix classes use for arithmetic uses.
     /// </summary>
-    interface IMatrixArithmetic
+    public interface IMatrixArithmetic
     {
         void Add(Matrix m1, Matrix m2);
         void Add(Matrix m, double scalar);
@@ -17,5 +13,6 @@ namespace csMatrix
         Matrix Multiply(Matrix m1, Matrix m2);
         void Multiply(Matrix m, double scalar);
         void Divide(Matrix m, double scalar);
+        bool Equals(Matrix m1, Matrix m2);
     }
 }
