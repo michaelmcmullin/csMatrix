@@ -1,6 +1,6 @@
 version: 1.0.{build}
 image: Visual Studio 2017
-configuration: Debug
+configuration: Release
 environment:
   COVERALLS_REPO_TOKEN:
     secure: DdD3jNDWWc9P2mPMGRumtwvNXQ83nT1G9cnMmAy2RgCbO6tVsam2a8Fw6wnagXyO
