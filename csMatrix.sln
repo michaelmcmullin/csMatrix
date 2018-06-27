@@ -6,6 +6,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csMatrix", "csMatrix\csMatr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csMatrix.Tests", "csMatrix.Tests\csMatrix.Tests.csproj", "{8F324FE8-D639-41B7-95E5-13E1642D2F80}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{49FE9E3F-A50C-45C4-9220-99F9D63D3AE6}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
