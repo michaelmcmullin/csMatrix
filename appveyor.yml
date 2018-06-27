@@ -1,6 +1,8 @@
 version: 1.0.{build}
 image: Visual Studio 2017
-configuration: Release
+configuration:
+  - Debug
+  - Release
 environment:
   COVERALLS_REPO_TOKEN:
     secure: DdD3jNDWWc9P2mPMGRumtwvNXQ83nT1G9cnMmAy2RgCbO6tVsam2a8Fw6wnagXyO
@@ -19,7 +21,7 @@ test_script:
     nuget install coveralls.net -OutputDirectory packages -Version 0.7.0
 
 
-    .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:dotnet.exe "-targetargs:"".\packages\xunit.runner.console.2.3.1\tools\netcoreapp2.0\xunit.console.dll"" ""csMatrix.Tests\bin\$env:CONFIGURATION\netcoreapp2.0\csMatrix.Tests.dll"" -noshadow -appveyor" -filter:"+[csMatrix*]*" -oldStyle -output:opencoverCoverage.xml
+    .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:dotnet.exe "-targetargs:"".\packages\xunit.runner.console.2.3.1\tools\netcoreapp2.0\xunit.console.dll"" ""csMatrix.Tests\bin\Debug\netcoreapp2.0\csMatrix.Tests.dll"" -noshadow -appveyor" -filter:"+[csMatrix*]*" -oldStyle -output:opencoverCoverage.xml
 
     $coveralls = ".\packages\coveralls.net.0.7.0\tools\csmacnz.Coveralls.exe"
 
