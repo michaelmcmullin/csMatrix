@@ -17,9 +17,13 @@ namespace csMatrix
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Static constructor 
+        /// </summary>
         static Matrix()
         {
             Arithmetic = new csMatrix.Arithmetic.Basic();
+            RowColumnOperations = new csMatrix.RowColumnOperations.Basic();
         }
 
         /// <summary>
@@ -110,6 +114,11 @@ namespace csMatrix
         /// The class used to perform Matrix arithmetic operations
         /// </summary>
         public static IMatrixArithmetic Arithmetic { get; set; }
+
+        /// <summary>
+        /// The class used to perform Matrix arithmetic operations
+        /// </summary>
+        public static IMatrixRowColumn RowColumnOperations { get; set; }
 
         /// <summary>
         /// Indicates whether or not this Matrix row and column dimensions are equal.
@@ -486,7 +495,7 @@ namespace csMatrix
         /// <remarks>This method updates the instance it's called on.</remarks>
         public void SwapRows(int row1, int row2)
         {
-            MatrixMutators.SwapRows(this, row1, row2);
+            RowColumnOperations.SwapRows(this, row1, row2);
         }
 
         /// <summary>
@@ -498,7 +507,7 @@ namespace csMatrix
         /// <remarks>This method updates the instance it's called on.</remarks>
         public void SwapColumns(int column1, int column2)
         {
-            MatrixMutators.SwapColumns(this, column1, column2);
+            RowColumnOperations.SwapColumns(this, column1, column2);
         }
 
         /// <summary>

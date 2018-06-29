@@ -1,7 +1,7 @@
 ﻿namespace csMatrix
 {
     /// <summary>
-    /// Interface that Matrix classes use for arithmetic uses.
+    /// Interface that Matrix classes use for arithmetic operations.
     /// </summary>
     public interface IMatrixArithmetic
     {
