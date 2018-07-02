@@ -538,6 +538,18 @@ namespace csMatrix.Tests
             Matrix expected = new Matrix(new double[,] { { 1.0, 1.0 }, { 1.0, 1.0 } });
             Assert.Equal(expected, m);
         }
+
+        [Fact]
+        public void MatrixRand()
+        {
+            int seed = 5;
+            Matrix m1 = new Matrix(2, 2);
+            Matrix m2 = new Matrix(2, 2);
+            m1.Rand(seed);
+            m2.Rand(seed);
+            Assert.Equal(m1[0, 0], m2[0, 0]);
+            Assert.Equal(m1[1, 1], m2[1, 1]);
+        }
         #endregion
     }
 }

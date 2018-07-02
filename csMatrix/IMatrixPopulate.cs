@@ -12,7 +12,7 @@ namespace csMatrix
         void Number(Matrix m, double number);
         void Ones(Matrix m);
         void Zeros(Matrix m);
-        void Rand(Matrix m);
+        void Rand(Matrix m, int seed);
         void Identity(Matrix m);
     }
 }

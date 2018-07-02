@@ -524,21 +524,46 @@ namespace csMatrix
             Populate.Number(this, number);
         }
 
+        /// <summary>
+        /// Fills this Matrix with zeros, except for ones along the main diagonal.
+        /// </summary>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when Matrix is not square.</exception>
         public void Identity()
         {
             Populate.Identity(this);
         }
 
+        /// <summary>
+        /// Fills this Matrix with random numbers between 0.0 (inclusive) and 1.0 (exclusive).
+        /// </summary>
         public void Rand()
         {
-            Populate.Rand(this);
+            Populate.Rand(this, (int)DateTime.Now.Ticks & 0x0000FFFF);
         }
 
+        /// <summary>
+        /// Fills this Matrix with random numbers between 0.0 (inclusive) and 1.0 (exclusive).
+        /// </summary>
+        /// <param name="seed">The number used to calculate a starting value.</param>
+        public void Rand(int seed)
+        {
+            Populate.Rand(this, seed);
+        }
+
+        /// <summary>
+        /// Fills this Matrix with zeros.
+        /// </summary>
+        /// <remarks>A new Matrix that doesn't specify any initial values will default
+        /// to zeros. In that case, there is no need to call this method immediately
+        /// afterwards.</remarks>
         public void Zeros()
         {
             Populate.Zeros(this);
         }
 
+        /// <summary>
+        /// Fills this Matrix with ones.
+        /// </summary>
         public void Ones()
         {
             Populate.Ones(this);

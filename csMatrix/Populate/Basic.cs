@@ -18,8 +18,9 @@ namespace csMatrix.Populate
         }
 
         /// <summary>
-        /// Populates an identity Matrix
+        /// Populates an identity Matrix (all zeros, but ones along the main diagonal)
         /// </summary>
+        /// <param name="m">A square Matrix to populate with the appropriate values.</param>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when Matrix is not
         /// square.</exception>
         public void Identity(Matrix m)
@@ -43,6 +44,7 @@ namespace csMatrix.Populate
         /// <summary>
         /// Fills the Matrix with the number one.
         /// </summary>
+        /// <param name="m">The Matrix to populate with ones.</param>
         public void Ones(Matrix m)
         {
             Number(m, 1);
@@ -51,9 +53,11 @@ namespace csMatrix.Populate
         /// <summary>
         /// Fills the Matrix with random numbers between 0.0 (inclusive) and 1.0 (exclusive).
         /// </summary>
-        public void Rand(Matrix m)
+        /// <param name="m">The Matrix to populate with random numbers.</param>
+        /// <param name="seed">The number used to calculate a starting value.</param>
+        public void Rand(Matrix m, int seed)
         {
-            Random random = new Random();
+            Random random = new Random(seed);
             for (int i = 0; i < m.Size; i++)
             {
                 m[i] = random.NextDouble();
@@ -66,6 +70,7 @@ namespace csMatrix.Populate
         /// <remarks>A new Matrix that doesn't specify any initial values will default
         /// to zeros. In that case, there is no need to call this method immediately
         /// afterwards.</remarks>
+        /// <param name="m">The Matrix to populate with zeros.</param>
         public void Zeros(Matrix m)
         {
             Number(m, 0);
