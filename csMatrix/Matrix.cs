@@ -24,6 +24,7 @@ namespace csMatrix
         {
             Arithmetic = new csMatrix.Arithmetic.Basic();
             RowColumnOperations = new csMatrix.RowColumnOperations.Basic();
+            Populate = new csMatrix.Populate.Basic();
         }
 
         /// <summary>
@@ -55,8 +56,7 @@ namespace csMatrix
         /// <exception cref="ArgumentException">Thrown when the supplied dimensions are less than 1.</exception>
         public Matrix(int rows, int columns, double value) : this(rows, columns)
         {
-            for (int i = 0; i < Size; i++)
-                data[i] = value;
+            Fill(value);
         }
 
         /// <summary>
@@ -119,6 +119,11 @@ namespace csMatrix
         /// The class used to perform Matrix arithmetic operations
         /// </summary>
         public static IMatrixRowColumn RowColumnOperations { get; set; }
+
+        /// <summary>
+        /// The class used to populate a Matrix in different ways
+        /// </summary>
+        public static IMatrixPopulate Populate { get; set; }
 
         /// <summary>
         /// Indicates whether or not this Matrix row and column dimensions are equal.
@@ -516,7 +521,27 @@ namespace csMatrix
         /// <param name="number">The number to assign to every element in the Matrix.</param>
         public void Fill(double number)
         {
-            MatrixMutators.Fill(this, number);
+            Populate.Number(this, number);
+        }
+
+        public void Identity()
+        {
+            Populate.Identity(this);
+        }
+
+        public void Rand()
+        {
+            Populate.Rand(this);
+        }
+
+        public void Zeros()
+        {
+            Populate.Zeros(this);
+        }
+
+        public void Ones()
+        {
+            Populate.Ones(this);
         }
         #endregion
 
