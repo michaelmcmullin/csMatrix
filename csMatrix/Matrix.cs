@@ -344,6 +344,7 @@ namespace csMatrix
 
         #region Methods
         #region Instance Methods
+        #region Generic Element Operations
         /// <summary>
         /// Perform the given operation on each Matrix element.
         /// </summary>
@@ -377,7 +378,9 @@ namespace csMatrix
         {
             Arithmetic.ElementOperation(this, scalar, op);
         }
+        #endregion
 
+        #region Arithmetic
         /// <summary>
         /// Add a Matrix to this instance.
         /// </summary>
@@ -452,7 +455,9 @@ namespace csMatrix
         {
             Arithmetic.ElementOperation(this, scalar, (a, b) => a / b);
         }
+        #endregion
 
+        #region Equality
         /// <summary>
         /// Override the Object.Equals method to compare Matrix values.
         /// </summary>
@@ -475,7 +480,9 @@ namespace csMatrix
         {
             return Arithmetic.Equals(this, m);
         }
+        #endregion
 
+        #region Overrides
         /// <summary>
         /// Override the default hash code.
         /// </summary>
@@ -504,6 +511,7 @@ namespace csMatrix
             }
             return sb.ToString();
         }
+        #endregion
 
         /// <summary>
         /// Implement the GetEnumerator method to run against the data array.
@@ -525,6 +533,7 @@ namespace csMatrix
             return (this.Rows == m.Rows && this.Columns == m.Columns);
         }
 
+        #region Row/Column methods
         /// <summary>
         /// Swap two rows in this Matrix.
         /// </summary>
@@ -548,7 +557,9 @@ namespace csMatrix
         {
             RowColumnOperations.SwapColumns(this, column1, column2);
         }
+        #endregion
 
+        #region Populate
         /// <summary>
         /// Fills this Matrix with a given number.
         /// </summary>
@@ -602,6 +613,7 @@ namespace csMatrix
         {
             Populate.Ones(this);
         }
+        #endregion
         #endregion
 
         #region Static Methods
