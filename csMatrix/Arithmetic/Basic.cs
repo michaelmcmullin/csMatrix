@@ -7,43 +7,45 @@ namespace csMatrix.Arithmetic
     public class Basic : IMatrixArithmetic
     {
         /// <summary>
-        /// Add one Matrix to another.
+        /// Perform the given operation on each Matrix element.
         /// </summary>
-        /// <param name="m1">The Matrix to add to.</param>
-        /// <param name="m2">The second Matrix to add to the first.</param>
+        /// <param name="m">The Matrix to perform elementwise operations on.</param>
+        /// <param name="op">The operation to perform on each Matrix element.</param>
+        public void ElementOperation(Matrix m, Func<double, double> op)
+        {
+            for (int i = 0; i < m.Size; i++)
+            {
+                m[i] = op(m[i]);
+            }
+        }
+
+        /// <summary>
+        /// Perform the given operation on each Matrix element.
+        /// </summary>
+        /// <param name="m1">The first Matrix to perform elementwise operations on.</param>
+        /// <param name="m2">The second Matrix to perform elementwise operations with.</param>
+        /// <param name="op">The operation to perform on each Matrix element.</param>
         /// <remarks>Assume m1 and m2 are not null, and have the same dimensions.
         /// These checks are currently carried out in the client application.</remarks>
-        public void Add(Matrix m1, Matrix m2)
+        public void ElementOperation(Matrix m1, Matrix m2, Func<double, double, double> op)
         {
             for (int i = 0; i < m1.Size; i++)
             {
-                m1[i] += m2[i];
+                m1[i] = op(m1[i], m2[i]);
             }
         }
 
         /// <summary>
-        /// Add a number to each element in a given Matrix.
+        /// Perform the given operation on each Matrix element.
         /// </summary>
-        /// <param name="m">The Matrix to add numbers to.</param>
-        /// <param name="scalar">The number to add to each element in a Matrix.</param>
-        public void Add(Matrix m, double scalar)
+        /// <param name="m">The Matrix to perform elementwise operations on.</param>
+        /// <param name="scalar">A scalar value to use as a second operand in each operation.</param>
+        /// <param name="op">The operation to perform on each Matrix element.</param>
+        public void ElementOperation(Matrix m, double scalar, Func<double, double, double> op)
         {
             for (int i = 0; i < m.Size; i++)
             {
-                m[i] += scalar;
-            }
-        }
-
-        /// <summary>
-        /// Scalar division of a Matrix.
-        /// </summary>
-        /// <param name="m">The Matrix to apply division to.</param>
-        /// <param name="scalar">The scalar value to divide each element of the Matrix by.</param>
-        public void Divide(Matrix m, double scalar)
-        {
-            for (int i = 0; i < m.Size; i++)
-            {
-                m[i] /= scalar;
+                m[i] = op(m[i], scalar);
             }
         }
 
@@ -94,58 +96,6 @@ namespace csMatrix.Arithmetic
                 }
             }
             return result;
-        }
-
-        /// <summary>
-        /// Scalar multiplication of a Matrix.
-        /// </summary>
-        /// <param name="m">The Matrix to apply multiplication to.</param>
-        /// <param name="scalar">The scalar value to multiply each element of the Matrix by.</param>
-        public void Multiply(Matrix m, double scalar)
-        {
-            for (int i = 0; i < m.Size; i++)
-            {
-                m[i] *= scalar;
-            }
-        }
-
-        /// <summary>
-        /// Unary negative operator, negates every element in a given Matrix.
-        /// </summary>
-        /// <param name="m">The Matrix to negate.</param>
-        public void Negate(Matrix m)
-        {
-            for (int i = 0; i < m.Size; i++)
-            {
-                m[i] = -m[i];
-            }
-        }
-        /// <summary>
-        /// Subtract one Matrix from another.
-        /// </summary>
-        /// <param name="m1">The first Matrix to subtract from.</param>
-        /// <param name="m2">The second Matrix to subtract from the first.</param>
-        /// <remarks>Assume m1 and m2 are not null, and have the same dimensions.
-        /// These checks are currently carried out in the client application.</remarks>
-        public void Subtract(Matrix m1, Matrix m2)
-        {
-            for (int i = 0; i < m1.Size; i++)
-            {
-                m1[i] -= m2[i];
-            }
-        }
-
-        /// <summary>
-        /// Subtract a number from each element in a Matrix.
-        /// </summary>
-        /// <param name="m">The Matrix to subtract the number from.</param>
-        /// <param name="scalar">The number to subtract from each element in the Matrix.</param>
-        public void Subtract(Matrix m, double scalar)
-        {
-            for (int i = 0; i < m.Size; i++)
-            {
-                m[i] -= scalar;
-            }
         }
     }
 }

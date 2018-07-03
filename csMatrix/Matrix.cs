@@ -345,6 +345,40 @@ namespace csMatrix
         #region Methods
         #region Instance Methods
         /// <summary>
+        /// Perform the given operation on each Matrix element.
+        /// </summary>
+        /// <param name="op">The operation to perform on each Matrix element.</param>
+        public void ElementOperation(Func<double, double> op)
+        {
+            Arithmetic.ElementOperation(this, op);
+        }
+
+        /// <summary>
+        /// Perform the given operation on each Matrix element, using corresponding elements
+        /// from a second Matrix.
+        /// </summary>
+        /// <param name="m">A second Matrix with the same dimensions as this one, whose elements
+        /// will be used as the second parameter in each elementwise operation.</param>
+        /// <param name="op">The operation to perform on each Matrix element.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        public void ElementOperation(Matrix m, Func<double, double, double> op)
+        {
+            if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
+            Arithmetic.ElementOperation(this, m, op);
+        }
+
+        /// <summary>
+        /// Perform the given operation on each Matrix element.
+        /// </summary>
+        /// <param name="scalar">A scalar value to use as a second operand in each operation.</param>
+        /// <param name="op">The operation to perform on each Matrix element.</param>
+        public void ElementOperation(double scalar, Func<double, double, double> op)
+        {
+            Arithmetic.ElementOperation(this, scalar, op);
+        }
+
+        /// <summary>
         /// Add a Matrix to this instance.
         /// </summary>
         /// <param name="m">The Matrix to add to this one.</param>
@@ -354,7 +388,7 @@ namespace csMatrix
         public void Add(Matrix m)
         {
             if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
-            Arithmetic.Add(this, m);
+            Arithmetic.ElementOperation(this, m, (a, b) => a + b);
         }
 
         /// <summary>
@@ -364,7 +398,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Add(double scalar)
         {
-            Arithmetic.Add(this, scalar);
+            Arithmetic.ElementOperation(this, scalar, (a, b) => a + b);
         }
 
         /// <summary>
@@ -373,7 +407,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Negate()
         {
-            Arithmetic.Negate(this);
+            Arithmetic.ElementOperation(this, a => -a);
         }
 
         /// <summary>
@@ -386,7 +420,7 @@ namespace csMatrix
         public void Subtract(Matrix m)
         {
             if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
-            Arithmetic.Subtract(this, m);
+            Arithmetic.ElementOperation(this, m, (a, b) => a - b);
         }
 
         /// <summary>
@@ -396,7 +430,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Subtract(double scalar)
         {
-            Arithmetic.Subtract(this, scalar);
+            Arithmetic.ElementOperation(this, scalar, (a, b) => a - b);
         }
 
         /// <summary>
@@ -406,7 +440,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Multiply(double scalar)
         {
-            Arithmetic.Multiply(this, scalar);
+            Arithmetic.ElementOperation(this, scalar, (a, b) => a * b);
         }
 
         /// <summary>
@@ -416,7 +450,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
         public void Divide(double scalar)
         {
-            Arithmetic.Divide(this, scalar);
+            Arithmetic.ElementOperation(this, scalar, (a, b) => a / b);
         }
 
         /// <summary>
@@ -572,6 +606,54 @@ namespace csMatrix
 
         #region Static Methods
         /// <summary>
+        /// Perform the given operation on each Matrix element.
+        /// </summary>
+        /// <param name="m">The Matrix to perform the operation on (remains unchanged).</param>
+        /// <param name="scalar">A scalar value to use as a second operand in each operation.</param>
+        /// <param name="op">The operation to perform on each Matrix element.</param>
+        /// <returns>A new Matrix populated with the result of applying the given operation to
+        /// Matrix m.</returns>
+        public static Matrix ElementOperation(Matrix m, Func<double, double> op)
+        {
+            Matrix result = new Matrix(m);
+            Arithmetic.ElementOperation(result, op);
+            return result;
+        }
+
+        /// <summary>
+        /// Perform the given operation on each Matrix element, using corresponding elements
+        /// from a second Matrix.
+        /// </summary>
+        /// <param name="m1">The first Matrix to use within the given operation.</param>
+        /// <param name="m2">A second Matrix with the same dimensions as the first, whose elements
+        /// will be used as the second parameter in each elementwise operation.</param>
+        /// <param name="op">The operation to perform on each Matrix element.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
+        /// different dimensions.</exception>
+        public static Matrix ElementOperation(Matrix m1, Matrix m2, Func<double, double, double> op)
+        {
+            if (!m1.HasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot operate Matrices with different dimensions");
+            Matrix result = new Matrix(m1);
+            Arithmetic.ElementOperation(result, m2, op);
+            return result;
+        }
+
+        /// <summary>
+        /// Perform the given operation on each Matrix element.
+        /// </summary>
+        /// <param name="m">The Matrix to perform the operation on (remains unchanged).</param>
+        /// <param name="scalar">A scalar value to use as a second operand in each operation.</param>
+        /// <param name="op">The operation to perform on each Matrix element.</param>
+        /// <returns>A new Matrix populated with the result of applying the given operation to
+        /// Matrix m.</returns>
+        public static Matrix ElementOperation(Matrix m, double scalar, Func<double, double, double> op)
+        {
+            Matrix result = new Matrix(m);
+            Arithmetic.ElementOperation(result, scalar, op);
+            return result;
+        }
+
+        /// <summary>
         /// Add two matrices together.
         /// </summary>
         /// <param name="m1">The first Matrix to add.</param>
@@ -584,7 +666,7 @@ namespace csMatrix
         {
             if (!m1.HasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
             Matrix result = new Matrix(m1);
-            Arithmetic.Add(result, m2);
+            Arithmetic.ElementOperation(result, m2, (a, b) => a + b);
             return result;
         }
 
@@ -598,7 +680,7 @@ namespace csMatrix
         public static Matrix Add(Matrix m, double scalar)
         {
             Matrix result = new Matrix(m);
-            Arithmetic.Add(result, scalar);
+            Arithmetic.ElementOperation(result, scalar, (a, b) => a + b);
             return result;
         }
 
@@ -611,7 +693,7 @@ namespace csMatrix
         public static Matrix Negate(Matrix m)
         {
             Matrix result = new Matrix(m);
-            Arithmetic.Negate(result);
+            Arithmetic.ElementOperation(result, a => -a);
             return result;
         }
 
@@ -628,7 +710,7 @@ namespace csMatrix
         {
             if (!m1.HasSameDimensions(m2)) throw new InvalidMatrixDimensionsException("Cannot subtract Matrices with different dimensions");
             Matrix result = new Matrix(m1);
-            Arithmetic.Subtract(result, m2);
+            Arithmetic.ElementOperation(result, m2, (a, b) => a - b);
             return result;
         }
 
@@ -642,7 +724,7 @@ namespace csMatrix
         public static Matrix Subtract(Matrix m, double scalar)
         {
             Matrix result = new Matrix(m);
-            Arithmetic.Subtract(result, scalar);
+            Arithmetic.ElementOperation(result, scalar, (a, b) => a - b);
             return result;
         }
 
@@ -671,7 +753,7 @@ namespace csMatrix
         public static Matrix Multiply(Matrix m, double scalar)
         {
             Matrix result = new Matrix(m);
-            Arithmetic.Multiply(result, scalar);
+            Arithmetic.ElementOperation(result, scalar, (a, b) => a * b);
             return result;
         }
 
@@ -685,7 +767,7 @@ namespace csMatrix
         public static Matrix Divide(Matrix m, double scalar)
         {
             Matrix result = new Matrix(m);
-            Arithmetic.Divide(result, scalar);
+            Arithmetic.ElementOperation(result, scalar, (a, b) => a / b);
             return result;
         }
         #endregion
