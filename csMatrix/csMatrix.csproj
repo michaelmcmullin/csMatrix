@@ -11,7 +11,7 @@
     <Company />
     <PackageTags>matrix</PackageTags>
     <NeutralLanguage></NeutralLanguage>
-    <PackageIconUrl>https://github.com/michaelmcmullin/csMatrix/blob/f80ecf76b21c964c14f814a270573e52b81bfbad/Assets/csMatrix_64x64.png</PackageIconUrl>
+    <PackageIconUrl>https://github.com/michaelmcmullin/csMatrix/blob/2d3bfb3c6b9ca92bf4641594361763cb425624d8/Assets/csMatrix_64x64.png</PackageIconUrl>
   </PropertyGroup>
 
 </Project>
