@@ -186,7 +186,7 @@ namespace csMatrix.Tests
             Matrix m1 = new Matrix(2, 2);
             m1.Fill(3.0);
             Matrix m2 = Matrix.ElementOperation(m1, 2.0, (a, b) => Math.Pow(a, b));
-            m1.ElementOperation(2.0, (a,b) => Math.Pow(a, b));
+            m1.ElementOperation(2.0, (a, b) => Math.Pow(a, b));
             double expectedElement = Math.Pow(3.0, 2.0);
             Matrix expected = new Matrix(2, 2, expectedElement);
             Assert.True(expected == m1);
@@ -460,7 +460,8 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => m / scalar);
         }
         #endregion
- 
+
+        #region Equality
         [Fact]
         public void MatrixEquals()
         {
@@ -480,7 +481,9 @@ namespace csMatrix.Tests
             Assert.False(m1 == m2);
             Assert.True(m1 != m2);
         }
+        #endregion
 
+        #region Row/Column operations
         [Theory]
         [InlineData(1, 2)]
         [InlineData(2, 1)]
@@ -489,7 +492,7 @@ namespace csMatrix.Tests
         {
             Matrix m = new Matrix(rows, columns);
             int size = 0;
-            foreach(double element in m)
+            foreach (double element in m)
             {
                 size++;
             }
@@ -547,6 +550,57 @@ namespace csMatrix.Tests
         }
 
         [Fact]
+        public void MatrixTransposeInMemory()
+        {
+            Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } });
+            Matrix m2 = new Matrix(m1);
+            int rows = m1.Rows;
+            int columns = m1.Columns;
+            int size = m1.Size;
+
+            m1.Transpose(true);
+            Assert.Equal(columns, m1.Rows);
+            Assert.Equal(rows, m1.Columns);
+            Assert.Equal(size, m1.Size);
+            Assert.Equal(4.0, m1[0, 1]);
+            Assert.False(m1 == m2);
+
+            m2.IsTransposed = true;
+            Assert.True(m1 == m2);
+        }
+
+        [Fact]
+        public void MatrixTransposeInMemoryArithmetic()
+        {
+            Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0 }, { 3.0, 4.0 } });
+            Matrix m2 = new Matrix(new double[,] { { 1.0, 3.0 }, { 2.0, 4.0 } });
+            Matrix m3 = new Matrix(m1);
+            Matrix m4 = new Matrix(new double[,] { { 2.0, 5.0 }, { 5.0, 8.0 } });
+            m1.Transpose(true);
+
+            Assert.True(m1 == m2);
+            m1.Add(m2);
+            Assert.True(m1 == m4);
+        }
+
+        [Fact]
+        public void MatrixTransposeInMemoryIndexing()
+        {
+            Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0 }, { 3.0, 4.0 }, { 5.0, 6.0 } });
+            Matrix m2 = new Matrix(new double[,] { { 1.0, 3.0, 5.0 }, { 2.0, 4.0, 6.0 } });
+            m1.Transpose(true);
+            Assert.True(m1 == m2);
+            Assert.Equal(1.0, m1[0, 0]);
+            Assert.Equal(2.0, m1[1, 0]);
+            Assert.Equal(3.0, m1[0, 1]);
+            Assert.Equal(4.0, m1[1, 1]);
+            Assert.Equal(5.0, m1[0, 2]);
+            Assert.Equal(6.0, m1[1, 2]);
+        }
+        #endregion
+
+        #region Populate Matrix
+        [Fact]
         public void MatrixFillDouble()
         {
             Matrix m = new Matrix(2, 2);
@@ -601,6 +655,7 @@ namespace csMatrix.Tests
             Assert.Equal(m1[0, 0], m2[0, 0]);
             Assert.Equal(m1[1, 1], m2[1, 1]);
         }
+        #endregion
         #endregion
     }
 }

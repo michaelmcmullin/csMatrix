@@ -14,6 +14,16 @@ namespace csMatrix
         /// Storage array for the Matrix data.
         /// </summary>
         private double[] data;
+
+        /// <summary>
+        /// The number of rows in this Matrix, before transposing.
+        /// </summary>
+        private int rows;
+
+        /// <summary>
+        /// The number of columns in this Matrix, before transposing.
+        /// </summary>
+        private int columns;
         #endregion
 
         #region Constructors
@@ -44,6 +54,7 @@ namespace csMatrix
             Size = rows * columns;
             Dimensions = new int[] { Rows, Columns };
             data = new double[Size];
+            IsTransposed = false;
         }
 
         /// <summary>
@@ -139,17 +150,30 @@ namespace csMatrix
         /// <summary>
         /// Get the number of rows in this Matrix.
         /// </summary>
-        public int Rows { get; }
+        public int Rows
+        {
+            get { return IsTransposed ? columns : rows; }
+            private set { rows = value; }
+        }
 
         /// <summary>
         /// Get the number of columns in this Matrix.
         /// </summary>
-        public int Columns { get; }
+        public int Columns
+        {
+            get { return IsTransposed ? rows : columns; }
+            private set { columns = value; }
+        }
 
         /// <summary>
         /// Get the total number of elements in this Matrix.
         /// </summary>
         public int Size { get; }
+
+        /// <summary>
+        /// Indicates whether this Matrix is transposed (i.e. rows and columns are swapped)
+        /// </summary>
+        public bool IsTransposed { get; set; }
         #endregion
 
         #region Indexers
@@ -162,8 +186,14 @@ namespace csMatrix
         /// <remarks>Matrices are zero-indexed.</remarks>
         public double this[int row, int column]
         {
-            get { return data[(row * Columns) + column]; }
-            set { data[(row * Columns) + column] = value; }
+            get
+            {
+                return data[GetIndex(row, column)];
+            }
+            set
+            {
+                data[GetIndex(row, column)] = value;
+            }
         }
 
         /// <summary>
@@ -533,6 +563,25 @@ namespace csMatrix
             return (this.Rows == m.Rows && this.Columns == m.Columns);
         }
 
+        /// <summary>
+        /// Get the direct index of a given row and column, taking into account
+        /// in-memory transposition.
+        /// </summary>
+        /// <param name="row">The row position.</param>
+        /// <param name="column">The column position.</param>
+        /// <returns>A single index to access the given row and column.</returns>
+        protected int GetIndex(int row, int column)
+        {
+            if (IsTransposed)
+            {
+                return (column * Rows) + row;
+            }
+            else
+            {
+                return (row * Columns) + column;
+            }
+        }
+
         #region Row/Column methods
         /// <summary>
         /// Swap two rows in this Matrix.
@@ -556,6 +605,23 @@ namespace csMatrix
         public void SwapColumns(int column1, int column2)
         {
             RowColumnOperations.SwapColumns(this, column1, column2);
+        }
+
+        /// <summary>
+        /// Transpose this Matrix, either permanently, or in-memory (i.e., the data array doesn't
+        /// change, but accessing it does).
+        /// </summary>
+        /// <param name="InMemory">Indicates whether the Matrix should be transposed in-memory.</param>
+        public void Transpose(bool InMemory)
+        {
+            if (InMemory)
+            {
+                IsTransposed = !IsTransposed;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
         #endregion
 
