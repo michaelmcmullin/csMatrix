@@ -42,15 +42,6 @@ namespace csMatrix.Populate
         }
 
         /// <summary>
-        /// Fills the Matrix with the number one.
-        /// </summary>
-        /// <param name="m">The Matrix to populate with ones.</param>
-        public void Ones(Matrix m)
-        {
-            Number(m, 1);
-        }
-
-        /// <summary>
         /// Fills the Matrix with random numbers between 0.0 (inclusive) and 1.0 (exclusive).
         /// </summary>
         /// <param name="m">The Matrix to populate with random numbers.</param>
@@ -62,18 +53,6 @@ namespace csMatrix.Populate
             {
                 m[i] = random.NextDouble();
             }
-        }
-
-        /// <summary>
-        /// Fills the Matrix with zeros.
-        /// </summary>
-        /// <remarks>A new Matrix that doesn't specify any initial values will default
-        /// to zeros. In that case, there is no need to call this method immediately
-        /// afterwards.</remarks>
-        /// <param name="m">The Matrix to populate with zeros.</param>
-        public void Zeros(Matrix m)
-        {
-            Number(m, 0);
         }
     }
 }

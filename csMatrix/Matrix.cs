@@ -603,7 +603,7 @@ namespace csMatrix
         /// afterwards.</remarks>
         public void Zeros()
         {
-            Populate.Zeros(this);
+            Populate.Number(this, 0.0);
         }
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace csMatrix
         /// </summary>
         public void Ones()
         {
-            Populate.Ones(this);
+            Populate.Number(this, 1.0);
         }
         #endregion
         #endregion
