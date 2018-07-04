@@ -1,4 +1,4 @@
-![alt text](https://github.com/michaelmcmullin/csMatrix/blob/869c86e8c38052593dfda48ed6e9d8b56a1927e2/Assets/csMatrix_128x128.png "csMatrix Icon")
+![alt text](https://github.com/michaelmcmullin/csMatrix/blob/7c5510a06fadec5d3024b67048d9123edc7010fe/Assets/csMatrix_128x128.png "csMatrix Icon")
 
 # csMatrix
 
