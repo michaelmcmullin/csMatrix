@@ -206,8 +206,8 @@ namespace csMatrix
         /// loop.</remarks>
         public double this[int index]
         {
-            get { return data[index]; }
-            set { data[index] = value; }
+            get { return data[GetTransposedIndex(index)]; }
+            set { data[GetTransposedIndex(index)] = value; }
         }
         #endregion
 
@@ -579,6 +579,29 @@ namespace csMatrix
             else
             {
                 return (row * Columns) + column;
+            }
+        }
+
+        /// <summary>
+        /// Get the direct index of an element taking into account in-memory transposition.
+        /// </summary>
+        /// <param name="index">The index of the requested element for a non-transposed Matrix</param>
+        /// <returns>A single index to access the correct element.</returns>
+        /// <remarks>When accessing a Matrix sequentially, it runs through the columns of each
+        /// row in turn. However, when the Matrix has been transposed in-memory, the same index
+        /// will run through the rows of each column instead. This method is used by the indexer
+        /// to ensure that all Matrices are accessed row by row.</remarks>
+        protected int GetTransposedIndex(int index)
+        {
+            if (IsTransposed)
+            {
+                int row = index / Columns;
+                int column = index % Columns;
+                return (column * Rows) + row;
+            }
+            else
+            {
+                return index;
             }
         }
 

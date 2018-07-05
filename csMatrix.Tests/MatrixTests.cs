@@ -165,6 +165,71 @@ namespace csMatrix.Tests
         }
         #endregion
 
+        #region Indexers
+        [Fact]
+        public void MatrixIndexRowColumn()
+        {
+            Assert.Equal(1.0, testMatrix1[0, 0]);
+            Assert.Equal(2.0, testMatrix1[0, 1]);
+            Assert.Equal(3.0, testMatrix1[0, 2]);
+            Assert.Equal(4.0, testMatrix1[1, 0]);
+            Assert.Equal(5.0, testMatrix1[1, 1]);
+            Assert.Equal(6.0, testMatrix1[1, 2]);
+        }
+
+        [Fact]
+        public void MatrixIndexSingle()
+        {
+            Assert.Equal(1.0, testMatrix1[0]);
+            Assert.Equal(2.0, testMatrix1[1]);
+            Assert.Equal(3.0, testMatrix1[2]);
+            Assert.Equal(4.0, testMatrix1[3]);
+            Assert.Equal(5.0, testMatrix1[4]);
+            Assert.Equal(6.0, testMatrix1[5]);
+        }
+
+        [Fact]
+        public void MatrixIndexRowColumnTransposeInMemory()
+        {
+            Matrix m = new Matrix(testMatrix1);
+            m.Transpose(true);
+            Assert.Equal(1.0, m[0, 0]);
+            Assert.Equal(2.0, m[1, 0]);
+            Assert.Equal(3.0, m[2, 0]);
+            Assert.Equal(4.0, m[0, 1]);
+            Assert.Equal(5.0, m[1, 1]);
+            Assert.Equal(6.0, m[2, 1]);
+        }
+
+        [Fact]
+        public void MatrixIndexSingleTransposeInMemory()
+        {
+            Matrix m = new Matrix(testMatrix1);
+            m.Transpose(true);
+            Assert.Equal(1.0, m[0]);
+            Assert.Equal(4.0, m[1]);
+            Assert.Equal(2.0, m[2]);
+            Assert.Equal(5.0, m[3]);
+            Assert.Equal(3.0, m[4]);
+            Assert.Equal(6.0, m[5]);
+        }
+
+        [Fact]
+        public void MatrixIndexRowColumnIndexOutOfRangeException()
+        {
+            int row = testMatrix1.Rows;
+            int columns = testMatrix1.Columns;
+            Assert.Throws<IndexOutOfRangeException>(() => testMatrix1[row, columns]);
+        }
+
+        [Fact]
+        public void MatrixIndexSingleIndexOutOfRangeException()
+        {
+            int size = testMatrix1.Size;
+            Assert.Throws<IndexOutOfRangeException>(() => testMatrix1[size]);
+        }
+        #endregion
+
         #region Methods
         #region Element Operations
         [Fact]
@@ -575,7 +640,7 @@ namespace csMatrix.Tests
             Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0 }, { 3.0, 4.0 } });
             Matrix m2 = new Matrix(new double[,] { { 1.0, 3.0 }, { 2.0, 4.0 } });
             Matrix m3 = new Matrix(m1);
-            Matrix m4 = new Matrix(new double[,] { { 2.0, 5.0 }, { 5.0, 8.0 } });
+            Matrix m4 = new Matrix(new double[,] { { 2.0, 6.0 }, { 4.0, 8.0 } });
             m1.Transpose(true);
 
             Assert.True(m1 == m2);
@@ -590,12 +655,12 @@ namespace csMatrix.Tests
             Matrix m2 = new Matrix(new double[,] { { 1.0, 3.0, 5.0 }, { 2.0, 4.0, 6.0 } });
             m1.Transpose(true);
             Assert.True(m1 == m2);
-            Assert.Equal(1.0, m1[0, 0]);
-            Assert.Equal(2.0, m1[1, 0]);
-            Assert.Equal(3.0, m1[0, 1]);
-            Assert.Equal(4.0, m1[1, 1]);
-            Assert.Equal(5.0, m1[0, 2]);
-            Assert.Equal(6.0, m1[1, 2]);
+            Assert.Equal(1.0, m1[0, 0]); Assert.Equal(1.0, m1[0]);
+            Assert.Equal(2.0, m1[1, 0]); Assert.Equal(2.0, m1[3]);
+            Assert.Equal(3.0, m1[0, 1]); Assert.Equal(3.0, m1[1]);
+            Assert.Equal(4.0, m1[1, 1]); Assert.Equal(4.0, m1[4]);
+            Assert.Equal(5.0, m1[0, 2]); Assert.Equal(5.0, m1[2]);
+            Assert.Equal(6.0, m1[1, 2]); Assert.Equal(6.0, m1[5]);
         }
         #endregion
 
