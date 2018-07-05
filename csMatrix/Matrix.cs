@@ -379,9 +379,11 @@ namespace csMatrix
         /// Perform the given operation on each Matrix element.
         /// </summary>
         /// <param name="op">The operation to perform on each Matrix element.</param>
-        public void ElementOperation(Func<double, double> op)
+        /// <returns>A reference to this Matrix instance.</returns>
+        public Matrix ElementOperation(Func<double, double> op)
         {
             Arithmetic.ElementOperation(this, op);
+            return this;
         }
 
         /// <summary>
@@ -391,12 +393,14 @@ namespace csMatrix
         /// <param name="m">A second Matrix with the same dimensions as this one, whose elements
         /// will be used as the second parameter in each elementwise operation.</param>
         /// <param name="op">The operation to perform on each Matrix element.</param>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
         /// different dimensions.</exception>
-        public void ElementOperation(Matrix m, Func<double, double, double> op)
+        public Matrix ElementOperation(Matrix m, Func<double, double, double> op)
         {
             if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
             Arithmetic.ElementOperation(this, m, op);
+            return this;
         }
 
         /// <summary>
@@ -404,9 +408,11 @@ namespace csMatrix
         /// </summary>
         /// <param name="scalar">A scalar value to use as a second operand in each operation.</param>
         /// <param name="op">The operation to perform on each Matrix element.</param>
-        public void ElementOperation(double scalar, Func<double, double, double> op)
+        /// <returns>A reference to this Matrix instance.</returns>
+        public Matrix ElementOperation(double scalar, Func<double, double, double> op)
         {
             Arithmetic.ElementOperation(this, scalar, op);
+            return this;
         }
         #endregion
 
@@ -415,75 +421,89 @@ namespace csMatrix
         /// Add a Matrix to this instance.
         /// </summary>
         /// <param name="m">The Matrix to add to this one.</param>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
         /// different dimensions.</exception>
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
-        public void Add(Matrix m)
+        public Matrix Add(Matrix m)
         {
             if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
             Arithmetic.ElementOperation(this, m, (a, b) => a + b);
+            return this;
         }
 
         /// <summary>
         /// Add a number to each element in this Matrix.
         /// </summary>
         /// <param name="scalar">The number to add to each element in a Matrix.</param>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
-        public void Add(double scalar)
+        public Matrix Add(double scalar)
         {
             Arithmetic.ElementOperation(this, scalar, (a, b) => a + b);
+            return this;
         }
 
         /// <summary>
         /// Unary negative operator, negates every element in this Matrix.
         /// </summary>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
-        public void Negate()
+        public Matrix Negate()
         {
             Arithmetic.ElementOperation(this, a => -a);
+            return this;
         }
 
         /// <summary>
         /// Subtract a Matrix from this instance.
         /// </summary>
         /// <param name="m">The Matrix to subtract from this instance.</param>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
         /// different dimensions.</exception>
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
-        public void Subtract(Matrix m)
+        public Matrix Subtract(Matrix m)
         {
             if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
             Arithmetic.ElementOperation(this, m, (a, b) => a - b);
+            return this;
         }
 
         /// <summary>
         /// Subtract a number from each element in this Matrix.
         /// </summary>
         /// <param name="scalar">The number to subtract from each element in this Matrix.</param>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
-        public void Subtract(double scalar)
+        public Matrix Subtract(double scalar)
         {
             Arithmetic.ElementOperation(this, scalar, (a, b) => a - b);
+            return this;
         }
 
         /// <summary>
         /// Scalar multiplication of this Matrix instance.
         /// </summary>
         /// <param name="scalar">The scalar value to multiply each element of the Matrix by.</param>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
-        public void Multiply(double scalar)
+        public Matrix Multiply(double scalar)
         {
             Arithmetic.ElementOperation(this, scalar, (a, b) => a * b);
+            return this;
         }
 
         /// <summary>
         /// Scalar division of this Matrix instance.
         /// </summary>
         /// <param name="scalar">The scalar value to divide each element of the Matrix by.</param>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
-        public void Divide(double scalar)
+        public Matrix Divide(double scalar)
         {
             Arithmetic.ElementOperation(this, scalar, (a, b) => a / b);
+            return this;
         }
         #endregion
 
@@ -611,11 +631,13 @@ namespace csMatrix
         /// </summary>
         /// <param name="row1">The first row to swap.</param>
         /// <param name="row2">The second row to swap.</param>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="IndexOutOfRangeException">Thrown when called with non-existent rows.</exception>
         /// <remarks>This method updates the instance it's called on.</remarks>
-        public void SwapRows(int row1, int row2)
+        public Matrix SwapRows(int row1, int row2)
         {
             RowColumnOperations.SwapRows(this, row1, row2);
+            return this;
         }
 
         /// <summary>
@@ -623,11 +645,13 @@ namespace csMatrix
         /// </summary>
         /// <param name="column1">The first column to swap.</param>
         /// <param name="column2">The second column to swap.</param>
+        /// <returns>A reference to this Matrix instance.</returns>
         /// <exception cref="IndexOutOfRangeException">Thrown when called with non-existent columns.</exception>
         /// <remarks>This method updates the instance it's called on.</remarks>
-        public void SwapColumns(int column1, int column2)
+        public Matrix SwapColumns(int column1, int column2)
         {
             RowColumnOperations.SwapColumns(this, column1, column2);
+            return this;
         }
 
         /// <summary>
@@ -635,7 +659,8 @@ namespace csMatrix
         /// change, but accessing it does).
         /// </summary>
         /// <param name="InMemory">Indicates whether the Matrix should be transposed in-memory.</param>
-        public void Transpose(bool InMemory)
+        /// <returns>A reference to this Matrix instance.</returns>
+        public Matrix Transpose(bool InMemory)
         {
             if (InMemory)
             {
@@ -645,6 +670,7 @@ namespace csMatrix
             {
                 throw new NotImplementedException();
             }
+            return this;
         }
         #endregion
 
@@ -653,35 +679,43 @@ namespace csMatrix
         /// Fills this Matrix with a given number.
         /// </summary>
         /// <param name="number">The number to assign to every element in the Matrix.</param>
-        public void Fill(double number)
+        /// <returns>A reference to this Matrix instance.</returns>
+        public Matrix Fill(double number)
         {
             Populate.Number(this, number);
+            return this;
         }
 
         /// <summary>
         /// Fills this Matrix with zeros, except for ones along the main diagonal.
         /// </summary>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when Matrix is not square.</exception>
-        public void Identity()
+        /// <returns>A reference to this Matrix instance.</returns>
+        public Matrix Identity()
         {
             Populate.Identity(this);
+            return this;
         }
 
         /// <summary>
         /// Fills this Matrix with random numbers between 0.0 (inclusive) and 1.0 (exclusive).
         /// </summary>
-        public void Rand()
+        /// <returns>A reference to this Matrix instance.</returns>
+        public Matrix Rand()
         {
             Populate.Rand(this, (int)DateTime.Now.Ticks & 0x0000FFFF);
+            return this;
         }
 
         /// <summary>
         /// Fills this Matrix with random numbers between 0.0 (inclusive) and 1.0 (exclusive).
         /// </summary>
         /// <param name="seed">The number used to calculate a starting value.</param>
-        public void Rand(int seed)
+        /// <returns>A reference to this Matrix instance.</returns>
+        public Matrix Rand(int seed)
         {
             Populate.Rand(this, seed);
+            return this;
         }
 
         /// <summary>
@@ -690,17 +724,21 @@ namespace csMatrix
         /// <remarks>A new Matrix that doesn't specify any initial values will default
         /// to zeros. In that case, there is no need to call this method immediately
         /// afterwards.</remarks>
-        public void Zeros()
+        /// <returns>A reference to this Matrix instance.</returns>
+        public Matrix Zeros()
         {
             Populate.Number(this, 0.0);
+            return this;
         }
 
         /// <summary>
         /// Fills this Matrix with ones.
         /// </summary>
-        public void Ones()
+        /// <returns>A reference to this Matrix instance.</returns>
+        public Matrix Ones()
         {
             Populate.Number(this, 1.0);
+            return this;
         }
         #endregion
         #endregion
