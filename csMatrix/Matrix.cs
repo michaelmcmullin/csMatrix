@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace csMatrix
@@ -579,14 +580,61 @@ namespace csMatrix
         }
         #endregion
 
+        #region Enumerators
         /// <summary>
         /// Implement the GetEnumerator method to run against the data array.
         /// </summary>
-        /// <returns>Returns an enumerator for the data array.</returns>
+        /// <returns>Returns an enumerator for this Matrix.</returns>
         public IEnumerator GetEnumerator()
         {
-            return data.GetEnumerator();
+            return new MatrixEnumerator(this);
         }
+
+        /// <summary>
+        /// An enumerator class for Matrix objects.
+        /// </summary>
+        public class MatrixEnumerator : IEnumerator<double>
+        {
+            private int currentIndex = -1;
+            private Matrix currentMatrix;
+
+            public MatrixEnumerator(Matrix m)
+            {
+                currentMatrix = m;
+            }
+
+            public double Current
+            {
+                get
+                {
+                    if (currentIndex >= 0 && currentIndex < currentMatrix.Size)
+                        return currentMatrix[currentIndex];
+                    else
+                        throw new IndexOutOfRangeException();
+                }
+            }
+
+            object IEnumerator.Current
+            {
+                get { return Current; }
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                currentIndex++;
+                return currentIndex < currentMatrix.Size; 
+            }
+
+            public void Reset()
+            {
+                currentIndex = -1;
+            }
+        }
+        #endregion
 
         /// <summary>
         /// Checks if this Matrix has the same dimensions as another.

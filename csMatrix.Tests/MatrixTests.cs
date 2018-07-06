@@ -165,7 +165,7 @@ namespace csMatrix.Tests
         }
         #endregion
 
-        #region Indexers
+        #region Indexers / Enumerators
         [Fact]
         public void MatrixIndexRowColumn()
         {
@@ -227,6 +227,29 @@ namespace csMatrix.Tests
         {
             int size = testMatrix1.Size;
             Assert.Throws<IndexOutOfRangeException>(() => testMatrix1[size]);
+        }
+
+        [Fact]
+        public void MatrixEnumerator()
+        {
+            double start = 1.0;
+            foreach (double d in testMatrix1)
+            {
+                Assert.Equal(start++, d);
+            }
+        }
+
+        [Fact]
+        public void MatrixEnumeratorTranspose()
+        {
+            double start = 1.0;
+            Matrix m = new Matrix(new double[,] { { 1.0, 3.0 }, { 2.0, 4.0 } });
+            m.Transpose(true);
+
+            foreach (double d in m)
+            {
+                Assert.Equal(start++, d);
+            }
         }
         #endregion
 
