@@ -425,6 +425,14 @@ namespace csMatrix
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
         /// different dimensions.</exception>
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        /// <remarks><para>When using the fluent syntax to add a Matrix to itself repeatedly, be aware
+        /// that the value will update after each call to this method:</para>
+        /// <code>myMatrix.Add(myMatrix).Add(myMatrix);</code>
+        /// <para>At first glance, this might look like it's the equivalent of <c>myMatrix * 3.0</c>.
+        /// In fact, it's more like <c>myMatrix * 4.0</c>, because after the first <c>Add</c> method,
+        /// <c>myMatrix</c> has now doubled. The second call is adding this updated value to itself,
+        /// not the original value of <c>myMatrix</c>.</para>
+        /// </remarks>
         public Matrix Add(Matrix m)
         {
             if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
@@ -463,6 +471,14 @@ namespace csMatrix
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when both matrices have
         /// different dimensions.</exception>
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
+        /// <remarks><para>When using the fluent syntax to subtract a Matrix from itself repeatedly, be aware
+        /// that the value will update after each call to this method:</para>
+        /// <code>myMatrix.Subtract(myMatrix).Subtract(myMatrix);</code>
+        /// <para>At first glance, this might look like it's the equivalent of <c>-myMatrix</c>.
+        /// In fact, it will be a zero Matrix, because after the first <c>Subtract</c> method,
+        /// <c>myMatrix</c> is now zero. The second call is subtracting this updated value from itself,
+        /// not the original value of <c>myMatrix</c>.</para>
+        /// </remarks>
         public Matrix Subtract(Matrix m)
         {
             if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");

@@ -287,12 +287,32 @@ namespace csMatrix.Tests
         public void MatrixAddMatrixMatrix()
         {
             Matrix m1 = Matrix.Add(testMatrix1, testMatrix2);
-            Matrix m2 = new Matrix(testMatrix1); m2.Add(testMatrix2);
+            Matrix m2 = new Matrix(testMatrix1);
+            m2.Add(testMatrix2);
             Matrix m3 = testMatrix1 + testMatrix2;
             Matrix expected = new Matrix(new double[,] { { 8.0, 10.0, 12.0 }, { 14.0, 16.0, 18.0 } });
             Assert.Equal(expected, m1);
             Assert.Equal(expected, m2);
             Assert.Equal(expected, m3);
+        }
+
+        [Fact]
+        public void MatrixAddMatrixMatrixFluent()
+        {
+            Matrix m1 = new Matrix(testMatrix1);
+            m1.Add(testMatrix1).Add(testMatrix1);
+
+            Matrix m2 = new Matrix(testMatrix1);
+            m2.Add(m2).Add(m2);
+
+            Matrix m3 = Matrix.Add(testMatrix1, testMatrix1).Add(testMatrix1);
+
+            Matrix expected1 = testMatrix1 * 3;
+            Matrix expected2 = testMatrix1 * 4;
+
+            Assert.Equal(expected1, m1);
+            Assert.Equal(expected2, m2);
+            Assert.Equal(expected1, m3);
         }
 
         [Fact]
@@ -336,6 +356,16 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m2);
             Assert.Equal(expected, m3);
             Assert.Equal(expected, m4);
+        }
+
+        [Fact]
+        public void MatrixAddMatrixScalarFluent()
+        {
+            double scalar = 3.0;
+            Matrix m = new Matrix(testMatrix1).Add(scalar).Add(scalar);
+            Matrix expected = testMatrix1 + (scalar * 2);
+
+            Assert.Equal(expected, m);
         }
 
         [Fact]
@@ -383,6 +413,25 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m1);
             Assert.Equal(expected, m2);
             Assert.Equal(expected, m3);
+        }
+
+        [Fact]
+        public void MatrixSubtractMatrixMatrixFluent()
+        {
+            Matrix m1 = new Matrix(testMatrix1);
+            m1.Subtract(testMatrix1).Subtract(testMatrix1);
+
+            Matrix m2 = new Matrix(testMatrix1);
+            m2.Subtract(m2).Subtract(m2); // After the first subtraction, m2 is zero, so further subtractions have no effect
+
+            Matrix m3 = Matrix.Subtract(testMatrix1, testMatrix1).Subtract(testMatrix1);
+
+            Matrix expected1 = -testMatrix1;
+            Matrix expected2 = new Matrix(testMatrix1).Zeros();
+
+            Assert.Equal(expected1, m1);
+            Assert.Equal(expected2, m2);
+            Assert.Equal(expected1, m3);
         }
 
         [Fact]
@@ -491,6 +540,18 @@ namespace csMatrix.Tests
         }
 
         [Fact]
+        public void MatrixMultiplyMatrixScalarFluent()
+        {
+            double scalar = 3.0;
+            Matrix m = new Matrix(testMatrix1);
+            m.Multiply(scalar).Multiply(scalar);
+
+            Matrix expected = testMatrix1 * (scalar * scalar);
+
+            Assert.Equal(expected, m);
+        }
+
+        [Fact]
         public void MatrixMultiplyNullScalar()
         {
             double scalar = 3.0;
@@ -513,6 +574,16 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m1);
             Assert.Equal(expected, m2);
             Assert.Equal(expected, m3);
+        }
+
+        [Fact]
+        public void MatrixDivideMatrixScalarFluent()
+        {
+            double scalar = 2.0;
+            Matrix m = new Matrix(testMatrix1);
+            m.Divide(scalar).Divide(scalar);
+            Matrix expected = new Matrix(new double[,] { { 0.25, 0.5, 0.75 }, { 1.0, 1.25, 1.5 } });
+            Assert.Equal(expected, m);
         }
 
         [Fact]
