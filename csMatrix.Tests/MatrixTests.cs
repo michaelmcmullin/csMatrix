@@ -191,7 +191,7 @@ namespace csMatrix.Tests
         }
 
         [Fact]
-        public void MatrixIndexRowColumnTransposeInMemory()
+        public void MatrixIndexRowColumnTransposeSwapDimensions()
         {
             Matrix m = new Matrix(testMatrix1);
             m.Transpose(true);
@@ -204,7 +204,7 @@ namespace csMatrix.Tests
         }
 
         [Fact]
-        public void MatrixIndexSingleTransposeInMemory()
+        public void MatrixIndexSingleTransposeSwapDimensions()
         {
             Matrix m = new Matrix(testMatrix1);
             m.Transpose(true);
@@ -711,7 +711,7 @@ namespace csMatrix.Tests
         }
 
         [Fact]
-        public void MatrixTransposeInMemory()
+        public void MatrixTransposeSwapDimensions()
         {
             Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } });
             Matrix m2 = new Matrix(m1);
@@ -731,7 +731,7 @@ namespace csMatrix.Tests
         }
 
         [Fact]
-        public void MatrixTransposeInMemoryArithmetic()
+        public void MatrixTransposeSwapDimensionsArithmetic()
         {
             Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0 }, { 3.0, 4.0 } });
             Matrix m2 = new Matrix(new double[,] { { 1.0, 3.0 }, { 2.0, 4.0 } });
@@ -745,7 +745,7 @@ namespace csMatrix.Tests
         }
 
         [Fact]
-        public void MatrixTransposeInMemoryIndexing()
+        public void MatrixTransposeSwapDimensionsIndexing()
         {
             Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0 }, { 3.0, 4.0 }, { 5.0, 6.0 } });
             Matrix m2 = new Matrix(new double[,] { { 1.0, 3.0, 5.0 }, { 2.0, 4.0, 6.0 } });
@@ -789,6 +789,28 @@ namespace csMatrix.Tests
             Assert.Equal(4.0, m[1, 0]); Assert.Equal(4.0, m[3]);
             Assert.Equal(5.0, m[1, 1]); Assert.Equal(5.0, m[4]);
             Assert.Equal(6.0, m[1, 2]); Assert.Equal(6.0, m[5]);
+        }
+
+        [Fact]
+        public void MatrixTransposeComparePermanentWithSwappedDimensions()
+        {
+            Matrix m1 = new Matrix(testMatrix1);
+            Matrix m2 = new Matrix(testMatrix1);
+
+            m1.Transpose(true);
+            m2.Transpose(false);
+
+            Assert.Equal(m1.Rows, m2.Rows);
+            Assert.Equal(m1.Columns, m2.Columns);
+            Assert.True(m1.HasSameDimensions(m2));
+            Assert.Equal(m1[0, 0], m2[0, 0]);
+            Assert.Equal(m1[0, 1], m2[0, 1]);
+            Assert.Equal(m1[1, 0], m2[1, 0]);
+            Assert.Equal(m1[1, 1], m2[1, 1]);
+            Assert.Equal(m1[2, 0], m2[2, 0]);
+            Assert.Equal(m1[2, 1], m2[2, 1]);
+
+            Assert.True(m1 == m2);
         }
         #endregion
 
