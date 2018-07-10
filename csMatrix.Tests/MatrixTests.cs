@@ -6,12 +6,14 @@ namespace csMatrix.Tests
     public class MatrixTests
     {
         Matrix testMatrix1, testMatrix2, testMatrix3;
+        Matrix testMatrix1Transposed;
 
         public MatrixTests()
         {
             testMatrix1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } });
             testMatrix2 = new Matrix(new double[,] { { 7.0, 8.0, 9.0 }, { 10.0, 11.0, 12.0 } });
             testMatrix3 = new Matrix(new double[,] { { 1.0, 2.0 }, { 3.0, 4.0 }, { 5.0, 6.0 } });
+            testMatrix1Transposed = new Matrix(new double[,] { { 1.0, 4.0 }, { 2.0, 5.0 }, { 3.0, 6.0 } });
         }
 
         #region Constructors
@@ -755,6 +757,38 @@ namespace csMatrix.Tests
             Assert.Equal(4.0, m1[1, 1]); Assert.Equal(4.0, m1[4]);
             Assert.Equal(5.0, m1[0, 2]); Assert.Equal(5.0, m1[2]);
             Assert.Equal(6.0, m1[1, 2]); Assert.Equal(6.0, m1[5]);
+        }
+
+        [Fact]
+        public void MatrixTransposePermanentlyWideMatrix()
+        {
+            Matrix m = new Matrix(testMatrix1);
+            m.Transpose(false);
+            Assert.Equal(testMatrix1.Rows, m.Columns);
+            Assert.Equal(testMatrix1.Columns, m.Rows);
+            Assert.True(m == testMatrix1Transposed);
+            Assert.Equal(1.0, m[0, 0]); Assert.Equal(1.0, m[0]);
+            Assert.Equal(2.0, m[1, 0]); Assert.Equal(2.0, m[2]);
+            Assert.Equal(3.0, m[2, 0]); Assert.Equal(3.0, m[4]);
+            Assert.Equal(4.0, m[0, 1]); Assert.Equal(4.0, m[1]);
+            Assert.Equal(5.0, m[1, 1]); Assert.Equal(5.0, m[3]);
+            Assert.Equal(6.0, m[2, 1]); Assert.Equal(6.0, m[5]);
+        }
+
+        [Fact]
+        public void MatrixTransposePermanentlyTallMatrix()
+        {
+            Matrix m = new Matrix(testMatrix1Transposed);
+            m.Transpose(false);
+            Assert.Equal(testMatrix1Transposed.Rows, m.Columns);
+            Assert.Equal(testMatrix1Transposed.Columns, m.Rows);
+            Assert.True(m == testMatrix1);
+            Assert.Equal(1.0, m[0, 0]); Assert.Equal(1.0, m[0]);
+            Assert.Equal(2.0, m[0, 1]); Assert.Equal(2.0, m[1]);
+            Assert.Equal(3.0, m[0, 2]); Assert.Equal(3.0, m[2]);
+            Assert.Equal(4.0, m[1, 0]); Assert.Equal(4.0, m[3]);
+            Assert.Equal(5.0, m[1, 1]); Assert.Equal(5.0, m[4]);
+            Assert.Equal(6.0, m[1, 2]); Assert.Equal(6.0, m[5]);
         }
         #endregion
 

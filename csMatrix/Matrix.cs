@@ -36,6 +36,7 @@ namespace csMatrix
             Arithmetic = new csMatrix.Arithmetic.Basic();
             RowColumnOperations = new csMatrix.RowColumnOperations.Basic();
             Populate = new csMatrix.Populate.Basic();
+            Operations = new csMatrix.TransposeOperations.Basic();
         }
 
         /// <summary>
@@ -138,6 +139,11 @@ namespace csMatrix
         public static IMatrixPopulate Populate { get; set; }
 
         /// <summary>
+        /// The class used to perform Matrix-specific operations
+        /// </summary>
+        public static IMatrixTransposeOperations Operations { get; set; }
+
+        /// <summary>
         /// Indicates whether or not this Matrix row and column dimensions are equal.
         /// </summary>
         public bool IsSquare => Rows == Columns;
@@ -146,7 +152,7 @@ namespace csMatrix
         /// Get the dimensions of this Matrix in a single-dimensional array of the form
         /// [rows,columns].
         /// </summary>
-        public int[] Dimensions { get; }
+        public int[] Dimensions { get; private set; }
 
         /// <summary>
         /// Get the number of rows in this Matrix.
@@ -169,7 +175,7 @@ namespace csMatrix
         /// <summary>
         /// Get the total number of elements in this Matrix.
         /// </summary>
-        public int Size { get; }
+        public int Size { get; private set; }
 
         /// <summary>
         /// Indicates whether this Matrix is transposed (i.e. rows and columns are swapped)
@@ -375,6 +381,27 @@ namespace csMatrix
 
         #region Methods
         #region Instance Methods
+        #region Matrix creation
+        /// <summary>
+        /// Replace this Matrix instance with data from another Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to obtain new data from.</param>
+        public void Load(Matrix m)
+        {
+            if (!ReferenceEquals(this, m))
+            {
+                this.Rows = m.Rows;
+                this.Columns = m.Columns;
+                Size = rows * columns;
+                Dimensions = new int[] { Rows, Columns };
+                data = new double[Size];
+                IsTransposed = m.IsTransposed;
+                for (int i = 0; i < Size; i++)
+                    data[i] = m.data[i];
+            }
+        }
+        #endregion
+
         #region Generic Element Operations
         /// <summary>
         /// Perform the given operation on each Matrix element.
@@ -626,7 +653,7 @@ namespace csMatrix
             public bool MoveNext()
             {
                 currentIndex++;
-                return currentIndex < currentMatrix.Size; 
+                return currentIndex < currentMatrix.Size;
             }
 
             public void Reset()
@@ -722,17 +749,22 @@ namespace csMatrix
         /// Transpose this Matrix, either permanently, or in-memory (i.e., the data array doesn't
         /// change, but accessing it does).
         /// </summary>
-        /// <param name="InMemory">Indicates whether the Matrix should be transposed in-memory.</param>
+        /// <param name="SwapDimensions">Indicates whether the Matrix should be transposed by simply
+        /// swapping the dimensions (i.e. rows become columns and vice versa).</param>
         /// <returns>A reference to this Matrix instance.</returns>
-        public Matrix Transpose(bool InMemory)
+        /// <remarks>Swapping dimensions is a very quick way of transposing this Matrix. However,
+        /// further operations may end up being slower. Setting <c>SwapDimensions</c> to <c>false</c>
+        /// makes transposing a more expensive operation, but further operations may end up being
+        /// faster.</remarks>
+        public Matrix Transpose(bool SwapDimensions)
         {
-            if (InMemory)
+            if (SwapDimensions)
             {
                 IsTransposed = !IsTransposed;
             }
             else
             {
-                throw new NotImplementedException();
+                Load(Operations.Transpose(this));
             }
             return this;
         }
