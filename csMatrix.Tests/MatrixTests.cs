@@ -5,7 +5,7 @@ namespace csMatrix.Tests
 {
     public class MatrixTests
     {
-        Matrix testMatrix1, testMatrix2, testMatrix3;
+        Matrix testMatrix1, testMatrix2, testMatrix3, testMatrix4;
         Matrix testMatrix1Transposed;
 
         public MatrixTests()
@@ -13,6 +13,7 @@ namespace csMatrix.Tests
             testMatrix1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } });
             testMatrix2 = new Matrix(new double[,] { { 7.0, 8.0, 9.0 }, { 10.0, 11.0, 12.0 } });
             testMatrix3 = new Matrix(new double[,] { { 1.0, 2.0 }, { 3.0, 4.0 }, { 5.0, 6.0 } });
+            testMatrix4 = new Matrix(new double[,] { { 22.0, 28.0 }, { 49.0, 64.0 } });
             testMatrix1Transposed = new Matrix(new double[,] { { 1.0, 4.0 }, { 2.0, 5.0 }, { 3.0, 6.0 } });
         }
 
@@ -520,9 +521,14 @@ namespace csMatrix.Tests
         {
             Matrix m1 = Matrix.Multiply(testMatrix1, testMatrix3);
             Matrix m2 = testMatrix1 * testMatrix3;
+            Matrix m3 = new Matrix(testMatrix1);
+            m3.Multiply(testMatrix3);
+
             Matrix expected = new Matrix(new double[,] { { 22.0, 28.0 }, { 49.0, 64.0 } });
+
             Assert.Equal(expected, m1);
             Assert.Equal(expected, m2);
+            Assert.Equal(expected, m3);
         }
 
         [Fact]
@@ -531,6 +537,7 @@ namespace csMatrix.Tests
             Assert.Throws<InvalidMatrixDimensionsException>(() => Matrix.Multiply(testMatrix1, testMatrix2));
             Matrix m1 = new Matrix(testMatrix1);
             Assert.Throws<InvalidMatrixDimensionsException>(() => testMatrix1 * testMatrix2);
+            Assert.Throws<InvalidMatrixDimensionsException>(() => testMatrix1.Multiply(testMatrix2));
         }
 
         [Fact]
@@ -539,6 +546,7 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => Matrix.Multiply(testMatrix1, null));
             Matrix m1 = null;
             Assert.Throws<NullReferenceException>(() => testMatrix1 * m1);
+            Assert.Throws<NullReferenceException>(() => testMatrix1.Multiply(m1));
         }
 
         [Fact]
@@ -547,6 +555,7 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => Matrix.Multiply(null, testMatrix1));
             Matrix m1 = null;
             Assert.Throws<NullReferenceException>(() => m1 * testMatrix1);
+            Assert.Throws<NullReferenceException>(() => m1.Multiply(testMatrix1));
         }
 
         [Fact]
@@ -562,6 +571,17 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m2);
             Assert.Equal(expected, m3);
             Assert.Equal(expected, m4);
+        }
+
+        [Fact]
+        public void MatrixMultipyMatrixMatrixFluent()
+        {
+            Matrix m1 = new Matrix(testMatrix1);
+            Matrix m2 = new Matrix(new double[,] { { 22.0, 28.0 }, { 49.0, 64.0 } });
+            Matrix expected = new Matrix(new double[,] { { 1856.0, 2408.0 }, { 4214.0, 5468.0 } });
+
+            m1.Multiply(testMatrix3).Multiply(m2);
+            Assert.Equal(expected, m1);
         }
 
         [Fact]
