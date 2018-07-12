@@ -36,7 +36,7 @@ namespace csMatrix
             Arithmetic = new csMatrix.Arithmetic.Basic();
             RowColumnOperations = new csMatrix.RowColumnOperations.Basic();
             Populate = new csMatrix.Populate.Basic();
-            Operations = new csMatrix.TransposeOperations.Basic();
+            TransposeOperations = new csMatrix.TransposeOperations.Basic();
         }
 
         /// <summary>
@@ -139,9 +139,14 @@ namespace csMatrix
         public static IMatrixPopulate Populate { get; set; }
 
         /// <summary>
-        /// The class used to perform Matrix-specific operations
+        /// The class used to perform Matrix transpose operations
         /// </summary>
-        public static IMatrixTransposeOperations Operations { get; set; }
+        public static IMatrixTransposeOperations TransposeOperations { get; set; }
+
+        /// <summary>
+        /// The class used to perform inverse Matrix operations
+        /// </summary>
+        public static IMatrixInverseOperations InverseOperations { get; set; }
 
         /// <summary>
         /// Indicates whether or not this Matrix row and column dimensions are equal.
@@ -759,14 +764,16 @@ namespace csMatrix
             RowColumnOperations.SwapColumns(this, column1, column2);
             return this;
         }
+        #endregion
 
+        #region Transpose
         /// <summary>
         /// Transpose this Matrix, either permanently, or in-memory (i.e., the data array doesn't
         /// change, but accessing it does).
         /// </summary>
         /// <param name="SwapDimensions">Indicates whether the Matrix should be transposed by simply
         /// swapping the dimensions (i.e. rows become columns and vice versa).</param>
-        /// <returns>A reference to this Matrix instance.</returns>
+        /// <returns>A reference to this Matrix instance after transposing.</returns>
         /// <remarks>Swapping dimensions is a very quick way of transposing this Matrix. However,
         /// further operations may end up being slower. Setting <c>SwapDimensions</c> to <c>false</c>
         /// makes transposing a more expensive operation, but further operations may end up being
@@ -779,8 +786,20 @@ namespace csMatrix
             }
             else
             {
-                Load(Operations.Transpose(this));
+                Load(TransposeOperations.Transpose(this));
             }
+            return this;
+        }
+        #endregion
+
+        #region Inverse
+        /// <summary>
+        /// Calculate the inverse of this Matrix.
+        /// </summary>
+        /// <returns>A reference to this Matrix instance after inversion.</returns>
+        public Matrix Inverse()
+        {
+            Load(InverseOperations.Inverse(this));
             return this;
         }
         #endregion
@@ -855,6 +874,7 @@ namespace csMatrix
         #endregion
 
         #region Static Methods
+        #region General element operations
         /// <summary>
         /// Perform the given operation on each Matrix element.
         /// </summary>
@@ -902,7 +922,9 @@ namespace csMatrix
             Arithmetic.ElementOperation(result, scalar, op);
             return result;
         }
+        #endregion
 
+        #region Arithmetic
         /// <summary>
         /// Add two matrices together.
         /// </summary>
@@ -1020,6 +1042,31 @@ namespace csMatrix
             Arithmetic.ElementOperation(result, scalar, (a, b) => a / b);
             return result;
         }
+        #endregion
+
+        #region Transpose
+        /// <summary>
+        /// Get the transposed version of the given Matrix (swap rows and columns).
+        /// </summary>
+        /// <param name="m">The Matrix to transpose.</param>
+        /// <returns>A new Matrix that is the transpose of the original.</returns>
+        public static Matrix Transpose(Matrix m)
+        {
+            return TransposeOperations.Transpose(m);
+        }
+        #endregion
+
+        #region Inverse
+        /// <summary>
+        /// Calculate the inverse of the given Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to calculate the inverse of.</param>
+        /// <returns>A new Matrix that is the inverse of the supplied Matrix.</returns>
+        public static Matrix Inverse(Matrix m)
+        {
+            return InverseOperations.Inverse(m);
+        }
+        #endregion
         #endregion
         #endregion
     }
