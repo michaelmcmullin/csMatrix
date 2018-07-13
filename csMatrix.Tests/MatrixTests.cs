@@ -729,7 +729,9 @@ namespace csMatrix.Tests
             Matrix m = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
             Assert.Throws<IndexOutOfRangeException>(() => m.SwapColumns(m.Columns, 0));
         }
+        #endregion
 
+        #region Transpose
         [Fact]
         public void MatrixTransposeSwapDimensions()
         {
@@ -831,6 +833,32 @@ namespace csMatrix.Tests
             Assert.Equal(m1[2, 1], m2[2, 1]);
 
             Assert.True(m1 == m2);
+        }
+        #endregion
+
+        #region Inverse
+        [Fact]
+        public void MatrixInverseSquareMatrix()
+        {
+            Matrix m = new Matrix(new double[,] { { 1, 0, 5 }, { 2, 1, 6 }, { 3, 4, 0 } });
+            Matrix expected = new Matrix(new double[,] { { -24, 20, -5 }, { 18, -15, 4 }, { 5, -4, 1 } });
+
+            m.Inverse();
+            Assert.Equal(expected, m);
+        }
+
+        [Fact]
+        public void MatrixInverseSquareNonInvertibleMatrix()
+        {
+            Matrix m = new Matrix(new double[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } });
+            Assert.Throws<NonInvertibleMatrixException>(() => m.Inverse());
+        }
+
+        [Fact]
+        public void MatrixInverseNonSquareMatrix()
+        {
+            Matrix m = new Matrix(testMatrix1);
+            Assert.Throws<InvalidMatrixDimensionsException>(() => m.Inverse());
         }
         #endregion
 

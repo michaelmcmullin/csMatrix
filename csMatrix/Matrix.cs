@@ -37,6 +37,7 @@ namespace csMatrix
             RowColumnOperations = new csMatrix.RowColumnOperations.Basic();
             Populate = new csMatrix.Populate.Basic();
             TransposeOperations = new csMatrix.TransposeOperations.Basic();
+            InverseOperations = new csMatrix.InverseOperations.Basic();
         }
 
         /// <summary>
