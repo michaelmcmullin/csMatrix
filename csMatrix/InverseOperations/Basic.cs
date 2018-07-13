@@ -15,23 +15,24 @@ namespace csMatrix.InverseOperations
         {
             if (!m.IsSquare)
                 throw new InvalidMatrixDimensionsException("Inverse requires a Matrix to be square.");
+            Matrix working = new Matrix(m);
             Matrix result = new Matrix(m.Rows);
             result.Identity();
 
             for (int diagonal = 0; diagonal < m.Rows; diagonal++)
             {
-                double diagonalValue = m[diagonal, diagonal];
+                double diagonalValue = working[diagonal, diagonal];
 
                 // Ensure the diagonal value is not zero by swapping another row if necessary.
                 if (diagonalValue == 0)
                 {
                     for (int i = 0; i < m.Rows; i++)
                     {
-                        if (i != diagonal && m[i, diagonal] != 0 && m[diagonal, i] != 0)
+                        if (i != diagonal && m[i, diagonal] != 0 && working[diagonal, i] != 0)
                         {
-                            m.SwapRows(diagonal, i);
+                            working.SwapRows(diagonal, i);
                             result.SwapRows(diagonal, i);
-                            diagonalValue = m[diagonal, diagonal];
+                            diagonalValue = working[diagonal, diagonal];
                             break;
                         }
                     }
@@ -41,26 +42,26 @@ namespace csMatrix.InverseOperations
 
                 int lineValueIndex = diagonal;
                 int itemIndex = 0;
-                int diagonalIndex = diagonal * m.Columns;
+                int diagonalIndex = diagonal * working.Columns;
 
-                for (int row = 0; row < m.Rows; row++)
+                for (int row = 0; row < working.Rows; row++)
                 {
                     if (row != diagonal)
                     {
-                        double lineValue = m[lineValueIndex];
-                        for (int column = 0; column < m.Columns; column++)
+                        double lineValue = working[lineValueIndex];
+                        for (int column = 0; column < working.Columns; column++)
                         {
                             int diagonalColumnIndex = diagonalIndex + column;
-                            m[itemIndex] = (m[itemIndex] * diagonalValue) - (m[diagonalColumnIndex] * lineValue);
+                            working[itemIndex] = (working[itemIndex] * diagonalValue) - (working[diagonalColumnIndex] * lineValue);
                             result[itemIndex] = (result[itemIndex] * diagonalValue) - (result[diagonalColumnIndex] * lineValue);
                             itemIndex++;
                         }
                     }
                     else
                     {
-                        itemIndex += m.Columns;
+                        itemIndex += working.Columns;
                     }
-                    lineValueIndex += m.Columns;
+                    lineValueIndex += working.Columns;
                 }
             }
 
@@ -68,12 +69,12 @@ namespace csMatrix.InverseOperations
             int indexResult = 0;
             int indexThis = 0;
 
-            for (int i = 0; i < m.Rows; i++)
+            for (int i = 0; i < working.Rows; i++)
             {
-                double divisor = m[indexThis];
-                indexThis += m.Columns + 1;
+                double divisor = working[indexThis];
+                indexThis += working.Columns + 1;
 
-                for (int j = 0; j < m.Columns; j++)
+                for (int j = 0; j < working.Columns; j++)
                 {
                     result[indexResult++] /= divisor;
                 }
