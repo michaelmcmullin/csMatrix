@@ -408,7 +408,7 @@ namespace csMatrix
         }
         #endregion
 
-        #region Generic Element Operations
+        #region General Element Operations
         /// <summary>
         /// Perform the given operation on each Matrix element.
         /// </summary>
@@ -797,6 +797,10 @@ namespace csMatrix
         /// <summary>
         /// Calculate the inverse of this Matrix.
         /// </summary>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when this Matrix is
+        /// not square.</exception>
+        /// <exception cref="NonInvertibleMatrixException">Thrown when this Matrix is not
+        /// invertible.</exception>
         /// <returns>A reference to this Matrix instance after inversion.</returns>
         public Matrix Inverse()
         {
@@ -1062,6 +1066,10 @@ namespace csMatrix
         /// Calculate the inverse of the given Matrix.
         /// </summary>
         /// <param name="m">The Matrix to calculate the inverse of.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the supplied Matrix is
+        /// not square.</exception>
+        /// <exception cref="NonInvertibleMatrixException">Thrown when the supplied Matrix is not
+        /// invertible.</exception>
         /// <returns>A new Matrix that is the inverse of the supplied Matrix.</returns>
         public static Matrix Inverse(Matrix m)
         {

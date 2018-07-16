@@ -10,6 +10,10 @@ namespace csMatrix.InverseOperations
         /// Calculate the inverse of a Matrix.
         /// </summary>
         /// <param name="m">The Matrix to invert.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the supplied Matrix is
+        /// not square.</exception>
+        /// <exception cref="NonInvertibleMatrixException">Thrown when the supplied Matrix is not
+        /// invertible.</exception>
         /// <returns>The inverse Matrix of the supplied Matrix.</returns>
         public Matrix Inverse(Matrix m)
         {
