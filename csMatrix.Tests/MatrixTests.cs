@@ -737,6 +737,7 @@ namespace csMatrix.Tests
         {
             Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } });
             Matrix m2 = new Matrix(m1);
+
             int rows = m1.Rows;
             int columns = m1.Columns;
             int size = m1.Size;
@@ -784,33 +785,41 @@ namespace csMatrix.Tests
         [Fact]
         public void MatrixTransposePermanentlyWideMatrix()
         {
-            Matrix m = new Matrix(testMatrix1);
-            m.Transpose(false);
-            Assert.Equal(testMatrix1.Rows, m.Columns);
-            Assert.Equal(testMatrix1.Columns, m.Rows);
-            Assert.True(m == testMatrix1Transposed);
-            Assert.Equal(1.0, m[0, 0]); Assert.Equal(1.0, m[0]);
-            Assert.Equal(2.0, m[1, 0]); Assert.Equal(2.0, m[2]);
-            Assert.Equal(3.0, m[2, 0]); Assert.Equal(3.0, m[4]);
-            Assert.Equal(4.0, m[0, 1]); Assert.Equal(4.0, m[1]);
-            Assert.Equal(5.0, m[1, 1]); Assert.Equal(5.0, m[3]);
-            Assert.Equal(6.0, m[2, 1]); Assert.Equal(6.0, m[5]);
+            Matrix m1 = new Matrix(testMatrix1);
+            Matrix m2 = Matrix.Transpose(m1);
+
+            m1.Transpose(false);
+            Assert.Equal(testMatrix1.Rows, m1.Columns);
+            Assert.Equal(testMatrix1.Columns, m1.Rows);
+            Assert.True(m1 == testMatrix1Transposed);
+            Assert.Equal(1.0, m1[0, 0]); Assert.Equal(1.0, m1[0]);
+            Assert.Equal(2.0, m1[1, 0]); Assert.Equal(2.0, m1[2]);
+            Assert.Equal(3.0, m1[2, 0]); Assert.Equal(3.0, m1[4]);
+            Assert.Equal(4.0, m1[0, 1]); Assert.Equal(4.0, m1[1]);
+            Assert.Equal(5.0, m1[1, 1]); Assert.Equal(5.0, m1[3]);
+            Assert.Equal(6.0, m1[2, 1]); Assert.Equal(6.0, m1[5]);
+
+            Assert.True(m1 == m2);
         }
 
         [Fact]
         public void MatrixTransposePermanentlyTallMatrix()
         {
-            Matrix m = new Matrix(testMatrix1Transposed);
-            m.Transpose(false);
-            Assert.Equal(testMatrix1Transposed.Rows, m.Columns);
-            Assert.Equal(testMatrix1Transposed.Columns, m.Rows);
-            Assert.True(m == testMatrix1);
-            Assert.Equal(1.0, m[0, 0]); Assert.Equal(1.0, m[0]);
-            Assert.Equal(2.0, m[0, 1]); Assert.Equal(2.0, m[1]);
-            Assert.Equal(3.0, m[0, 2]); Assert.Equal(3.0, m[2]);
-            Assert.Equal(4.0, m[1, 0]); Assert.Equal(4.0, m[3]);
-            Assert.Equal(5.0, m[1, 1]); Assert.Equal(5.0, m[4]);
-            Assert.Equal(6.0, m[1, 2]); Assert.Equal(6.0, m[5]);
+            Matrix m1 = new Matrix(testMatrix1Transposed);
+            Matrix m2 = Matrix.Transpose(m1);
+
+            m1.Transpose(false);
+            Assert.Equal(testMatrix1Transposed.Rows, m1.Columns);
+            Assert.Equal(testMatrix1Transposed.Columns, m1.Rows);
+            Assert.True(m1 == testMatrix1);
+            Assert.Equal(1.0, m1[0, 0]); Assert.Equal(1.0, m1[0]);
+            Assert.Equal(2.0, m1[0, 1]); Assert.Equal(2.0, m1[1]);
+            Assert.Equal(3.0, m1[0, 2]); Assert.Equal(3.0, m1[2]);
+            Assert.Equal(4.0, m1[1, 0]); Assert.Equal(4.0, m1[3]);
+            Assert.Equal(5.0, m1[1, 1]); Assert.Equal(5.0, m1[4]);
+            Assert.Equal(6.0, m1[1, 2]); Assert.Equal(6.0, m1[5]);
+
+            Assert.True(m1 == m2);
         }
 
         [Fact]
@@ -818,6 +827,7 @@ namespace csMatrix.Tests
         {
             Matrix m1 = new Matrix(testMatrix1);
             Matrix m2 = new Matrix(testMatrix1);
+            Matrix m3 = Matrix.Transpose(m1);
 
             m1.Transpose(true);
             m2.Transpose(false);
@@ -833,6 +843,8 @@ namespace csMatrix.Tests
             Assert.Equal(m1[2, 1], m2[2, 1]);
 
             Assert.True(m1 == m2);
+            Assert.True(m3 == m1);
+            Assert.True(m3 == m2);
         }
         #endregion
 
