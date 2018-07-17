@@ -4,6 +4,9 @@ using System.Text;
 
 namespace csMatrix.Arithmetic
 {
+    /// <summary>
+    /// Default implementation of Matrix arithmetic operations
+    /// </summary>
     public class Basic : IMatrixArithmetic
     {
         /// <summary>

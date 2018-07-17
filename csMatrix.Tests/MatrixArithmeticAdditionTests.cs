@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace csMatrix.Tests
 {
     public class MatrixArithmeticAdditionTests
     {
-        [Fact]
-        public void MatrixAddMatrixMatrix()
+        public static IEnumerable<object[]> GetObjects = Setup.GetIMatrixArithmetic;
+
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixAddMatrixMatrix(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             Matrix testMatrix2 = Setup.GetTestMatrix2();
 
@@ -21,9 +26,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m3);
         }
 
-        [Fact]
-        public void MatrixAddMatrixMatrixFluent()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixAddMatrixMatrixFluent(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             Matrix m1 = new Matrix(testMatrix1);
@@ -42,9 +49,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected1, m3);
         }
 
-        [Fact]
-        public void MatrixAddMatrixMatrixInvalidDimensions()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixAddMatrixMatrixInvalidDimensions(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             Matrix testMatrix2 = Setup.GetTestMatrix2();
             Matrix testMatrix3 = Setup.GetTestMatrix3();
@@ -55,9 +64,11 @@ namespace csMatrix.Tests
             Assert.Throws<InvalidMatrixDimensionsException>(() => testMatrix1 + testMatrix3);
         }
 
-        [Fact]
-        public void MatrixAddMatrixNull()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixAddMatrixNull(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             Assert.Throws<NullReferenceException>(() => Matrix.Add(testMatrix1, null));
@@ -66,9 +77,11 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => m1 + null);
         }
 
-        [Fact]
-        public void MatrixAddNullMatrix()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixAddNullMatrix(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             Assert.Throws<NullReferenceException>(() => Matrix.Add(null, testMatrix1));
@@ -77,9 +90,11 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => m1 + testMatrix1);
         }
 
-        [Fact]
-        public void MatrixAddMatrixScalar()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixAddMatrixScalar(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             double scalar = 3.0;
@@ -95,9 +110,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m4);
         }
 
-        [Fact]
-        public void MatrixAddMatrixScalarFluent()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixAddMatrixScalarFluent(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             double scalar = 3.0;
@@ -107,9 +124,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m);
         }
 
-        [Fact]
-        public void MatrixAddNullScalar()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixAddNullScalar(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             double scalar = 3.0;
             Assert.Throws<NullReferenceException>(() => Matrix.Add(null, scalar));
             Matrix m1 = null;

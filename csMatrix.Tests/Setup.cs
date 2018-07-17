@@ -27,5 +27,17 @@ namespace csMatrix.Tests
         {
             return new Matrix(new double[,] { { 1.0, 4.0 }, { 2.0, 5.0 }, { 3.0, 6.0 } });
         }
+
+        public static IEnumerable<object[]> GetIMatrixArithmetic
+        {
+            get
+            {
+                return new[]
+                {
+                    new IMatrixArithmetic[] { new Arithmetic.Basic() },
+                    new IMatrixArithmetic[] { new Arithmetic.ParallelOperations() }
+                };
+            }
+        }
     }
 }
