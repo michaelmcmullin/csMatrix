@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace csMatrix.Tests
 {
     public class MatrixMethodsElementOperationTests
     {
-        [Fact]
-        public void MatrixElementOperation()
+        public static IEnumerable<object[]> GetObjects = Setup.GetIMatrixArithmetic;
+
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixElementOperation(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix m1 = new Matrix(2, 2);
             m1.Fill(3.0);
             Matrix m2 = Matrix.ElementOperation(m1, a => Math.Sin(a));
@@ -18,9 +23,11 @@ namespace csMatrix.Tests
             Assert.True(expected == m2);
         }
 
-        [Fact]
-        public void MatrixElementOperationScalar()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixElementOperationScalar(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix m1 = new Matrix(2, 2);
             m1.Fill(3.0);
             Matrix m2 = Matrix.ElementOperation(m1, 2.0, (a, b) => Math.Pow(a, b));
@@ -31,9 +38,11 @@ namespace csMatrix.Tests
             Assert.True(expected == m2);
         }
 
-        [Fact]
-        public void MatrixElementOperationMatrix()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixElementOperationMatrix(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             double x = 3.0, y = 4.0;
             Matrix m1 = new Matrix(2, 2);
             Matrix m2 = new Matrix(2, 2);
@@ -46,9 +55,11 @@ namespace csMatrix.Tests
             Assert.True(expected == m3);
         }
 
-        [Fact]
-        public void MatrixElementOperationInvalidDimensions()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixElementOperationInvalidDimensions(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             Matrix testMatrix3 = Setup.GetTestMatrix3();
             Assert.Throws<InvalidMatrixDimensionsException>(() => Matrix.ElementOperation(testMatrix1, testMatrix3, (a, b) => a + b));

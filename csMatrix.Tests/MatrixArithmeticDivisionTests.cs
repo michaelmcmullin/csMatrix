@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace csMatrix.Tests
 {
     public class MatrixArithmeticDivisionTests
     {
+        public static IEnumerable<object[]> GetObjects = Setup.GetIMatrixArithmetic;
+
         #region Division
-        [Fact]
-        public void MatrixDivideMatrixScalar()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixDivideMatrixScalar(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             double scalar = 2.0;
 
@@ -21,9 +26,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m3);
         }
 
-        [Fact]
-        public void MatrixDivideMatrixScalarFluent()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixDivideMatrixScalarFluent(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             double scalar = 2.0;
 
@@ -33,9 +40,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m);
         }
 
-        [Fact]
-        public void MatrixDivideNullScalar()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixDivideNullScalar(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             double scalar = 2.0;
             Assert.Throws<NullReferenceException>(() => Matrix.Divide(null, scalar));
             Matrix m = null;

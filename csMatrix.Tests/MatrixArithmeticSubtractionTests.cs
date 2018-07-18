@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace csMatrix.Tests
 {
     public class MatrixArithmeticSubtractionTests
     {
-        [Fact]
-        public void MatrixNegate()
+        public static IEnumerable<object[]> GetObjects = Setup.GetIMatrixArithmetic;
+
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixNegate(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             Matrix m1 = Matrix.Negate(testMatrix1);
@@ -20,18 +25,22 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m3);
         }
 
-        [Fact]
-        public void MatrixNegateNull()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixNegateNull(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Assert.Throws<NullReferenceException>(() => Matrix.Negate(null));
             Matrix m1 = null;
             Assert.Throws<NullReferenceException>(() => m1.Negate());
             Assert.Throws<NullReferenceException>(() => -m1);
         }
 
-        [Fact]
-        public void MatrixSubtractMatrixMatrix()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixSubtractMatrixMatrix(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             Matrix testMatrix2 = Setup.GetTestMatrix2();
 
@@ -44,9 +53,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m3);
         }
 
-        [Fact]
-        public void MatrixSubtractMatrixMatrixFluent()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixSubtractMatrixMatrixFluent(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             Matrix m1 = new Matrix(testMatrix1);
@@ -65,9 +76,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected1, m3);
         }
 
-        [Fact]
-        public void MatrixSubtractMatrixMatrixInvalidDimensions()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixSubtractMatrixMatrixInvalidDimensions(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             Matrix testMatrix3 = Setup.GetTestMatrix3();
 
@@ -77,9 +90,11 @@ namespace csMatrix.Tests
             Assert.Throws<InvalidMatrixDimensionsException>(() => testMatrix1 - testMatrix3);
         }
 
-        [Fact]
-        public void MatrixSubtractMatrixNull()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixSubtractMatrixNull(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             Assert.Throws<NullReferenceException>(() => Matrix.Subtract(testMatrix1, null));
@@ -88,9 +103,11 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => m1 - null);
         }
 
-        [Fact]
-        public void MatrixSubtractNullMatrix()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixSubtractNullMatrix(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             Assert.Throws<NullReferenceException>(() => Matrix.Subtract(null, testMatrix1));
@@ -99,9 +116,11 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => m1 - testMatrix1);
         }
 
-        [Fact]
-        public void MatrixSubtractMatrixScalar()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixSubtractMatrixScalar(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             double scalar = 3.0;
@@ -117,9 +136,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m4);
         }
 
-        [Fact]
-        public void MatrixSubtractNullScalar()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixSubtractNullScalar(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             double scalar = 3.0;
             Assert.Throws<NullReferenceException>(() => Matrix.Subtract(null, scalar));
             Matrix m1 = null;

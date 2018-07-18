@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace csMatrix.Tests
 {
     public class MatrixArithmeticMultiplicationTests
     {
-        #region Multiplication
-        [Fact]
-        public void MatrixMultiplyMatrixMatrix()
+        public static IEnumerable<object[]> GetObjects = Setup.GetIMatrixArithmetic;
+
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixMultiplyMatrixMatrix(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             Matrix testMatrix3 = Setup.GetTestMatrix3();
 
@@ -24,9 +28,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m3);
         }
 
-        [Fact]
-        public void MatrixMultiplyMatrixMatrixInvalidDimensions()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixMultiplyMatrixMatrixInvalidDimensions(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             Matrix testMatrix2 = Setup.GetTestMatrix2();
 
@@ -36,9 +42,11 @@ namespace csMatrix.Tests
             Assert.Throws<InvalidMatrixDimensionsException>(() => testMatrix1.Multiply(testMatrix2));
         }
 
-        [Fact]
-        public void MatrixMultiplyMatrixNull()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixMultiplyMatrixNull(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             Assert.Throws<NullReferenceException>(() => Matrix.Multiply(testMatrix1, null));
@@ -47,9 +55,11 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => testMatrix1.Multiply(m1));
         }
 
-        [Fact]
-        public void MatrixMultiplyNullMatrix()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixMultiplyNullMatrix(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             Assert.Throws<NullReferenceException>(() => Matrix.Multiply(null, testMatrix1));
@@ -58,9 +68,11 @@ namespace csMatrix.Tests
             Assert.Throws<NullReferenceException>(() => m1.Multiply(testMatrix1));
         }
 
-        [Fact]
-        public void MatrixMultiplyMatrixScalar()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixMultiplyMatrixScalar(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             double scalar = 3.0;
@@ -75,9 +87,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m4);
         }
 
-        [Fact]
-        public void MatrixMultipyMatrixMatrixFluent()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixMultipyMatrixMatrixFluent(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
             Matrix testMatrix3 = Setup.GetTestMatrix3();
 
@@ -89,9 +103,11 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m1);
         }
 
-        [Fact]
-        public void MatrixMultiplyMatrixScalarFluent()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixMultiplyMatrixScalarFluent(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
 
             double scalar = 3.0;
@@ -103,15 +119,16 @@ namespace csMatrix.Tests
             Assert.Equal(expected, m);
         }
 
-        [Fact]
-        public void MatrixMultiplyNullScalar()
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixMultiplyNullScalar(IMatrixArithmetic arithmetic)
         {
+            Matrix.Arithmetic = arithmetic;
             double scalar = 3.0;
             Assert.Throws<NullReferenceException>(() => Matrix.Multiply(null, scalar));
             Matrix m1 = null;
             Assert.Throws<NullReferenceException>(() => m1.Multiply(scalar));
             Assert.Throws<NullReferenceException>(() => m1 * scalar);
         }
-        #endregion
     }
 }
