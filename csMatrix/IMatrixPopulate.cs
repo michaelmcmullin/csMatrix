@@ -12,5 +12,6 @@ namespace csMatrix
         void Number(Matrix m, double number);
         void Rand(Matrix m, int seed);
         void Identity(Matrix m);
+        void Magic(Matrix m);
     }
 }

@@ -6,6 +6,26 @@ namespace csMatrix.TransposeOperations
 {
     public class Basic : IMatrixTransposeOperations
     {
+        public Matrix MultiplyByTranspose(Matrix m1, Matrix m2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Matrix MultiplyByTranspose(Matrix m)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Matrix MultiplyTransposeBy(Matrix m1, Matrix m2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Matrix MultiplyTransposeBy(Matrix m1)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Get the transposed version of a Matrix (swap rows and columns)
         /// </summary>

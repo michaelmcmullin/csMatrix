@@ -6,6 +6,36 @@ namespace csMatrix.RowColumnOperations
 {
     public class Basic : IMatrixRowColumn
     {
+        public Matrix AddColumns(Matrix m, int column, int count, double value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Matrix AddRows(Matrix m, int row, int count, double value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Matrix GetColumns(Matrix m, int column, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Matrix GetRows(Matrix m, int ro1, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Matrix RemoveColumns(Matrix m, int column, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Matrix RemoveRows(Matrix m, int row, int count)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Swap two columns in a given Matrix.
         /// </summary>

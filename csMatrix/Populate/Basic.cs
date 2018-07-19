@@ -54,5 +54,10 @@ namespace csMatrix.Populate
                 m[i] = random.NextDouble();
             }
         }
+
+        public void Magic(Matrix m)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
