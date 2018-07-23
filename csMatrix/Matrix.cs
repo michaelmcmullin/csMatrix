@@ -38,6 +38,7 @@ namespace csMatrix
             Populate = new csMatrix.Populate.Basic();
             TransposeOperations = new csMatrix.TransposeOperations.Basic();
             InverseOperations = new csMatrix.InverseOperations.Basic();
+            Operations = new csMatrix.Operations.Basic();
         }
 
         /// <summary>
@@ -148,6 +149,11 @@ namespace csMatrix
         /// The class used to perform inverse Matrix operations
         /// </summary>
         public static IMatrixInverseOperations InverseOperations { get; set; }
+
+        /// <summary>
+        /// The class used to perform general Matrix operations
+        /// </summary>
+        public static IMatrixOperations Operations { get; set; }
 
         /// <summary>
         /// Indicates whether or not this Matrix row and column dimensions are equal.
@@ -876,6 +882,25 @@ namespace csMatrix
             return this;
         }
         #endregion
+
+        #region Operations
+        /// <summary>
+        /// Joins another Matrix onto this one.
+        /// </summary>
+        /// <param name="m">The Matrix to join to this one</param>
+        /// <param name="dimension">Determines whether the second Matrix should be
+        /// joined to this one by adding rows, columns, or automatically determine
+        /// the most suitable dimension.</param>
+        /// <returns>A reference to this instance after joining.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the
+        /// two Matrix instances don't share the correct number of elements along
+        /// the specified dimension.</exception>
+        public Matrix Join(Matrix m, MatrixDimension dimension)
+        {
+            Load(Operations.Join(this, m, dimension));
+            return this;
+        }
+        #endregion
         #endregion
 
         #region Static Methods
@@ -1074,6 +1099,26 @@ namespace csMatrix
         public static Matrix Inverse(Matrix m)
         {
             return InverseOperations.Inverse(m);
+        }
+        #endregion
+
+        #region Operations
+        /// <summary>
+        /// Joins two Matrix instances together.
+        /// </summary>
+        /// <param name="m1">The first Matrix to join.</param>
+        /// <param name="m2">The second Matrix to join to the first.</param>
+        /// <param name="dimension">Determines whether the second Matrix should be
+        /// joined to this one by adding rows, columns, or automatically determine
+        /// the most suitable dimension.</param>
+        /// <returns>A Matrix that consists of both input Matrix instances joined
+        /// into one single Matrix.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the
+        /// two Matrix instances don't share the correct number of elements along
+        /// the specified dimension.</exception>
+        public static Matrix Join(Matrix m1, Matrix m2, MatrixDimension dimension)
+        {
+            return Operations.Join(m1, m2, dimension);
         }
         #endregion
         #endregion
