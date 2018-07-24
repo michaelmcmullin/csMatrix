@@ -113,6 +113,23 @@ namespace csMatrix
         }
 
         /// <summary>
+        /// Constructor to create a new Matrix based on an existing one-dimensional array.
+        /// </summary>
+        /// <param name="rows">The number of rows to initialise the Matrix with.</param>
+        /// <param name="cols">The number of columns to initialise the Matrix with.</param>
+        /// <param name="data">The array to specify values for a new Matrix.</param>
+        /// <exception cref="NullReferenceException">Thrown when the array is null.</exception>
+        public Matrix(int rows, int columns, double[] data) : this(rows, columns)
+        {
+            if ((rows * columns) != data.GetLength(0))
+                throw new InvalidMatrixDimensionsException("Data array does not fit the required Matrix dimensions.");
+            for(int index = 0; index < data.GetLength(0); index++)
+            {
+                this[index] = data[index];
+            }
+        }
+
+        /// <summary>
         /// Constructor to create a new Matrix based on an existing Matrix.
         /// </summary>
         /// <param name="m">The existing Matrix to specify values for a new Matrix.</param>
@@ -900,6 +917,34 @@ namespace csMatrix
             Load(Operations.Join(this, m, dimension));
             return this;
         }
+
+        public Matrix ReduceDimension(MatrixDimension dimension, Func<double, double, double> op)
+        {
+            Load(Operations.ReduceDimension(this, dimension, op));
+            return this;
+        }
+
+        public Matrix StatisticalReduce(MatrixDimension dimension, Func<Matrix, double> op)
+        {
+            Load(Operations.StatisticalReduce(this, dimension, op));
+            return this;
+        }
+
+        /// <summary>
+        /// Rearrange this Matrix, filling in each column sequentially.
+        /// </summary>
+        /// <param name="startingIndex">The zero-based starting index of the Matrix to start
+        /// extracting data from.</param>
+        /// <param name="rows">The number of rows in the reshaped Matrix.</param>
+        /// <param name="columns">The number of columns in the reshaped Matrix.</param>
+        /// <returns>A reference to this Matrix after reshaping.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
+        /// enough elements to fill</exception>
+        public Matrix Reshape(int startingIndex, int newRows, int newColumns)
+        {
+            Load(Operations.Reshape(this, startingIndex, newRows, newColumns));
+            return this;
+        }
         #endregion
         #endregion
 
@@ -1119,6 +1164,32 @@ namespace csMatrix
         public static Matrix Join(Matrix m1, Matrix m2, MatrixDimension dimension)
         {
             return Operations.Join(m1, m2, dimension);
+        }
+
+        public static Matrix ReduceDimension(Matrix m, MatrixDimension dimension, Func<double, double, double> op)
+        {
+            return Operations.ReduceDimension(m, dimension, op);
+        }
+
+        public static Matrix StatisticalReduce(Matrix m, MatrixDimension dimension, Func<Matrix, double> op)
+        {
+            return Operations.StatisticalReduce(m, dimension, op);
+        }
+
+		/// <summary>
+		/// Extract a new Matrix from an existing one, filling in each column sequentially.
+		/// </summary>
+		/// <param name="m">The Matrix to extract data from.</param>
+        /// <param name="startingIndex">The zero-based starting index of the Matrix to start
+        /// extracting data from.</param>
+        /// <param name="rows">The number of rows in the reshaped Matrix.</param>
+        /// <param name="columns">The number of columns in the reshaped Matrix.</param>
+        /// <returns>A reference to this Matrix after reshaping.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
+        /// enough elements to fill the new Matrix.</exception>
+        public static Matrix Reshape(Matrix m, int startingIndex, int newRows, int newColumns)
+        {
+            return Operations.Reshape(m, startingIndex, newRows, newColumns);
         }
         #endregion
         #endregion

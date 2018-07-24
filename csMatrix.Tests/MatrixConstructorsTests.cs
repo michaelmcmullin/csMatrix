@@ -70,6 +70,37 @@ namespace csMatrix.Tests
         }
 
         [Fact]
+        public void MatrixConstructorSingleArray()
+        {
+            double[] arr = { 1, 2, 3, 4, 5, 6 };
+            int rows = 3;
+            int columns = 2;
+            Matrix m = new Matrix(rows, columns, arr);
+            Matrix expected = new Matrix(new double[,] { { 1, 2, 3 }, { 4, 5, 6 } });
+        }
+
+        [Fact]
+        public void MatrixConstructorSingleArrayNull()
+        {
+            double[] arr = null;
+            Assert.Throws<NullReferenceException>(() => new Matrix(3, 4, arr));
+        }
+
+        [Fact]
+        public void MatrixConstructorSingleArrayTooFewDimensions()
+        {
+            double[] arr = { 1, 2, 3, 4, 5, 6 };
+            Assert.Throws<InvalidMatrixDimensionsException>(() => new Matrix(1, 1, arr));
+        }
+
+        [Fact]
+        public void MatrixConstructorSingleArrayTooManyDimensions()
+        {
+            double[] arr = { 1, 2, 3, 4, 5, 6 };
+            Assert.Throws<InvalidMatrixDimensionsException>(() => new Matrix(10, 5, arr));
+        }
+
+        [Fact]
         public void MatrixConstructorMatrix()
         {
             int rows = 3, columns = 2;
