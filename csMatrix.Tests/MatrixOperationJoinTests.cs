@@ -3,7 +3,7 @@ using Xunit;
 
 namespace csMatrix.Tests
 {
-    public class MatrixMethodsOperationJoinTests
+    public class MatrixOperationJoinTests
     {
         [Fact]
         public void MatrixOperationsJoinRows()

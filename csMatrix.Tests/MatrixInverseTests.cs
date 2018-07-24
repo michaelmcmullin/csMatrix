@@ -3,7 +3,7 @@ using Xunit;
 
 namespace csMatrix.Tests
 {
-    public class MatrixMethodsInverseTests
+    public class MatrixInverseTests
     {
         [Fact]
         public void MatrixInverseSquareMatrix()

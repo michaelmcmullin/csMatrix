@@ -3,7 +3,7 @@ using Xunit;
 
 namespace csMatrix.Tests
 {
-    public class MatrixMethodsEqualityTests
+    public class MatrixEqualityTests
     {
         [Fact]
         public void MatrixEquals()

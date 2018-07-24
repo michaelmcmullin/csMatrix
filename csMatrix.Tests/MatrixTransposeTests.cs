@@ -3,7 +3,7 @@ using Xunit;
 
 namespace csMatrix.Tests
 {
-    public class MatrixMethodsTransposeTests
+    public class MatrixTransposeTests
     {
         [Fact]
         public void MatrixTransposeSwapDimensions()

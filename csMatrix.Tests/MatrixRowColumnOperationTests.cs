@@ -3,7 +3,7 @@ using Xunit;
 
 namespace csMatrix.Tests
 {
-    public class MatrixMethodsRowColumnOperationTests
+    public class MatrixRowColumnOperationTests
     {
         [Theory]
         [InlineData(1, 2)]

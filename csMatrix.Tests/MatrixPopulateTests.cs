@@ -1,9 +1,11 @@
-﻿using System;
+﻿
+
+using System;
 using Xunit;
 
 namespace csMatrix.Tests
 {
-    public class MatrixMethodsPopulateTests
+    public class MatrixPopulateTests
     {
         [Fact]
         public void MatrixFillDouble()

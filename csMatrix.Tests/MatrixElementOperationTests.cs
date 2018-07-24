@@ -4,7 +4,7 @@ using Xunit;
 
 namespace csMatrix.Tests
 {
-    public class MatrixMethodsElementOperationTests
+    public class MatrixElementOperationTests
     {
         public static IEnumerable<object[]> GetObjects = Setup.GetIMatrixArithmetic;
 
