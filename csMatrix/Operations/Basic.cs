@@ -70,9 +70,44 @@ namespace csMatrix.Operations
             throw new NotImplementedException();
         }
 
-        public Matrix Reshape(Matrix m, int startingIndex, int rows, int columns)
+        /// <summary>
+        /// Extract a new Matrix from an existing one, filling in each column sequentially.
+        /// </summary>
+        /// <param name="m">The Matrix to extract data from.</param>
+        /// <param name="startingIndex">The zero-based starting index of the Matrix to start
+        /// extracting data from.</param>
+        /// <param name="rows">The number of rows in the reshaped Matrix.</param>
+        /// <param name="columns">The number of columns in the reshaped Matrix.</param>
+        /// <returns>A reference to this Matrix after reshaping.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
+        /// enough elements to fill the new Matrix.</exception>
+        public Matrix Extract(Matrix m, int startingIndex, int rows, int columns)
         {
-            throw new NotImplementedException();
+            if (startingIndex < 0 || startingIndex >= m.Size)
+                throw new IndexOutOfRangeException("startingIndex is not set to a valid index.");
+            if (m.Size < (startingIndex + (rows * columns)))
+                throw new InvalidMatrixDimensionsException("There are not enough elements in the Matrix to extract.");
+            int startRow = startingIndex / m.Columns;
+            int startColumn = startingIndex % m.Columns;
+            if (startRow + rows > m.Rows)
+                throw new InvalidMatrixDimensionsException("There are not enough rows in the Matrix to extract.");
+            if (startColumn + columns > m.Columns)
+                throw new InvalidMatrixDimensionsException("There are not enough columns in the Matrix to extract.");
+
+            Matrix output = new Matrix(rows, columns);
+
+            int dataIndex = startingIndex;
+            int step = m.Columns - columns;
+            for (int i = 0; i < columns; i++)
+            {
+                dataIndex = startingIndex + i;
+                for (int j = 0; j < rows; j++)
+                {
+                    output[j, i] = m[dataIndex];
+                    dataIndex += m.Columns;
+                }
+            }
+            return output;
         }
 
         public Matrix StatisticalReduce(Matrix m, MatrixDimension dimension, Func<Matrix, double> op)

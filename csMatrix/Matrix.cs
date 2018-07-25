@@ -940,9 +940,9 @@ namespace csMatrix
         /// <returns>A reference to this Matrix after reshaping.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
         /// enough elements to fill</exception>
-        public Matrix Reshape(int startingIndex, int newRows, int newColumns)
+        public Matrix Extract(int startingIndex, int newRows, int newColumns)
         {
-            Load(Operations.Reshape(this, startingIndex, newRows, newColumns));
+            Load(Operations.Extract(this, startingIndex, newRows, newColumns));
             return this;
         }
         #endregion
@@ -1187,9 +1187,9 @@ namespace csMatrix
         /// <returns>A reference to this Matrix after reshaping.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
         /// enough elements to fill the new Matrix.</exception>
-        public static Matrix Reshape(Matrix m, int startingIndex, int newRows, int newColumns)
+        public static Matrix Extract(Matrix m, int startingIndex, int newRows, int newColumns)
         {
-            return Operations.Reshape(m, startingIndex, newRows, newColumns);
+            return Operations.Extract(m, startingIndex, newRows, newColumns);
         }
         #endregion
         #endregion
