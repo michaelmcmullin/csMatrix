@@ -814,6 +814,20 @@ namespace csMatrix
             }
             return this;
         }
+
+        /// <summary>
+        /// Multiply this instance by the transpose of a second Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to multiply this instance by its transpose.</param>
+        /// <returns>A reference to this instance after being multiplied by the
+        /// transpose of the given Matrix.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the two Matrix
+        /// instances have incompatible dimensions for multiplication.</exception>
+        public Matrix MultiplyByTranspose(Matrix m)
+        {
+            Load(TransposeOperations.MultiplyByTranspose(this, m));
+            return this;
+        }
         #endregion
 
         #region Inverse
@@ -1129,6 +1143,21 @@ namespace csMatrix
         {
             return TransposeOperations.Transpose(m);
         }
+
+        /// <summary>
+        /// Multiply one Matrix by the transpose of a second Matrix.
+        /// </summary>
+        /// <param name="m1">The Matrix to multiply.</param>
+        /// <param name="m2">The Matrix to multiply the first Matrix by its transpose.</param>
+        /// <returns>A new Matrix with the result of multiplying Matrix m1 by the transpose
+        /// of Matrix m2.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the two Matrix
+        /// instances have incompatible dimensions for multiplication.</exception>
+        public static Matrix MultiplyByTranspose(Matrix m1, Matrix m2)
+        {
+            return TransposeOperations.MultiplyByTranspose(m1, m2);
+        }
+
         #endregion
 
         #region Inverse

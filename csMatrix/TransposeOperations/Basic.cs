@@ -6,9 +6,38 @@ namespace csMatrix.TransposeOperations
 {
     public class Basic : IMatrixTransposeOperations
     {
+        /// <summary>
+        /// Multiply one Matrix by the transpose of a second Matrix.
+        /// </summary>
+        /// <param name="m1">The Matrix to multiply.</param>
+        /// <param name="m2">The Matrix to multiply the first Matrix by its transpose.</param>
+        /// <returns>A new Matrix with the result of multiplying Matrix m1 by the transpose
+        /// of Matrix m2.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the two Matrix
+        /// instances have incompatible dimensions for multiplication.</exception>
         public Matrix MultiplyByTranspose(Matrix m1, Matrix m2)
         {
-            throw new NotImplementedException();
+            if (m1.Columns != m2.Columns)
+            {
+                throw new InvalidMatrixDimensionsException("Cannot multiply by transpose because the second Matrix has a different number of columns to the first.");
+            }
+
+            Matrix result = new Matrix(m1.Rows, m2.Rows);
+
+            for (int row = 0; row < m1.Rows; row++)
+            {
+                for (int column = 0; column < m2.Rows; column++)
+                {
+                    double sum = 0;
+                    for (int i = 0; i < m2.Columns; i++)
+                    {
+                        sum += (m1[row, i] * m2[column, i]);
+                    }
+                    result[row, column] = sum;
+                }
+            }
+
+            return result;
         }
 
         public Matrix MultiplyByTranspose(Matrix m)
