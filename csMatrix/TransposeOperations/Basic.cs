@@ -40,9 +40,30 @@ namespace csMatrix.TransposeOperations
             return result;
         }
 
+        /// <summary>
+        /// Multiply a Matrix by its own transpose.
+        /// </summary>
+        /// <param name="m">The Matrix to multiply by its own transpose.</param>
+        /// <returns>A new Matrix with the result of multiplying Matrix m by the transpose
+        /// of itself.</returns>
         public Matrix MultiplyByTranspose(Matrix m)
         {
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m.Rows, m.Rows);
+
+            for (int row = 0; row < m.Rows; row++)
+            {
+                for (int column = 0; column < m.Rows; column++)
+                {
+                    double sum = 0;
+                    for (int i = 0; i < m.Columns; i++)
+                    {
+                        sum += (m[row, i] * m[column, i]);
+                    }
+                    result[row, column] = sum;
+                }
+            }
+
+            return result;
         }
 
         public Matrix MultiplyTransposeBy(Matrix m1, Matrix m2)

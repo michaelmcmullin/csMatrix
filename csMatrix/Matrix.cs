@@ -828,6 +828,17 @@ namespace csMatrix
             Load(TransposeOperations.MultiplyByTranspose(this, m));
             return this;
         }
+
+        /// <summary>
+        /// Multiply this Matrix instance by its own transpose.
+        /// </summary>
+        /// <returns>A reference to this instance after being multiplied by its
+        /// transpose.</returns>
+        public Matrix MultiplyByOwnTranspose()
+        {
+            Load(TransposeOperations.MultiplyByTranspose(this));
+            return this;
+        }
         #endregion
 
         #region Inverse
@@ -1156,6 +1167,16 @@ namespace csMatrix
         public static Matrix MultiplyByTranspose(Matrix m1, Matrix m2)
         {
             return TransposeOperations.MultiplyByTranspose(m1, m2);
+        }
+
+        /// <summary>
+        /// Multiply a Matrix by its transpose.
+        /// </summary>
+        /// <param name="m">The Matrix to multiply by its transpose.</param>
+        /// <returns>The result of multiplying m1 with its transpose.</returns>
+        public static Matrix MultiplyByOwnTranspose(Matrix m)
+        {
+            return TransposeOperations.MultiplyByTranspose(m);
         }
 
         #endregion
