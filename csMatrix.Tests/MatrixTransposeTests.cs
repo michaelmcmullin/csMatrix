@@ -181,13 +181,47 @@ namespace csMatrix.Tests
             Assert.True(expected == test2);
         }
 
-        /*
         [Fact]
         public void MatrixMultiplyTransposeByMatrixMatrix()
         {
+            Matrix m1 = Matrix.Transpose(Setup.GetTestMatrix1());
+            Matrix m2 = Setup.GetTestMatrix2();
+            Matrix expected = m1 * m2;
 
+            Matrix test1 = Matrix.MultiplyTransposeBy(Setup.GetTestMatrix1(), m2);
+            Matrix test2 = Setup.GetTestMatrix1();
+            test2.MultiplyTransposeBy(Setup.GetTestMatrix2());
+
+            Assert.True(test1 == expected);
+            Assert.True(test2 == expected);
         }
 
+        [Fact]
+        public void MatrixMultiplyTransposeByMatrixSwapDimensionsMatrix()
+        {
+            Matrix m1 = Setup.GetTestMatrix3();
+            Matrix m2 = Setup.GetTestMatrix1();
+            Matrix expected = m1 * m2;
+
+            Matrix test1 = Matrix.MultiplyTransposeBy(m1.Transpose(true), Setup.GetTestMatrix1());
+            Matrix test2 = Setup.GetTestMatrix3().Transpose(true);
+            test2.MultiplyTransposeBy(Setup.GetTestMatrix1());
+
+            Assert.True(test1 == expected);
+            Assert.True(test2 == expected);
+        }
+
+        [Fact]
+        public void MatrixMultiplyTransposeByMatrixMatrixInvalidDimensions()
+        {
+            Matrix m1 = Setup.GetTestMatrix3();
+            Matrix m2 = Setup.GetTestMatrix1();
+
+            Assert.Throws<InvalidMatrixDimensionsException>(() => m1.MultiplyTransposeBy(m2));
+            Assert.Throws<InvalidMatrixDimensionsException>(() => Matrix.MultiplyTransposeBy(m1, m2));
+        }
+
+        /*
         [Fact]
         public void MatrixMultiplyTransposeByMatrix()
         {
