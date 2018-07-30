@@ -23,19 +23,31 @@ namespace csMatrix.Tests
         [Fact]
         public void MatrixSwapRowsFirstSecond()
         {
-            Matrix m = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
+            Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
+            Matrix m2 = new Matrix(m1);
             Matrix expected = new Matrix(new double[,] { { 4.0, 5.0, 6.0 }, { 1.0, 2.0, 3.0 }, { 7.0, 8.0, 9.0 } });
-            m.SwapRows(0, 1);
-            Assert.Equal(expected, m);
+
+            m1.SwapRows(0, 1);
+            Matrix test = Matrix.SwapRows(m2, 0, 1);
+
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, test);
+            Assert.NotEqual(m2, test); // Ensures m2 wasn't mutated.
         }
 
         [Fact]
         public void MatrixSwapRowsLastSecondLast()
         {
-            Matrix m = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
-            Matrix expected = new Matrix(new double[,] { { 4.0, 5.0, 6.0 }, { 1.0, 2.0, 3.0 }, { 7.0, 8.0, 9.0 } });
-            m.SwapRows(0, 1);
-            Assert.Equal(expected, m);
+            Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
+            Matrix m2 = new Matrix(m1);
+            Matrix expected = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 7.0, 8.0, 9.0 }, { 4.0, 5.0, 6.0 } });
+
+            m1.SwapRows(1, 2);
+            Matrix test = Matrix.SwapRows(m2, 1, 2);
+
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, test);
+            Assert.NotEqual(m2, test); // Ensures m2 wasn't mutated.
         }
 
         [Fact]
@@ -43,24 +55,37 @@ namespace csMatrix.Tests
         {
             Matrix m = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
             Assert.Throws<IndexOutOfRangeException>(() => m.SwapRows(m.Rows, 0));
+            Assert.Throws<IndexOutOfRangeException>(() => Matrix.SwapRows(m, m.Rows, 0));
         }
 
         [Fact]
         public void MatrixSwapColumnsFirstSecond()
         {
-            Matrix m = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
+            Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
+            Matrix m2 = new Matrix(m1);
             Matrix expected = new Matrix(new double[,] { { 2.0, 1.0, 3.0 }, { 5.0, 4.0, 6.0 }, { 8.0, 7.0, 9.0 } });
-            m.SwapColumns(0, 1);
-            Assert.Equal(expected, m);
+
+            m1.SwapColumns(0, 1);
+            Matrix test = Matrix.SwapColumns(m2, 0, 1);
+
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, test);
+            Assert.NotEqual(m2, test); // Ensures m2 wasn't mutated.
         }
 
         [Fact]
         public void MatrixSwapColumnsLastSecondLast()
         {
-            Matrix m = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
+            Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
+            Matrix m2 = new Matrix(m1);
             Matrix expected = new Matrix(new double[,] { { 1.0, 3.0, 2.0 }, { 4.0, 6.0, 5.0 }, { 7.0, 9.0, 8.0 } });
-            m.SwapColumns(m.Columns - 1, m.Columns - 2);
-            Assert.Equal(expected, m);
+
+            m1.SwapColumns(m1.Columns - 1, m1.Columns - 2);
+            Matrix test = Matrix.SwapColumns(m2, m2.Columns - 1, m2.Columns - 2);
+
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, test);
+            Assert.NotEqual(m2, test); // Ensures m2 wasn't mutated.
         }
 
         [Fact]
@@ -68,6 +93,7 @@ namespace csMatrix.Tests
         {
             Matrix m = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 } });
             Assert.Throws<IndexOutOfRangeException>(() => m.SwapColumns(m.Columns, 0));
+            Assert.Throws<IndexOutOfRangeException>(() => Matrix.SwapColumns(m, m.Columns, 0));
         }
     }
 }

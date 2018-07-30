@@ -1169,6 +1169,38 @@ namespace csMatrix
         }
         #endregion
 
+        #region Rows/Columns
+        /// <summary>
+        /// Swap two rows in a given Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to swap rows in.</param>
+        /// <param name="row1">The first row to swap.</param>
+        /// <param name="row2">The second row to swap.</param>
+        /// <returns>A new Matrix with the rows swapped.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when called with non-existent rows.</exception>
+        public static Matrix SwapRows(Matrix m, int row1, int row2)
+        {
+            Matrix result = new Matrix(m);
+            RowColumnOperations.SwapRows(result, row1, row2);
+            return result;
+        }
+
+        /// <summary>
+        /// Swap two columns in a given Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to swap columns in.</param>
+        /// <param name="column1">The first column to swap.</param>
+        /// <param name="column2">The second column to swap.</param>
+        /// <returns>A new Matrix with the columns swapped.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when called with non-existent columns.</exception>
+        public static Matrix SwapColumns(Matrix m, int column1, int column2)
+        {
+            Matrix result = new Matrix(m);
+            RowColumnOperations.SwapColumns(result, column1, column2);
+            return result;
+        }
+        #endregion
+
         #region Transpose
         /// <summary>
         /// Get the transposed version of the given Matrix (swap rows and columns).
