@@ -221,11 +221,34 @@ namespace csMatrix.Tests
             Assert.Throws<InvalidMatrixDimensionsException>(() => Matrix.MultiplyTransposeBy(m1, m2));
         }
 
-        /*
         [Fact]
         public void MatrixMultiplyTransposeByMatrix()
         {
+            Matrix m1 = Matrix.Transpose(Setup.GetTestMatrix1());
+            Matrix m2 = Setup.GetTestMatrix1();
+            Matrix expected = m1 * m2;
 
-        }*/
+            Matrix test1 = Matrix.MultiplyOwnTransposeBy(Setup.GetTestMatrix1());
+            Matrix test2 = Setup.GetTestMatrix1();
+            test2.MultiplyOwnTransposeBy();
+
+            Assert.True(expected == test1);
+            Assert.True(expected == test2);
+        }
+
+        [Fact]
+        public void MatrixMultiplyTransposeByMatrixSwapDimensions()
+        {
+            Matrix m1 = Setup.GetTestMatrix1();
+            Matrix m2 = Matrix.Transpose(Setup.GetTestMatrix1());
+            Matrix expected = m1 * m2;
+
+            Matrix test1 = Matrix.MultiplyOwnTransposeBy(Setup.GetTestMatrix1().Transpose(true));
+            Matrix test2 = Setup.GetTestMatrix1().Transpose(true);
+            test2.MultiplyOwnTransposeBy();
+
+            Assert.True(expected == test1);
+            Assert.True(expected == test2);
+        }
     }
 }
