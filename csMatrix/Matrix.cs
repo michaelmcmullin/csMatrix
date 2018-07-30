@@ -788,6 +788,39 @@ namespace csMatrix
             RowColumnOperations.SwapColumns(this, column1, column2);
             return this;
         }
+
+        /// <summary>
+        /// Inserts a number of additional columns to this Matrix instance, populating them
+        /// with a given value.
+        /// </summary>
+        /// <param name="column">The column index to insert the new columns at.</param>
+        /// <param name="count">The number of columns to insert.</param>
+        /// <param name="value">The default value to add to the newly added columns.</param>
+        /// <returns>A reference to this instance after the columns have been added.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to add columns outside
+        /// the range of valid column indices (i.e. 0 to this.Columns).</exception>
+        public Matrix AddColumns(int column, int count, double value)
+        {
+            Load(RowColumnOperations.AddColumns(this, column, count, value));
+            return this;
+        }
+
+        /// <summary>
+        /// Inserts a number of additional rows to this Matrix instance, populating them
+        /// with a given value.
+        /// </summary>
+        /// <param name="row">The row index to insert the new columns at.</param>
+        /// <param name="count">The number of rows to insert.</param>
+        /// <param name="value">The default value to add to the newly added rows.</param>
+        /// <returns>A reference to this instance after the rows have been added.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to add rows outside
+        /// the range of valid row indices (i.e. 0 to this.Rows).</exception>
+        public Matrix AddRows(int row, int count, double value)
+        {
+            Load(RowColumnOperations.AddRows(this, row, count, value));
+            return this;
+        }
+
         #endregion
 
         #region Transpose
@@ -1198,6 +1231,36 @@ namespace csMatrix
             Matrix result = new Matrix(m);
             RowColumnOperations.SwapColumns(result, column1, column2);
             return result;
+        }
+
+        /// <summary>
+        /// Inserts a number of additional columns to a Matrix, populating them with a given value.
+        /// </summary>
+        /// <param name="m">The Matrix to add columns to.</param>
+        /// <param name="column">The column index to insert the new columns at.</param>
+        /// <param name="count">The number of columns to insert.</param>
+        /// <param name="value">The default value to add to the newly added columns.</param>
+        /// <returns>A new Matrix with the additional columns added.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to add columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
+        public static Matrix AddColumns(Matrix m, int column, int count, double value)
+        {
+            return RowColumnOperations.AddColumns(m, column, count, value);
+        }
+
+        /// <summary>
+        /// Inserts a number of additional rows to a Matrix, populating them with a given value.
+        /// </summary>
+        /// <param name="m">The Matrix to add rows to.</param>
+        /// <param name="row">The row index to insert the new columns at.</param>
+        /// <param name="count">The number of rows to insert.</param>
+        /// <param name="value">The default value to add to the newly added rows.</param>
+        /// <returns>A new Matrix with the additional rows added.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to add rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
+        public static Matrix AddRows(Matrix m, int row, int count, double value)
+        {
+            return RowColumnOperations.AddRows(m, row, count, value);
         }
         #endregion
 
