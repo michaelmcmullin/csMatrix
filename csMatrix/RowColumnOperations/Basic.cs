@@ -16,12 +16,12 @@ namespace csMatrix.RowColumnOperations
             throw new NotImplementedException();
         }
 
-        public Matrix GetColumns(Matrix m, int column, int count)
+        public Matrix ExtractColumns(Matrix m, int column, int count)
         {
             throw new NotImplementedException();
         }
 
-        public Matrix GetRows(Matrix m, int ro1, int count)
+        public Matrix ExtractRows(Matrix m, int ro1, int count)
         {
             throw new NotImplementedException();
         }

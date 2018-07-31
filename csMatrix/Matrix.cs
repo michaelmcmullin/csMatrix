@@ -821,6 +821,64 @@ namespace csMatrix
             return this;
         }
 
+        /// <summary>
+        /// Removes a number of columns from this Matrix instance.
+        /// </summary>
+        /// <param name="column">The column index to start removal from.</param>
+        /// <param name="count">The number of columns to remove.</param>
+        /// <returns>A reference to this Matrix after the specified columns have been removed.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
+        public Matrix RemoveColumns(int column, int count)
+        {
+            Load(RowColumnOperations.RemoveColumns(this, column, count));
+            return this;
+        }
+
+        /// <summary>
+        /// Removes a number of rows from this Matrix instance.
+        /// </summary>
+        /// <param name="m">The Matrix to remove rows from.</param>
+        /// <param name="row">The row index to start removal from.</param>
+        /// <param name="count">The number of rows to remove.</param>
+        /// <returns>A reference to this Matrix after the specified rows have been removed.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
+        public Matrix RemoveRows(int row, int count)
+        {
+            Load(RowColumnOperations.RemoveRows(this, row, count));
+            return this;
+        }
+
+        /// <summary>
+        /// Extract a number of columns from this Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="column">The column index to start extraction from.</param>
+        /// <param name="count">The number of columns to extract.</param>
+        /// <returns>A reference to this Matrix after the columns have been extracted
+        /// and the remaining columns discarded.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to extract columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
+        public Matrix ExtractColumns(int column, int count)
+        {
+            Load(RowColumnOperations.ExtractColumns(this, column, count));
+            return this;
+        }
+
+        /// <summary>
+        /// Extract a number of columns from this Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="row">The row index to start extraction from.</param>
+        /// <param name="count">The number of rows to extract.</param>
+        /// <returns>A reference to this Matrix after the rows have been extracted
+        /// and the remaining rows discarded.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
+        public Matrix ExtractRows(int row, int count)
+        {
+            Load(RowColumnOperations.ExtractRows(this, row, count));
+            return this;
+        }
         #endregion
 
         #region Transpose
@@ -1261,6 +1319,62 @@ namespace csMatrix
         public static Matrix AddRows(Matrix m, int row, int count, double value)
         {
             return RowColumnOperations.AddRows(m, row, count, value);
+        }
+
+        /// <summary>
+        /// Removes a number of columns from a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to remove columns from.</param>
+        /// <param name="column">The column index to start removal from.</param>
+        /// <param name="count">The number of columns to remove.</param>
+        /// <returns>A new Matrix with the specified columns removed.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
+        public static Matrix RemoveColumns(Matrix m, int column, int count)
+        {
+            return RowColumnOperations.RemoveColumns(m, column, count);
+        }
+
+        /// <summary>
+        /// Removes a number of rows from a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to remove rows from.</param>
+        /// <param name="row">The row index to start removal from.</param>
+        /// <param name="count">The number of rows to remove.</param>
+        /// <returns>A new Matrix with the specified rows removed.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
+        public static Matrix RemoveRows(Matrix m, int row, int count)
+        {
+            return RowColumnOperations.RemoveRows(m, row, count);
+        }
+
+        /// <summary>
+        /// Extract a number of columns from a Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="m">The Matrix to extract columns from.</param>
+        /// <param name="column">The column index to start extraction from.</param>
+        /// <param name="count">The number of columns to extract.</param>
+        /// <returns>A new Matrix containing the extracted columns.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to extract columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
+        public static Matrix ExtractColumns(Matrix m, int column, int count)
+        {
+            return RowColumnOperations.ExtractColumns(m, column, count);
+        }
+
+        /// <summary>
+        /// Extract a number of columns from this Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="m">The Matrix to extract rows from.</param>
+        /// <param name="row">The row index to start extraction from.</param>
+        /// <param name="count">The number of rows to extract.</param>
+        /// <returns>A new Matrix containing the extracted rows.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
+        public static Matrix ExtractRows(Matrix m, int row, int count)
+        {
+            return RowColumnOperations.ExtractRows(m, row, count);
         }
         #endregion
 
