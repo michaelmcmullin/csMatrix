@@ -801,7 +801,8 @@ namespace csMatrix
         /// the range of valid column indices (i.e. 0 to this.Columns).</exception>
         public Matrix AddColumns(int column, int count, double value)
         {
-            Load(RowColumnOperations.AddColumns(this, column, count, value));
+            if (count > 0)
+                Load(RowColumnOperations.AddColumns(this, column, count, value));
             return this;
         }
 
@@ -817,7 +818,8 @@ namespace csMatrix
         /// the range of valid row indices (i.e. 0 to this.Rows).</exception>
         public Matrix AddRows(int row, int count, double value)
         {
-            Load(RowColumnOperations.AddRows(this, row, count, value));
+            if (count > 0)
+                Load(RowColumnOperations.AddRows(this, row, count, value));
             return this;
         }
 
@@ -831,7 +833,8 @@ namespace csMatrix
         /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
         public Matrix RemoveColumns(int column, int count)
         {
-            Load(RowColumnOperations.RemoveColumns(this, column, count));
+            if (count > 0)
+                Load(RowColumnOperations.RemoveColumns(this, column, count));
             return this;
         }
 
@@ -846,7 +849,8 @@ namespace csMatrix
         /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
         public Matrix RemoveRows(int row, int count)
         {
-            Load(RowColumnOperations.RemoveRows(this, row, count));
+            if (count > 0)
+                Load(RowColumnOperations.RemoveRows(this, row, count));
             return this;
         }
 
@@ -1358,13 +1362,15 @@ namespace csMatrix
         /// <returns>A new Matrix containing the extracted columns.</returns>
         /// <exception cref="IndexOutOfRangeException">Thrown when attempting to extract columns outside
         /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when attempting to extract zero
+        /// columns.</exception>
         public static Matrix ExtractColumns(Matrix m, int column, int count)
         {
             return RowColumnOperations.ExtractColumns(m, column, count);
         }
 
         /// <summary>
-        /// Extract a number of columns from this Matrix, discarding the rest.
+        /// Extract a number of rows from this Matrix, discarding the rest.
         /// </summary>
         /// <param name="m">The Matrix to extract rows from.</param>
         /// <param name="row">The row index to start extraction from.</param>
@@ -1372,6 +1378,8 @@ namespace csMatrix
         /// <returns>A new Matrix containing the extracted rows.</returns>
         /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
         /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when attempting to extract zero
+        /// rows.</exception>
         public static Matrix ExtractRows(Matrix m, int row, int count)
         {
             return RowColumnOperations.ExtractRows(m, row, count);

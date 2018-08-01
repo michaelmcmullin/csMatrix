@@ -6,31 +6,91 @@ namespace csMatrix.RowColumnOperations
 {
     public class Basic : IMatrixRowColumn
     {
+        /// <summary>
+        /// Inserts a number of additional columns to a Matrix, populating them with a given value.
+        /// </summary>
+        /// <param name="m">The Matrix to add columns to.</param>
+        /// <param name="column">The column index to insert the new columns at.</param>
+        /// <param name="count">The number of columns to insert.</param>
+        /// <param name="value">The default value to add to the newly added columns.</param>
+        /// <returns>A new Matrix with the additional columns added.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to add columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
         public Matrix AddColumns(Matrix m, int column, int count, double value)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Inserts a number of additional rows to a Matrix, populating them with a given value.
+        /// </summary>
+        /// <param name="m">The Matrix to add rows to.</param>
+        /// <param name="row">The row index to insert the new columns at.</param>
+        /// <param name="count">The number of rows to insert.</param>
+        /// <param name="value">The default value to add to the newly added rows.</param>
+        /// <returns>A new Matrix with the additional rows added.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to add rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
         public Matrix AddRows(Matrix m, int row, int count, double value)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Extract a number of columns from a Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="m">The Matrix to extract columns from.</param>
+        /// <param name="column">The column index to start extraction from.</param>
+        /// <param name="count">The number of columns to extract.</param>
+        /// <returns>A new Matrix containing the extracted columns.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to extract columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when attempting to extract zero
+        /// columns.</exception>
         public Matrix ExtractColumns(Matrix m, int column, int count)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Extract a number of rows from this Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="m">The Matrix to extract rows from.</param>
+        /// <param name="row">The row index to start extraction from.</param>
+        /// <param name="count">The number of rows to extract.</param>
+        /// <returns>A new Matrix containing the extracted rows.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when attempting to extract zero
+        /// rows.</exception>
         public Matrix ExtractRows(Matrix m, int ro1, int count)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Removes a number of columns from a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to remove columns from.</param>
+        /// <param name="column">The column index to start removal from.</param>
+        /// <param name="count">The number of columns to remove.</param>
+        /// <returns>A new Matrix with the specified columns removed.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
         public Matrix RemoveColumns(Matrix m, int column, int count)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Removes a number of rows from a Matrix.
+        /// </summary>
+        /// <param name="m">The Matrix to remove rows from.</param>
+        /// <param name="row">The row index to start removal from.</param>
+        /// <param name="count">The number of rows to remove.</param>
+        /// <returns>A new Matrix with the specified rows removed.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
         public Matrix RemoveRows(Matrix m, int row, int count)
         {
             throw new NotImplementedException();
