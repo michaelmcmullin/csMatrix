@@ -13,7 +13,7 @@ namespace csMatrix
         void SwapRows(Matrix m, int row1, int row2);
         Matrix AddRows(Matrix m, int row, int count, double value);
         Matrix AddColumns(Matrix m, int column, int count, double value);
-        Matrix ExtractRows(Matrix m, int ro1, int count);
+        Matrix ExtractRows(Matrix m, int row, int count);
         Matrix ExtractColumns(Matrix m, int column, int count);
         Matrix RemoveRows(Matrix m, int row, int count);
         Matrix RemoveColumns(Matrix m, int column, int count);
