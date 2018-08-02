@@ -165,7 +165,22 @@ namespace csMatrix.RowColumnOperations
             if (column > m.Columns - 1 || column < 0)
                 throw new IndexOutOfRangeException($"Cannot remove a column at index {column}.");
             Matrix result = new Matrix(m.Rows, m.Columns - count);
-
+            int index = 0, resultIndex = 0, columnIndex;
+            while (resultIndex < result.Size)
+            {
+                columnIndex = 0;
+                while (columnIndex < m.Columns)
+                {
+                    if (columnIndex++ < column || columnIndex > column + count)
+                    {
+                        result[resultIndex++] = m[index++];
+                    }
+                    else
+                    {
+                        index++;
+                    }
+                }
+            }
 
             return result;
         }
