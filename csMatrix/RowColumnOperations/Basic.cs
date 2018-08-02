@@ -104,12 +104,20 @@ namespace csMatrix.RowColumnOperations
         {
             if (column > m.Columns - 1 || column < 0)
                 throw new IndexOutOfRangeException($"Cannot extract a column from index {column}.");
-            if ((column + count) > (m.Columns - 1))
+            if ((column + count) > (m.Columns))
                 throw new IndexOutOfRangeException("Number of columns requested is out of range.");
             if (count <= 0)
                 throw new InvalidMatrixDimensionsException($"Cannot extract a Matrix with {count} columns.");
-            Matrix result = new Matrix(m.Rows, count);
 
+            Matrix result = new Matrix(m.Rows, count);
+            int resultIndex = 0;
+            for (int r = 0; r < m.Rows; r++)
+            {
+                for (int c = column; c < (column + count); c++)
+                {
+                    result[resultIndex++] = m[r, c];
+                }
+            }
 
             return result;
         }
@@ -129,7 +137,7 @@ namespace csMatrix.RowColumnOperations
         {
             if (row > m.Rows - 1 || row < 0)
                 throw new IndexOutOfRangeException($"Cannot extract a row from index {row}.");
-            if ((row + count) > (m.Rows - 1))
+            if ((row + count) > (m.Rows))
                 throw new IndexOutOfRangeException("Number of rows requested is out of range.");
             if (count <= 0)
                 throw new InvalidMatrixDimensionsException($"Cannot extract a Matrix with {count} rows.");
