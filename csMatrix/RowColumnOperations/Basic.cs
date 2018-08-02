@@ -142,7 +142,11 @@ namespace csMatrix.RowColumnOperations
             if (count <= 0)
                 throw new InvalidMatrixDimensionsException($"Cannot extract a Matrix with {count} rows.");
             Matrix result = new Matrix(count, m.Columns);
-
+            int resultIndex = 0;
+            for (int i = row * m.Columns; resultIndex < result.Size; i++)
+            {
+                result[resultIndex++] = m[i];
+            }
 
             return result;
         }
