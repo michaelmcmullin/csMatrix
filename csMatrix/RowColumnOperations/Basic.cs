@@ -64,8 +64,27 @@ namespace csMatrix.RowColumnOperations
         {
             if (row > m.Rows || row < 0)
                 throw new IndexOutOfRangeException($"Cannot add a row at index {row}.");
-            Matrix result = new Matrix(m.Rows + count, m.Columns);
+            if (count == 0)
+                return new Matrix(m);
 
+            Matrix result = new Matrix(m.Rows + count, m.Columns);
+            int index = 0, resultIndex = 0, rowIndex = row * m.Columns;
+
+            while (resultIndex < result.Size)
+            {
+                if (index == rowIndex)
+                {
+                    for (int i = 0; i < count * m.Columns; i++)
+                    {
+                        result[resultIndex++] = value;
+                    }
+                    rowIndex = -1;
+                }
+                else
+                {
+                    result[resultIndex++] = m[index++];
+                }
+            }
 
             return result;
         }
