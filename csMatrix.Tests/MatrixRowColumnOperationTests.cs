@@ -170,8 +170,8 @@ namespace csMatrix.Tests
         public void MatrixAddColumnsOneAtEnd()
         {
             Matrix m1 = Setup.GetTestMatrix1();
-            Matrix m2 = Matrix.AddColumns(Setup.GetTestMatrix1(), m1.Rows, 1, 2.0);
-            m1.AddColumns(m1.Rows, 1, 2.0);
+            Matrix m2 = Matrix.AddColumns(Setup.GetTestMatrix1(), m1.Columns, 1, 2.0);
+            m1.AddColumns(m1.Columns, 1, 2.0);
 
             Matrix expected = new Matrix(new double[,] { { 1.0, 2.0, 3.0, 2.0 }, { 4.0, 5.0, 6.0, 2.0 } });
             Assert.True(expected == m1);

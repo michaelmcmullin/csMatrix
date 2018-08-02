@@ -20,7 +20,34 @@ namespace csMatrix.RowColumnOperations
         {
             if (column > m.Columns || column < 0)
                 throw new IndexOutOfRangeException($"Cannot add a column at index {column}.");
-            throw new NotImplementedException();
+            if (count == 0)
+                return new Matrix(m);
+
+            Matrix result = new Matrix(m.Rows, m.Columns + count);
+            int index = 0, resultIndex = 0, columnIndex = 0;
+
+            while(resultIndex < result.Size)
+            {
+                columnIndex = 0;
+                while (columnIndex < result.Columns)
+                {
+                    if (columnIndex == column)
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            result[resultIndex++] = value;
+                            columnIndex++;
+                        }
+                    }
+                    else
+                    {
+                        result[resultIndex++] = m[index++];
+                        columnIndex++;
+                    }
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -37,7 +64,10 @@ namespace csMatrix.RowColumnOperations
         {
             if (row > m.Rows || row < 0)
                 throw new IndexOutOfRangeException($"Cannot add a row at index {row}.");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m.Rows + count, m.Columns);
+
+
+            return result;
         }
 
         /// <summary>
@@ -59,7 +89,10 @@ namespace csMatrix.RowColumnOperations
                 throw new IndexOutOfRangeException("Number of columns requested is out of range.");
             if (count <= 0)
                 throw new InvalidMatrixDimensionsException($"Cannot extract a Matrix with {count} columns.");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m.Rows, count);
+
+
+            return result;
         }
 
         /// <summary>
@@ -81,7 +114,10 @@ namespace csMatrix.RowColumnOperations
                 throw new IndexOutOfRangeException("Number of rows requested is out of range.");
             if (count <= 0)
                 throw new InvalidMatrixDimensionsException($"Cannot extract a Matrix with {count} rows.");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(count, m.Columns);
+
+
+            return result;
         }
 
         /// <summary>
@@ -95,9 +131,12 @@ namespace csMatrix.RowColumnOperations
         /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
         public Matrix RemoveColumns(Matrix m, int column, int count)
         {
-            if (column > m.Columns || column < 0)
+            if (column > m.Columns - 1 || column < 0)
                 throw new IndexOutOfRangeException($"Cannot remove a column at index {column}.");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m.Rows, m.Columns - count);
+
+
+            return result;
         }
 
         /// <summary>
@@ -111,9 +150,12 @@ namespace csMatrix.RowColumnOperations
         /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
         public Matrix RemoveRows(Matrix m, int row, int count)
         {
-            if (row > m.Rows || row < 0)
+            if (row > m.Rows - 1 || row < 0)
                 throw new IndexOutOfRangeException($"Cannot remove a row at index {row}.");
-            throw new NotImplementedException();
+            Matrix result = new Matrix(m.Rows - count, m.Columns);
+
+
+            return result;
         }
 
         /// <summary>
