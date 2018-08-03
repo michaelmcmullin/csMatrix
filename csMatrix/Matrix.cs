@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace csMatrix
@@ -210,6 +211,11 @@ namespace csMatrix
         /// Indicates whether this Matrix is transposed (i.e. rows and columns are swapped)
         /// </summary>
         public bool IsTransposed { get; set; }
+
+        /// <summary>
+        /// Get the backing data array for this Matrix.
+        /// </summary>
+        public double[] Data { get { return data; } }
         #endregion
 
         #region Indexers
@@ -1068,7 +1074,6 @@ namespace csMatrix
         /// Run a given operation on all elements in a particular dimension to reduce that dimension
         /// to a single row or column.
         /// </summary>
-        /// <param name="m">The Matrix to operate on.</param>
         /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
         /// <param name="op">The delegate method to operate with.</param>
         /// <returns>A Matrix populated with the results of performing the given operation.</returns>
@@ -1082,6 +1087,16 @@ namespace csMatrix
             return this;
         }
 
+        /// <summary>
+        /// Run a set of operations on all elements in a particular dimension to reduce that dimension
+        /// to a single row, and then perform an aggregate operation to produce a statistical result.
+        /// </summary>
+        /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
+        /// <param name="operation">The delegate method to operate with.</param>
+        /// <remarks>If the current Matrix is a row or column vector, then a 1*1 Matrix
+        /// will be returned, regardless of which dimension is chosen. If the dimension is
+        /// set to 'Auto', then the first non-singleton dimension is chosen. If no singleton
+        /// dimension exists, then columns are used as the default.</remarks>
         public Matrix StatisticalReduce(MatrixDimension dimension, Func<Matrix, double> op)
         {
             Load(Operations.StatisticalReduce(this, dimension, op));
@@ -1511,6 +1526,17 @@ namespace csMatrix
             return Operations.ReduceDimension(m, dimension, op);
         }
 
+        /// <summary>
+        /// Run a set of operations on all elements in a particular dimension to reduce that dimension
+        /// to a single row, and then perform an aggregate operation to produce a statistical result.
+        /// </summary>
+        /// <param name="m">The Matrix to operate on.</param>
+        /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
+        /// <param name="operation">The delegate method to operate with.</param>
+        /// <remarks>If the current Matrix is a row or column vector, then a 1*1 Matrix
+        /// will be returned, regardless of which dimension is chosen. If the dimension is
+        /// set to 'Auto', then the first non-singleton dimension is chosen. If no singleton
+        /// dimension exists, then columns are used as the default.</remarks>
         public static Matrix StatisticalReduce(Matrix m, MatrixDimension dimension, Func<Matrix, double> op)
         {
             return Operations.StatisticalReduce(m, dimension, op);

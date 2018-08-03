@@ -95,7 +95,7 @@ namespace csMatrix.Operations
                     else
                     {
                         // No singleton case? Let's go with columns.
-                        goto case MatrixDimension.Columns; // goto?? Haven't used one in years, and it feels good!!!!
+                        goto case MatrixDimension.Columns;
                     }
                 case MatrixDimension.Columns:
                     result = new Matrix(1, m.Columns);
@@ -157,9 +157,56 @@ namespace csMatrix.Operations
             return output;
         }
 
+        /// <summary>
+        /// Run a set of operations on all elements in a particular dimension to reduce that dimension
+        /// to a single row, and then perform an aggregate operation to produce a statistical result.
+        /// </summary>
+        /// <param name="m">The Matrix to operate on.</param>
+        /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
+        /// <param name="operation">The delegate method to operate with.</param>
+        /// <remarks>If the current Matrix is a row or column vector, then a 1*1 Matrix
+        /// will be returned, regardless of which dimension is chosen. If the dimension is
+        /// set to 'Auto', then the first non-singleton dimension is chosen. If no singleton
+        /// dimension exists, then columns are used as the default.</remarks>
         public Matrix StatisticalReduce(Matrix m, MatrixDimension dimension, Func<Matrix, double> op)
         {
-            throw new NotImplementedException();
+            Matrix result = null;
+
+            switch (dimension)
+            {
+                case MatrixDimension.Auto:
+                    if (m.Rows == 1)
+                    {
+                        result = new Matrix(1, 1);
+                        result[0] = op(m);
+                        return result;
+                    }
+                    else if (m.Columns == 1)
+                    {
+                        result = new Matrix(1, 1);
+                        result[0] = op(m);
+                        return result;
+                    }
+                    else
+                    {
+                        // No singleton case? Let's go with columns.
+                        goto case MatrixDimension.Columns;
+                    }
+                case MatrixDimension.Columns:
+                    result = new Matrix(1, m.Columns);
+                    for (int i = 0; i < m.Columns; i++)
+                        result[i] = op(Matrix.ExtractColumns(m, i, 1));
+                    break;
+                case MatrixDimension.Rows:
+                    result = new Matrix(m.Rows, 1);
+                    for (int i = 0; i < m.Rows; i++)
+                        result[i] = op(Matrix.ExtractRows(m, i, 1));
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
         }
     }
 }
