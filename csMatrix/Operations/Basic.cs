@@ -65,9 +65,56 @@ namespace csMatrix.Operations
             return result;
         }
 
+        /// Run a given operation on all elements in a particular dimension to reduce that dimension
+        /// to a single row or column.
+        /// </summary>
+        /// <param name="m">The Matrix to operate on.</param>
+        /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
+        /// <param name="op">The delegate method to operate with.</param>
+        /// <returns>A Matrix populated with the results of performing the given operation.</returns>
+        /// <remarks>If the current Matrix is a row or column vector, then a 1*1 Matrix
+        /// will be returned, regardless of which dimension is chosen. If the dimension is
+        /// set to 'Auto', then the first non-singleton dimension is chosen. If no singleton
+        /// dimension exists, then columns are used as the default.</remarks>
         public Matrix ReduceDimension(Matrix m, MatrixDimension dimension, Func<double, double, double> op)
         {
-            throw new NotImplementedException();
+            Matrix result = null;
+
+            // Process calculations
+            switch (dimension)
+            {
+                case MatrixDimension.Auto:
+                    // Inspired by Octave, 'Auto' will process the first non-singleton dimension.
+                    if (m.Rows == 1 || m.Columns == 1)
+                    {
+                        result = new Matrix(1, 1);
+                        for (int i = 0; i < m.Size; i++)
+                            result[0] = op(result[0], m[i]);
+                        return result;
+                    }
+                    else
+                    {
+                        // No singleton case? Let's go with columns.
+                        goto case MatrixDimension.Columns; // goto?? Haven't used one in years, and it feels good!!!!
+                    }
+                case MatrixDimension.Columns:
+                    result = new Matrix(1, m.Columns);
+                    for (int i = 0; i < m.Size; i += m.Columns)
+                        for (int j = 0; j < m.Columns; j++)
+                            result[j] = op(result[j], m[i + j]);
+                    break;
+                case MatrixDimension.Rows:
+                    result = new Matrix(m.Rows, 1);
+                    int index = 0;
+                    for (int i = 0; i < m.Rows; i++)
+                        for (int j = 0; j < m.Columns; j++)
+                            result[i] = op(result[i], m[index++]);
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
         }
 
         /// <summary>

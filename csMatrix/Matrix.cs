@@ -707,6 +707,7 @@ namespace csMatrix
         }
         #endregion
 
+        #region Misc
         /// <summary>
         /// Checks if this Matrix has the same dimensions as another.
         /// </summary>
@@ -759,6 +760,7 @@ namespace csMatrix
                 return index;
             }
         }
+        #endregion
 
         #region Row/Column methods
         /// <summary>
@@ -1063,6 +1065,17 @@ namespace csMatrix
             return this;
         }
 
+        /// Run a given operation on all elements in a particular dimension to reduce that dimension
+        /// to a single row or column.
+        /// </summary>
+        /// <param name="m">The Matrix to operate on.</param>
+        /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
+        /// <param name="op">The delegate method to operate with.</param>
+        /// <returns>A Matrix populated with the results of performing the given operation.</returns>
+        /// <remarks>If the current Matrix is a row or column vector, then a 1*1 Matrix
+        /// will be returned, regardless of which dimension is chosen. If the dimension is
+        /// set to 'Auto', then the first non-singleton dimension is chosen. If no singleton
+        /// dimension exists, then columns are used as the default.</remarks>
         public Matrix ReduceDimension(MatrixDimension dimension, Func<double, double, double> op)
         {
             Load(Operations.ReduceDimension(this, dimension, op));
@@ -1482,6 +1495,17 @@ namespace csMatrix
             return Operations.Join(m1, m2, dimension);
         }
 
+        /// Run a given operation on all elements in a particular dimension to reduce that dimension
+        /// to a single row or column.
+        /// </summary>
+        /// <param name="m">The Matrix to operate on.</param>
+        /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
+        /// <param name="op">The delegate method to operate with.</param>
+        /// <returns>A Matrix populated with the results of performing the given operation.</returns>
+        /// <remarks>If the current Matrix is a row or column vector, then a 1*1 Matrix
+        /// will be returned, regardless of which dimension is chosen. If the dimension is
+        /// set to 'Auto', then the first non-singleton dimension is chosen. If no singleton
+        /// dimension exists, then columns are used as the default.</remarks>
         public static Matrix ReduceDimension(Matrix m, MatrixDimension dimension, Func<double, double, double> op)
         {
             return Operations.ReduceDimension(m, dimension, op);
