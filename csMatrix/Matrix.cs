@@ -179,6 +179,11 @@ namespace csMatrix
         public bool IsSquare => Rows == Columns;
 
         /// <summary>
+        /// Indicates whether or not this Matrix is a Magic Square.
+        /// </summary>
+        public bool IsMagic => Populate.IsMagic(this);
+
+        /// <summary>
         /// Get the dimensions of this Matrix in a single-dimensional array of the form
         /// [rows,columns].
         /// </summary>
@@ -1051,6 +1056,19 @@ namespace csMatrix
             Populate.Number(this, 1.0);
             return this;
         }
+
+        /// <summary>
+        /// Populates this Matrix such that the sum of each row, column or diagonal
+        /// equals the same constant.
+        /// </summary>
+        /// <returns>A reference to this Matrix instance.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the dimensions
+        /// of this Matrix are not square.</exception>
+        public Matrix Magic()
+        {
+            Populate.Magic(this);
+            return this;
+        }
         #endregion
 
         #region Operations
@@ -1071,6 +1089,7 @@ namespace csMatrix
             return this;
         }
 
+        /// <summary>
         /// Run a given operation on all elements in a particular dimension to reduce that dimension
         /// to a single row or column.
         /// </summary>

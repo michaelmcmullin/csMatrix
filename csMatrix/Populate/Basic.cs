@@ -55,9 +55,60 @@ namespace csMatrix.Populate
             }
         }
 
+        /// <summary>
+        /// Fills the Matrix with numbers such that the sum of each row, column and
+        /// diagonal results in the same constant.
+        /// </summary>
+        /// <param name="m">The Matrix to populate as a Magic Square.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown if the dimensions
+        /// of the given Matrix is not square.</exception>
         public void Magic(Matrix m)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Determines if a given Matrix is a Magic Square (i.e. the sum of each row, column
+        /// or diagonal results in the same constant).
+        /// </summary>
+        /// <param name="m">The Matrix to test.</param>
+        /// <returns>Returns true if Matrix m is a Magic Square; otherwise false.</returns>
+        /// <remarks>A Magic Square of order n contains the elements 1 to n squared.</remarks>
+        public bool IsMagic(Matrix m)
+        {
+            if (m.Columns != m.Rows) return false;
+            if (m.Columns == 2) return false;
+
+            double n = m.Columns;
+            double magicConstant = (n * ((n * n) + 1)) / 2;
+            double diagonalSum = 0;
+            double reverseDiagonalSum = 0;
+            var usedElements = new Dictionary<double, double>();
+
+            for (int i = 0; i < m.Rows; i++)
+            {
+                double rowSum = 0;
+                double columnSum = 0;
+
+                for (int j = 0; j < m.Columns; j++)
+                {
+                    double thisElement = m[i, j];
+
+                    rowSum += thisElement;
+                    columnSum += m[j, i];
+
+                    if (!usedElements.ContainsKey(thisElement))
+                        usedElements[thisElement] = 1;
+                    else
+                        return false; // This Matrix does not contain distinct numbers
+                }
+                if (rowSum != magicConstant || columnSum != magicConstant) return false;
+
+                diagonalSum += m[i, i];
+                reverseDiagonalSum += m[i, m.Columns - i - 1];
+            }
+
+            return reverseDiagonalSum == magicConstant && diagonalSum == magicConstant;
         }
     }
 }
