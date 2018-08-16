@@ -61,10 +61,77 @@ namespace csMatrix.Populate
         /// </summary>
         /// <param name="m">The Matrix to populate as a Magic Square.</param>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown if the dimensions
-        /// of the given Matrix is not square.</exception>
+        /// of the given Matrix is not square, or if they're of order 2.</exception>
         public void Magic(Matrix m)
         {
-            throw new NotImplementedException();
+            if (m.Rows != m.Columns)
+                throw new InvalidMatrixDimensionsException("Cannot fill a non-square Matrix as a Magic Square.");
+
+            int n = m.Rows;
+            if (n == 2)
+                throw new InvalidMatrixDimensionsException("A Magic Square cannot be of the order n=2.");
+            // Handle special cases first
+            if (n == 1)
+                m[0] = 1.0;
+
+            // Different dimension types use various methods to populate them:
+            if (n % 2 == 1)
+            {
+                // CASE 1: Populate where n is odd.
+                //
+                // Set the first value and initialize current position to
+                // halfway across the first row.
+                int startColumn = n >> 1;
+                int startRow = 0;
+                m[startRow, startColumn] = 1;
+
+                // Keep moving up and to the right until all squares are filled
+                int newRow, newColumn;
+
+                for (int i = 2; i <= n * n; i++)
+                {
+                    newRow = startRow - 1; newColumn = startColumn + 1;
+                    if (newRow < 0) newRow = n - 1;
+                    if (newColumn >= n) newColumn = 0;
+
+                    if (m[newRow, newColumn] > 0)
+                    {
+                        while (m[startRow, startColumn] > 0)
+                        {
+                            startRow++;
+                            if (startRow >= n) startRow = 0;
+                        }
+                    }
+                    else
+                    {
+                        startRow = newRow; startColumn = newColumn;
+                    }
+                    m[startRow, startColumn] = i;
+                }
+            }
+            else if (n % 4 == 0)
+            {
+                // CASE 2: Populate where n is double-even (divisible by 4).
+                //
+                double index = 1;
+                for (int i = 0, r = n - 1; i < n; i++, r--)
+                {
+                    for (int j = 0, c = n - 1; j < n; j++, c--)
+                    {
+                        // Fill in the diagonals
+                        if (i == j || (j + i + 1) == n)
+                        {
+                            m[i, j] = index;
+                        }
+                        else
+                        {
+                            // Otherwise, fill in diagonally opposite element
+                            m[r, c] = index;
+                        }
+                        index++;
+                    }
+                }
+            }
         }
 
         /// <summary>
