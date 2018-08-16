@@ -83,7 +83,6 @@ namespace csMatrix.Populate
             double magicConstant = (n * ((n * n) + 1)) / 2;
             double diagonalSum = 0;
             double reverseDiagonalSum = 0;
-            var usedElements = new Dictionary<double, double>();
 
             for (int i = 0; i < m.Rows; i++)
             {
@@ -96,11 +95,6 @@ namespace csMatrix.Populate
 
                     rowSum += thisElement;
                     columnSum += m[j, i];
-
-                    if (!usedElements.ContainsKey(thisElement))
-                        usedElements[thisElement] = 1;
-                    else
-                        return false; // This Matrix does not contain distinct numbers
                 }
                 if (rowSum != magicConstant || columnSum != magicConstant) return false;
 
