@@ -111,26 +111,67 @@ namespace csMatrix.Populate
             }
             else if (n % 4 == 0)
             {
-                // CASE 2: Populate where n is double-even (divisible by 4).
+                // CASE 2: Populate where n is doubly-even (divisible by 4).
                 //
-                double index = 1;
-                for (int i = 0, r = n - 1; i < n; i++, r--)
+                // Imagine 8 smaller squares, n/4 in size, running along each diagonal.
+                // Place the numbers in sequence if they don't fall inside one of these
+                // squares, otherwise place a number in reverse sequence (index2).
+                double index1 = 1;
+                double index2 = m.Size;
+
+                int n2 = n / 2;
+                int n4 = n / 4;
+                for (int row = 0; row < n; row++)
                 {
-                    for (int j = 0, c = n - 1; j < n; j++, c--)
+                    for (int column = 0; column < n; column++)
                     {
-                        // Fill in the diagonals
-                        if (i == j || (j + i + 1) == n)
+                        if (
+                            ((row >= n4 && row < n4 + n2) && (column < n4 || column >= n4 + n2)) ||
+                            ((column >= n4 && column < n4 + n2) && (row < n4 || row >= n4 + n2))
+                            )
                         {
-                            m[i, j] = index;
+                            m[row, column] = index1;
                         }
                         else
                         {
-                            // Otherwise, fill in diagonally opposite element
-                            m[r, c] = index;
+                            m[row, column] = index2;
                         }
-                        index++;
+                        index1++;
+                        index2--;
                     }
                 }
+            }
+            else
+            {
+                // CASE 3: Populate where n is singly-even (divisible by 2, but not 4).
+                //
+                // Divide into 4 quadrants, creating magic square in each.
+                int n2 = n / 2;
+                Matrix quadrant = new Matrix(n2);
+                quadrant.Magic();
+
+                // Offsets for each quadrant
+                double[] deltas = { 0, quadrant.Size, quadrant.Size * 2, quadrant.Size * 3 };
+
+                // Initialise other variables
+                int leftColumnCount = quadrant.Columns / 2;
+                int rightColumnCount = leftColumnCount - 1;
+                int midRow = leftColumnCount + 1;
+
+                // Initial population
+                for (int row = 0; row < n2; row++)
+                {
+                    for (int column = 0; column < n2; column++)
+                    {
+                        m[row, column] = quadrant[row, column]; // Quadrant A (TL)
+                        m[row + n2, column + n2] = quadrant[row, column] + deltas[1]; // Quadrant B (BR)
+                        m[row, column + n2] = quadrant[row, column] + deltas[2]; // Quadrant C (TR)
+                        m[row + n2, column] = quadrant[row, column] + deltas[3]; // Quadrant D (BL)
+                    }
+                }
+
+                // TODO: Swap relevant elements in quadrants A and D
+                // TODO: Swap relevant elements in quadrants C and B
             }
         }
 

@@ -99,6 +99,8 @@ namespace csMatrix.Tests
         [InlineData(5)]
         [InlineData(6)]
         [InlineData(8)]
+        [InlineData(10)]
+        [InlineData(12)]
         public void MatrixPopulateMagic(int dimension)
         {
             Matrix m = new Matrix(dimension);
