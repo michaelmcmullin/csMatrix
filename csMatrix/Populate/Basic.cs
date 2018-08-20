@@ -156,7 +156,7 @@ namespace csMatrix.Populate
                 // Initialise other variables
                 int leftColumnCount = quadrant.Columns / 2;
                 int rightColumnCount = leftColumnCount - 1;
-                int midRow = leftColumnCount + 1;
+                int midRow = leftColumnCount;
 
                 // Initial population
                 for (int row = 0; row < n2; row++)
@@ -170,8 +170,27 @@ namespace csMatrix.Populate
                     }
                 }
 
-                // TODO: Swap relevant elements in quadrants A and D
-                // TODO: Swap relevant elements in quadrants C and B
+                int swapRow, swapColumn;
+                double tmp;
+                for (int row = 0; row < n2; row++)
+                {
+                    swapRow = row + n2;
+                    // Swap relevant elements in quadrants A and D
+                    for (int column = 0; column < leftColumnCount; column++)
+                    {
+                        swapColumn = row == midRow ? column + 1 : column;
+                        tmp = m[row, swapColumn];
+                        m[row, swapColumn] = m[swapRow, swapColumn];
+                        m[swapRow, swapColumn] = tmp;
+                    }
+                    // Swap relevant elements in quadrants C and B
+                    for (int column = m.Columns - rightColumnCount; column < m.Columns; column++)
+                    {
+                        tmp = m[row, column];
+                        m[row, column] = m[swapRow, column];
+                        m[swapRow, column] = tmp;
+                    }
+                }
             }
         }
 
