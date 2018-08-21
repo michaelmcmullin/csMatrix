@@ -139,9 +139,10 @@ Hopefully that's enough to get you started. Detailed documentation will be added
 
 Click on a button for more details.
 
-| Travis | Appveyor | Coveralls |
-|--------|----------|-----------|
-| [![Build Status](https://travis-ci.org/michaelmcmullin/csMatrix.svg?branch=master)](https://travis-ci.org/michaelmcmullin/csMatrix) | [![Build status](https://ci.appveyor.com/api/projects/status/o5vna4byfl4047x2?svg=true)](https://ci.appveyor.com/project/michaelmcmullin/csmatrix) | [![Coverage Status](https://coveralls.io/repos/github/michaelmcmullin/csMatrix/badge.svg?branch=master)](https://coveralls.io/github/michaelmcmullin/csMatrix?branch=master) |
+| Travis | Appveyor | Coveralls | NuGet |
+|--------|----------|-----------|-------|
+| [![Build Status](https://travis-ci.org/michaelmcmullin/csMatrix.svg?branch=master)](https://travis-ci.org/michaelmcmullin/csMatrix) | [![Build status](https://ci.appveyor.com/api/projects/status/o5vna4byfl4047x2?svg=true)](https://ci.appveyor.com/project/michaelmcmullin/csmatrix) | [![Coverage Status](https://coveralls.io/repos/github/michaelmcmullin/csMatrix/badge.svg?branch=master)](https://coveralls.io/github/michaelmcmullin/csMatrix?branch=master) | 
+[![NuGet](https://img.shields.io/nuget/v/csMatrix.svg)](https://www.nuget.org/packages/csMatrix) |
 
 ## License
 [MIT License](https://github.com/michaelmcmullin/csMatrix/blob/48f2c07d97d079bbca2251453afd1e369857e099/LICENSE)
