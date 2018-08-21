@@ -133,7 +133,7 @@ m3 = Matrix.Inverse(m3);
 Console.WriteLine(m3);
 ```
 
-Hopefully that's enough to get you started. Stay tuned for full documentation soon!
+Hopefully that's enough to get you started. Detailed documentation will be added to the [wiki](https://github.com/michaelmcmullin/csMatrix/wiki) as it becomes available.
 
 ## Current Status
 
