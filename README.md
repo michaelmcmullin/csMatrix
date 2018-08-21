@@ -11,6 +11,7 @@ environment.
 
 ### Visual Studio 2017
 
+#### Windows
 With your solution open, go to the **Tools > NuGet Package Manager** menu, and select either the
 **Package Manager Console** or **Manage NuGet Packages for Solution...**. The second option is a 
 little more user-friendly: you are provided with a UI which you can use to search for **csMatrix**.
@@ -21,6 +22,10 @@ following code to install csMatrix:
 
 **`Install-Package csMatrix -Version 1.0.0`**
 
+#### Mac OSX
+Right-click your project and choose **Add > Add NuGet Packages**. Search for **csMatrix**,
+select it, then click the 'Add Package' button.
+
 ### Command Line
 
 Users working outside Visual Studio might prefer to use the .NET CLI to install. The command to
@@ -29,6 +34,12 @@ use is:
 **`dotnet add package csMatrix --version 1.0.0`**
 
 ## Quick Start
+
+Before using csMatrix, you need to add the following line to the top of your code file:
+
+```C#
+using csMatrix;
+```
 
 csMatrix provides a number of constructors to create a new `Matrix`. A few simple examples are
 shown below:
@@ -86,6 +97,43 @@ Matrix test3 = m1 * 2.0; // Multiply each element by 2.0
 Matrix test4 = m2 + 1.5; // Add 1.5 to each element
 ```
 
+A `Matrix` instance exposes a few useful properties. The most common ones are demonstrated below:
+
+```C#
+Matrix m = new Matrix(5, 10);
+Console.WriteLine($"Matrix m has {m.Rows} rows and {m.Columns} columns.");
+Console.WriteLine($"The total number of elements is {m.Size}.");
+
+// OUTPUT:
+// Matrix m has 5 rows and 10 columns.
+// The total number of elements is 50.
+```
+
+Most `Matrix` methods have two forms: one that mutates the current instance, and another static
+version that creates a new `Matrix` without affecting the original. Both forms return the resulting
+`Matrix`, allowing a fluent programming approach. :
+
+```C#
+Matrix m1 = new Matrix(3, 3);
+Matrix m2 = new Matrix(m1);
+
+// Populate both source matrices, in this case making them both
+// Magic Squares.
+m1.Magic();
+m2.Magic();
+
+// Instance Methods
+m1.Transpose(false).Inverse();
+Console.WriteLine(m1);
+
+// Static Methods (gives the same result as above, without affecting
+// the original Matrix).
+Matrix m3 = Matrix.Transpose(m2);
+m3 = Matrix.Inverse(m3);
+Console.WriteLine(m3);
+```
+
+Hopefully that's enough to get you started. Stay tuned for full documentation soon!
 
 ## Current Status
 
