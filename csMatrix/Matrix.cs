@@ -119,6 +119,8 @@ namespace csMatrix
         /// <param name="rows">The number of rows to initialise the Matrix with.</param>
         /// <param name="cols">The number of columns to initialise the Matrix with.</param>
         /// <param name="data">The array to specify values for a new Matrix.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the given row and
+        /// column count don't match the number of elements in the data array.</exception>
         /// <exception cref="NullReferenceException">Thrown when the array is null.</exception>
         public Matrix(int rows, int columns, double[] data) : this(rows, columns)
         {
