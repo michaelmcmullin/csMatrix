@@ -24,5 +24,19 @@ namespace csMatrix.Tests
             Assert.False(m1 == m2);
             Assert.True(m1 != m2);
         }
+
+        [Fact]
+        public void MatrixEqualsTransposed()
+        {
+            Matrix m1 = Setup.GetTestMatrix1();
+            m1.Transpose(true);
+            Matrix m2 = Setup.GetTestMatrix1Transposed();
+
+            Assert.True(m1.IsTransposed);
+            Assert.False(m2.IsTransposed);
+            Assert.True(m1.Equals(m2));
+            Assert.True(m1 == m2);
+            Assert.False(m1 != m2);
+        }
     }
 }

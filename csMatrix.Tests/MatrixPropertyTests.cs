@@ -40,6 +40,18 @@ namespace csMatrix.Tests
         [InlineData(1, 2)]
         [InlineData(2, 1)]
         [InlineData(5, 2)]
+        public void MatrixDimensionsTransposed(int rows, int columns)
+        {
+            Matrix m = new Matrix(rows, columns);
+            m.Transpose(true);
+            Assert.Equal(m.Rows, m.Dimensions[0]);
+            Assert.Equal(m.Columns, m.Dimensions[1]);
+        }
+
+        [Theory]
+        [InlineData(1, 2)]
+        [InlineData(2, 1)]
+        [InlineData(5, 2)]
         public void MatrixRowsColumns(int rows, int columns)
         {
             Matrix m = new Matrix(rows, columns);
