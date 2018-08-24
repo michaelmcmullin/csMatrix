@@ -228,7 +228,22 @@ namespace csMatrix
         /// <summary>
         /// Indicates whether this Matrix is transposed (i.e. rows and columns are swapped)
         /// </summary>
-        public bool IsTransposed { get; set; }
+        public bool IsTransposed {
+            get { return isTransposed; }
+            set
+            {
+                if (value != isTransposed)
+                {
+                    isTransposed = value;
+                    TransposeDimensions();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Backing variable for IsTransposed
+        /// </summary>
+        private bool isTransposed = false;
 
         /// <summary>
         /// Get the backing data array for this Matrix.
@@ -984,6 +999,16 @@ namespace csMatrix
         {
             Load(TransposeOperations.MultiplyTransposeBy(this));
             return this;
+        }
+
+        /// <summary>
+        /// Utility method to swap the dimensions array when transposed
+        /// </summary>
+        protected void TransposeDimensions()
+        {
+            int tmp = Dimensions[0];
+            Dimensions[0] = Dimensions[1];
+            Dimensions[1] = tmp;
         }
         #endregion
 

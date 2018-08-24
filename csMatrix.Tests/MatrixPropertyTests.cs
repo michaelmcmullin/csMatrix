@@ -44,8 +44,8 @@ namespace csMatrix.Tests
         {
             Matrix m = new Matrix(rows, columns);
             m.Transpose(true);
-            Assert.Equal(m.Rows, m.Dimensions[0]);
-            Assert.Equal(m.Columns, m.Dimensions[1]);
+            Assert.Equal(columns, m.Dimensions[0]);
+            Assert.Equal(rows, m.Dimensions[1]);
         }
 
         [Theory]
