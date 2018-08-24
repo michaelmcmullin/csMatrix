@@ -117,7 +117,6 @@ namespace csMatrix.Tests
         [Fact]
         public void MatrixConstructorMatrixTransosed()
         {
-            int rows = 3, columns = 2;
             Matrix m1 = Setup.GetTestMatrix1();
             m1.Transpose(true);
             Matrix m2 = new Matrix(m1);
@@ -125,8 +124,8 @@ namespace csMatrix.Tests
 
             Assert.True(m1.IsTransposed);
             Assert.False(m2.IsTransposed);
-            Assert.Equal(columns, m2.Rows);
-            Assert.Equal(rows, m2.Columns);
+            Assert.Equal(expected.Rows, m2.Rows);
+            Assert.Equal(expected.Columns, m2.Columns);
             Assert.True(expected == m2);
         }
 

@@ -139,9 +139,19 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when Matrix m is null.</exception>
         public Matrix(Matrix m) : this(m.Rows, m.Columns)
         {
-
-            for (int i = 0; i < Size; i++)
-                data[i] = m.data[i];
+            if (!m.IsTransposed)
+            {
+                for (int i = 0; i < Size; i++)
+                    data[i] = m.data[i];
+            }
+            else
+            {
+                int i = 0;
+                foreach(double element in m)
+                {
+                    data[i++] = element;
+                }
+            }
         }
         #endregion
 
