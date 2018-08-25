@@ -128,8 +128,7 @@ Console.WriteLine(m1);
 
 // Static Methods (gives the same result as above, without affecting
 // the original Matrix).
-Matrix m3 = Matrix.Transpose(m2);
-m3 = Matrix.Inverse(m3);
+Matrix m3 = Matrix.Transpose(m2).Inverse();
 Console.WriteLine(m3);
 ```
 
