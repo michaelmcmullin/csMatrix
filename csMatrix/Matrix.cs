@@ -599,12 +599,12 @@ namespace csMatrix
         /// </summary>
         /// <param name="m">The Matrix to multiply this instance by.</param>
         /// <returns>A Matrix that is the product of this instance and <c>m</c>.</returns>
-        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the number of columns in this
-        /// Matrix instance don't match the number of rows in Matrix <c>m</c>.</exception>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the number of rows in this
+        /// Matrix instance don't match the number of columns in Matrix <c>m</c>.</exception>
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public Matrix Multiply(Matrix m)
         {
-            if (this.Columns != m.Rows) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
+            if (this.Rows != m.Columns) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
             this.Load(Arithmetic.Multiply(this, m));
             return this;
         }
@@ -1311,12 +1311,12 @@ namespace csMatrix
         /// <param name="m1">An n*m dimension Matrix.</param>
         /// <param name="m2">An m*p dimension Matrix.</param>
         /// <returns>An n*p Matrix that is the product of m1 and m2.</returns>
-        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the number of columns in the
-        /// first Matrix don't match the number of rows in the second Matrix.</exception>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the number of rows in the
+        /// first Matrix don't match the number of columns in the second Matrix.</exception>
         /// <exception cref="NullReferenceException">Thrown when either Matrix is null.</exception>
         public static Matrix Multiply(Matrix m1, Matrix m2)
         {
-            if (m1.Columns != m2.Rows) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
+            if (m1.Rows != m2.Columns) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
             return Arithmetic.Multiply(m1, m2);
         }
 
