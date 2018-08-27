@@ -9,7 +9,7 @@ namespace csMatrix
     /// <summary>
     /// A Matrix class for C#
     /// </summary>
-    public class Matrix : IEnumerable
+    public class Matrix : IEnumerable, IEquatable<Matrix>
     {
         #region Fields
         /// <summary>
