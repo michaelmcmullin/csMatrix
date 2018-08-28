@@ -20,7 +20,7 @@ Once found, select it, select the project(s) you want to add it to, then press *
 The **Package Manager Console** option opens a new command line in Visual Studio. Paste the
 following code to install csMatrix:
 
-**`Install-Package csMatrix -Version 1.0.1`**
+**`Install-Package csMatrix`**
 
 #### Mac OSX
 Right-click your project and choose **Add > Add NuGet Packages**. Search for **csMatrix**,
@@ -31,7 +31,7 @@ select it, then click the 'Add Package' button.
 Users working outside Visual Studio might prefer to use the .NET CLI to install. The command to
 use is:
 
-**`dotnet add package csMatrix --version 1.0.1`**
+**`dotnet add package csMatrix`**
 
 ## Quick Start
 
