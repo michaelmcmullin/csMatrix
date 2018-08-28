@@ -494,7 +494,7 @@ namespace csMatrix
         /// different dimensions.</exception>
         public Matrix ElementOperation(Matrix m, Func<double, double, double> op)
         {
-            if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot add Matrices with different dimensions");
+            if (!this.HasSameDimensions(m)) throw new InvalidMatrixDimensionsException("Cannot operate on Matrices with different dimensions");
             Arithmetic.ElementOperation(this, m, op);
             return this;
         }
