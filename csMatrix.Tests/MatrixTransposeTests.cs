@@ -250,5 +250,14 @@ namespace csMatrix.Tests
             Assert.True(expected == test1);
             Assert.True(expected == test2);
         }
+
+        [Fact]
+        public void MatrixTransposeToString()
+        {
+            Matrix m1 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } });
+            m1.Transpose(true);
+            String expected = "1.00 4.00 \n2.00 5.00 \n3.00 6.00 \n";
+            Assert.Equal(expected, m1.ToString());
+        }
     }
 }

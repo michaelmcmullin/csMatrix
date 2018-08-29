@@ -682,7 +682,7 @@ namespace csMatrix
             {
                 for (int j = 0; j < Columns; j++)
                 {
-                    sb.AppendFormat("{0:0.00} ", data[index++]);
+                    sb.AppendFormat("{0:0.00} ", this[index++]);
                 }
                 sb.Append("\n");
             }
