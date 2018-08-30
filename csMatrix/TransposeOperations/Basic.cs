@@ -79,7 +79,7 @@ namespace csMatrix.TransposeOperations
         {
             if (m1.Rows != m2.Rows)
             {
-                throw new InvalidMatrixDimensionsException("Cannot multiply by transpose because the second Matrix has a different number of rows to the first.");
+                throw new InvalidMatrixDimensionsException("Cannot multiply transpose by this Matrix because the second Matrix has a different number of rows to the first.");
             }
 
             Matrix result = new Matrix(m1.Columns, m2.Columns);
