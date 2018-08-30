@@ -4,6 +4,10 @@ using System.Text;
 
 namespace csMatrix.TransposeOperations
 {
+    /// <summary>
+    /// A basic implementation of IMatrixTransposeOperations, used as a default in the Matrix
+    /// class.
+    /// </summary>
     public class Basic : IMatrixTransposeOperations
     {
         /// <summary>

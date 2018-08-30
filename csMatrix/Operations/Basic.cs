@@ -4,6 +4,10 @@ using System.Text;
 
 namespace csMatrix.Operations
 {
+    /// <summary>
+    /// A basic implementation of IMatrixOperations, used as a default in the Matrix
+    /// class.
+    /// </summary>
     public class Basic : IMatrixOperations
     {
         /// <summary>
@@ -65,6 +69,7 @@ namespace csMatrix.Operations
             return result;
         }
 
+        /// <summary>
         /// Run a given operation on all elements in a particular dimension to reduce that dimension
         /// to a single row or column.
         /// </summary>
@@ -163,7 +168,7 @@ namespace csMatrix.Operations
         /// </summary>
         /// <param name="m">The Matrix to operate on.</param>
         /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
-        /// <param name="operation">The delegate method to operate with.</param>
+        /// <param name="op">The delegate method to operate with.</param>
         /// <remarks>If the current Matrix is a row or column vector, then a 1*1 Matrix
         /// will be returned, regardless of which dimension is chosen. If the dimension is
         /// set to 'Auto', then the first non-singleton dimension is chosen. If no singleton

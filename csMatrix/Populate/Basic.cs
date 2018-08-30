@@ -4,6 +4,10 @@ using System.Text;
 
 namespace csMatrix.Populate
 {
+    /// <summary>
+    /// A basic implementation of IMatrixPopulate, used as a default in the Matrix
+    /// class.
+    /// </summary>
     public class Basic : IMatrixPopulate
     {
         /// <summary>

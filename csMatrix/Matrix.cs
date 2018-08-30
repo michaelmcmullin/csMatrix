@@ -67,7 +67,7 @@ namespace csMatrix
         /// columns and default values.
         /// </summary>
         /// <param name="rows">The number of rows to initialise the Matrix with.</param>
-        /// <param name="cols">The number of columns to initialise the Matrix with.</param>
+        /// <param name="columns">The number of columns to initialise the Matrix with.</param>
         /// <param name="value">The value to fill the Matrix with.</param>
         /// <exception cref="ArgumentException">Thrown when the supplied dimensions are less than 1.</exception>
         public Matrix(int rows, int columns, double value) : this(rows, columns)
@@ -117,7 +117,7 @@ namespace csMatrix
         /// Constructor to create a new Matrix based on an existing one-dimensional array.
         /// </summary>
         /// <param name="rows">The number of rows to initialise the Matrix with.</param>
-        /// <param name="cols">The number of columns to initialise the Matrix with.</param>
+        /// <param name="columns">The number of columns to initialise the Matrix with.</param>
         /// <param name="data">The array to specify values for a new Matrix.</param>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when the given row and
         /// column count don't match the number of elements in the data array.</exception>
@@ -275,7 +275,8 @@ namespace csMatrix
         /// Indexer to directly access a position within an unrolled Matrix.
         /// </summary>
         /// <param name="index">The index within the complete Matrix, starting from
-        /// row 0, column 0, and progressing through each row.</returns>
+        /// row 0, column 0, and progressing through each row.</param>
+        /// <returns>The element at the given index.</returns>
         /// <remarks>Matrices are zero-indexed. Providing a single-index alternative
         /// allows a simple way to iterate through the entire Matrix data in a single
         /// loop.</remarks>
@@ -330,9 +331,9 @@ namespace csMatrix
         /// <param name="scalar">The number to add to each element in a Matrix.</param>
         /// <returns>The result of adding the number to each element in a Matrix.</returns>
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
-        public static Matrix operator +(Matrix m1, double scalar)
+        public static Matrix operator +(Matrix m, double scalar)
         {
-            return Matrix.Add(m1, scalar);
+            return Matrix.Add(m, scalar);
         }
 
         /// <summary>
@@ -342,9 +343,9 @@ namespace csMatrix
         /// <param name="m">The Matrix to add numbers to.</param>
         /// <returns>The result of adding the number to each element in a Matrix.</returns>
         /// <exception cref="NullReferenceException">Thrown when Matrix is null.</exception>
-        public static Matrix operator +(double scalar, Matrix m1)
+        public static Matrix operator +(double scalar, Matrix m)
         {
-            return Matrix.Add(m1, scalar);
+            return Matrix.Add(m, scalar);
         }
 
         /// <summary>
@@ -708,11 +709,18 @@ namespace csMatrix
             private int currentIndex = -1;
             private Matrix currentMatrix;
 
+            /// <summary>
+            /// Constructor for MatrixEnumerator
+            /// </summary>
+            /// <param name="m">The Matrix to create an enumerator for.</param>
             public MatrixEnumerator(Matrix m)
             {
                 currentMatrix = m;
             }
 
+            /// <summary>
+            /// Gets the element at the current position of the enumerator.
+            /// </summary>
             public double Current
             {
                 get
@@ -724,21 +732,35 @@ namespace csMatrix
                 }
             }
 
+            /// <summary>
+            /// Gets the element at the current position of the enumerator (nongeneric).
+            /// </summary>
             object IEnumerator.Current
             {
                 get { return Current; }
             }
 
-            public void Dispose()
+            /// <summary>
+            /// Empty Dispose method to satisfy IEnumerator&lt;T&gt; interface
+            /// </summary>
+            void IDisposable.Dispose()
             {
             }
 
+            /// <summary>
+            /// Advances the enumerator to the next element in the Matrix.
+            /// </summary>
+            /// <returns>true if successful, or false if it has advanced past the
+            /// end of the Matrix.</returns>
             public bool MoveNext()
             {
                 currentIndex++;
                 return currentIndex < currentMatrix.Size;
             }
 
+            /// <summary>
+            /// Set the enumerator to its initial position, before the first element.
+            /// </summary>
             public void Reset()
             {
                 currentIndex = -1;
@@ -882,7 +904,6 @@ namespace csMatrix
         /// <summary>
         /// Removes a number of rows from this Matrix instance.
         /// </summary>
-        /// <param name="m">The Matrix to remove rows from.</param>
         /// <param name="row">The row index to start removal from.</param>
         /// <param name="count">The number of rows to remove.</param>
         /// <returns>A reference to this Matrix after the specified rows have been removed.</returns>
@@ -1158,7 +1179,7 @@ namespace csMatrix
         /// to a single row, and then perform an aggregate operation to produce a statistical result.
         /// </summary>
         /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
-        /// <param name="operation">The delegate method to operate with.</param>
+        /// <param name="op">The delegate method to operate with.</param>
         /// <remarks>If the current Matrix is a row or column vector, then a 1*1 Matrix
         /// will be returned, regardless of which dimension is chosen. If the dimension is
         /// set to 'Auto', then the first non-singleton dimension is chosen. If no singleton
@@ -1174,8 +1195,8 @@ namespace csMatrix
         /// </summary>
         /// <param name="startingIndex">The zero-based starting index of the Matrix to start
         /// extracting data from.</param>
-        /// <param name="rows">The number of rows in the reshaped Matrix.</param>
-        /// <param name="columns">The number of columns in the reshaped Matrix.</param>
+        /// <param name="newRows">The number of rows in the reshaped Matrix.</param>
+        /// <param name="newColumns">The number of columns in the reshaped Matrix.</param>
         /// <returns>A reference to this Matrix after reshaping.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
         /// enough elements to fill</exception>
@@ -1193,7 +1214,6 @@ namespace csMatrix
         /// Perform the given operation on each Matrix element.
         /// </summary>
         /// <param name="m">The Matrix to perform the operation on (remains unchanged).</param>
-        /// <param name="scalar">A scalar value to use as a second operand in each operation.</param>
         /// <param name="op">The operation to perform on each Matrix element.</param>
         /// <returns>A new Matrix populated with the result of applying the given operation to
         /// Matrix m.</returns>
@@ -1585,6 +1605,7 @@ namespace csMatrix
             return Operations.Join(m1, m2, dimension);
         }
 
+        /// <summary>
         /// Run a given operation on all elements in a particular dimension to reduce that dimension
         /// to a single row or column.
         /// </summary>
@@ -1607,7 +1628,7 @@ namespace csMatrix
         /// </summary>
         /// <param name="m">The Matrix to operate on.</param>
         /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
-        /// <param name="operation">The delegate method to operate with.</param>
+        /// <param name="op">The delegate method to operate with.</param>
         /// <remarks>If the current Matrix is a row or column vector, then a 1*1 Matrix
         /// will be returned, regardless of which dimension is chosen. If the dimension is
         /// set to 'Auto', then the first non-singleton dimension is chosen. If no singleton
@@ -1617,14 +1638,14 @@ namespace csMatrix
             return Operations.StatisticalReduce(m, dimension, op);
         }
 
-		/// <summary>
-		/// Extract a new Matrix from an existing one, filling in each column sequentially.
-		/// </summary>
-		/// <param name="m">The Matrix to extract data from.</param>
+        /// <summary>
+        /// Extract a new Matrix from an existing one, filling in each column sequentially.
+        /// </summary>
+        /// <param name="m">The Matrix to extract data from.</param>
         /// <param name="startingIndex">The zero-based starting index of the Matrix to start
         /// extracting data from.</param>
-        /// <param name="rows">The number of rows in the reshaped Matrix.</param>
-        /// <param name="columns">The number of columns in the reshaped Matrix.</param>
+        /// <param name="newRows">The number of rows in the reshaped Matrix.</param>
+        /// <param name="newColumns">The number of columns in the reshaped Matrix.</param>
         /// <returns>A reference to this Matrix after reshaping.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
         /// enough elements to fill the new Matrix.</exception>
