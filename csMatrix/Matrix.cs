@@ -961,6 +961,10 @@ namespace csMatrix
         /// instances have incompatible dimensions for multiplication.</exception>
         public Matrix MultiplyByTranspose(Matrix m)
         {
+            if (this.Columns != m.Columns)
+            {
+                throw new InvalidMatrixDimensionsException("Cannot multiply by transpose because the second Matrix has a different number of columns to the first.");
+            }
             Load(TransposeOperations.MultiplyByTranspose(this, m));
             return this;
         }
@@ -986,6 +990,11 @@ namespace csMatrix
         /// instances have incompatible dimensions for multiplication.</exception>
         public Matrix MultiplyTransposeBy(Matrix m)
         {
+            if (this.Rows != m.Rows)
+            {
+                throw new InvalidMatrixDimensionsException("Cannot multiply transpose by this Matrix because the second Matrix has a different number of rows to the first.");
+            }
+
             Load(TransposeOperations.MultiplyTransposeBy(this, m));
             return this;
         }
@@ -1493,6 +1502,10 @@ namespace csMatrix
         /// instances have incompatible dimensions for multiplication.</exception>
         public static Matrix MultiplyByTranspose(Matrix m1, Matrix m2)
         {
+            if (m1.Columns != m2.Columns)
+            {
+                throw new InvalidMatrixDimensionsException("Cannot multiply by transpose because the second Matrix has a different number of columns to the first.");
+            }
             return TransposeOperations.MultiplyByTranspose(m1, m2);
         }
 
@@ -1517,6 +1530,11 @@ namespace csMatrix
         /// instances have incompatible dimensions for multiplication.</exception>
         public static Matrix MultiplyTransposeBy(Matrix m1, Matrix m2)
         {
+            if (m1.Rows != m2.Rows)
+            {
+                throw new InvalidMatrixDimensionsException("Cannot multiply transpose by this Matrix because the second Matrix has a different number of rows to the first.");
+            }
+
             return TransposeOperations.MultiplyTransposeBy(m1, m2);
         }
 

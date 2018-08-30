@@ -13,15 +13,10 @@ namespace csMatrix.TransposeOperations
         /// <param name="m2">The Matrix to multiply the first Matrix by its transpose.</param>
         /// <returns>A new Matrix with the result of multiplying Matrix m1 by the transpose
         /// of Matrix m2.</returns>
-        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the two Matrix
-        /// instances have incompatible dimensions for multiplication.</exception>
+        /// <remarks>Assumes that m1.Columns == m2.Columns. The Matrix class checks this before
+        /// calling this method.</remarks>
         public Matrix MultiplyByTranspose(Matrix m1, Matrix m2)
         {
-            if (m1.Columns != m2.Columns)
-            {
-                throw new InvalidMatrixDimensionsException("Cannot multiply by transpose because the second Matrix has a different number of columns to the first.");
-            }
-
             Matrix result = new Matrix(m1.Rows, m2.Rows);
 
             for (int row = 0; row < m1.Rows; row++)
@@ -73,15 +68,10 @@ namespace csMatrix.TransposeOperations
         /// <param name="m2">The Matrix to multiply the transposed Matrix by.</param>
         /// <returns>A new Matrix with the result of multiplying the transpose of Matrix
         /// m1 by Matrix m2.</returns>
-        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the two Matrix
-        /// instances have incompatible dimensions for multiplication.</exception>
+        /// <remarks>Assumes m1.Rows == m2.Rows. The Matrix class checks for this before
+        /// calling this method.</remarks>
         public Matrix MultiplyTransposeBy(Matrix m1, Matrix m2)
         {
-            if (m1.Rows != m2.Rows)
-            {
-                throw new InvalidMatrixDimensionsException("Cannot multiply transpose by this Matrix because the second Matrix has a different number of rows to the first.");
-            }
-
             Matrix result = new Matrix(m1.Columns, m2.Columns);
 
             for (int row = 0; row < m1.Columns; row++)
