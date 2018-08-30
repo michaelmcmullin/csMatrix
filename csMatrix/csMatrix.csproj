@@ -11,7 +11,7 @@
     <Company />
     <PackageTags>matrix math</PackageTags>
     <NeutralLanguage></NeutralLanguage>
-    <PackageIconUrl>https://raw.githubusercontent.com/michaelmcmullin/csMatrix/102694c46ceaad401cbe8b22808d4da6afa284b1/Assets/csMatrix_64x64.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/michaelmcmullin/csMatrix/1.0.2/Assets/csMatrix_128x128.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/michaelmcmullin/csMatrix</PackageProjectUrl>
     <Version>1.0.2</Version>
   </PropertyGroup>
