@@ -4,6 +4,10 @@ using System.Text;
 
 namespace csMatrix.RowColumnOperations
 {
+    /// <summary>
+    /// A basic implementation of IMatrixRowColumn, used as a default in the Matrix
+    /// class.
+    /// </summary>
     public class Basic : IMatrixRowColumn
     {
         /// <summary>
