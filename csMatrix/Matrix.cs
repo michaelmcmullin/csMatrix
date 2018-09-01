@@ -915,36 +915,6 @@ namespace csMatrix
                 Load(RowColumnOperations.RemoveRows(this, row, count));
             return this;
         }
-
-        /// <summary>
-        /// Extract a number of columns from this Matrix, discarding the rest.
-        /// </summary>
-        /// <param name="column">The column index to start extraction from.</param>
-        /// <param name="count">The number of columns to extract.</param>
-        /// <returns>A reference to this Matrix after the columns have been extracted
-        /// and the remaining columns discarded.</returns>
-        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to extract columns outside
-        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
-        public Matrix ExtractColumns(int column, int count)
-        {
-            Load(RowColumnOperations.ExtractColumns(this, column, count));
-            return this;
-        }
-
-        /// <summary>
-        /// Extract a number of columns from this Matrix, discarding the rest.
-        /// </summary>
-        /// <param name="row">The row index to start extraction from.</param>
-        /// <param name="count">The number of rows to extract.</param>
-        /// <returns>A reference to this Matrix after the rows have been extracted
-        /// and the remaining rows discarded.</returns>
-        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
-        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
-        public Matrix ExtractRows(int row, int count)
-        {
-            Load(RowColumnOperations.ExtractRows(this, row, count));
-            return this;
-        }
         #endregion
 
         #region Transpose
@@ -1189,21 +1159,71 @@ namespace csMatrix
             Load(Operations.StatisticalReduce(this, dimension, op));
             return this;
         }
+        #endregion
+
+        #region Extraction
+        /// <summary>
+        /// Extract a number of columns from this Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="column">The column index to start extraction from.</param>
+        /// <param name="count">The number of columns to extract.</param>
+        /// <returns>A reference to this Matrix after the columns have been extracted
+        /// and the remaining columns discarded.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to extract columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
+        public Matrix ExtractColumns(int column, int count)
+        {
+            Load(RowColumnOperations.ExtractColumns(this, column, count));
+            return this;
+        }
 
         /// <summary>
-        /// Rearrange this Matrix, filling in each column sequentially.
+        /// Extract a number of columns from this Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="row">The row index to start extraction from.</param>
+        /// <param name="count">The number of rows to extract.</param>
+        /// <returns>A reference to this Matrix after the rows have been extracted
+        /// and the remaining rows discarded.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
+        public Matrix ExtractRows(int row, int count)
+        {
+            Load(RowColumnOperations.ExtractRows(this, row, count));
+            return this;
+        }
+
+        /// <summary>
+        /// Extract a portion of this Matrix, discarding the rest.
         /// </summary>
         /// <param name="startingIndex">The zero-based starting index of the Matrix to start
         /// extracting data from.</param>
-        /// <param name="newRows">The number of rows in the reshaped Matrix.</param>
-        /// <param name="newColumns">The number of columns in the reshaped Matrix.</param>
-        /// <returns>A reference to this Matrix after reshaping.</returns>
+        /// <param name="rows">The number of rows to extract.</param>
+        /// <param name="columns">The number of columns to extract.</param>
+        /// <returns>A reference to this Matrix after extraction.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
-        /// enough elements to fill</exception>
-        public Matrix Extract(int startingIndex, int newRows, int newColumns)
+        /// enough elements to fill the extracted Matrix.</exception>
+        public Matrix Extract(int startingIndex, int rows, int columns)
         {
-            Load(Operations.Extract(this, startingIndex, newRows, newColumns));
+            Load(Operations.Extract(this, startingIndex, rows, columns));
             return this;
+        }
+
+        /// <summary>
+        /// Extract a portion of this Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="startingRow">The zero-based row of this Matrix to start
+        /// extracting data from.</param>
+        /// <param name="startingColumn">The zero-based column of this Matrix to start
+        /// extracting data from.</param>
+        /// <param name="rows">The number of rows to extract.</param>
+        /// <param name="columns">The number of columns to extract.</param>
+        /// <returns>A reference to this Matrix after extraction.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
+        /// enough elements to fill the extracted Matrix.</exception>
+        public Matrix Extract(int startingRow, int startingColumn, int rows, int columns)
+        {
+            int startingIndex = GetIndex(startingRow, startingColumn);
+            return Extract(startingIndex, rows, columns);
         }
         #endregion
         #endregion
@@ -1467,37 +1487,6 @@ namespace csMatrix
             return RowColumnOperations.RemoveRows(m, row, count);
         }
 
-        /// <summary>
-        /// Extract a number of columns from a Matrix, discarding the rest.
-        /// </summary>
-        /// <param name="m">The Matrix to extract columns from.</param>
-        /// <param name="column">The column index to start extraction from.</param>
-        /// <param name="count">The number of columns to extract.</param>
-        /// <returns>A new Matrix containing the extracted columns.</returns>
-        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to extract columns outside
-        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
-        /// <exception cref="InvalidMatrixDimensionsException">Thrown when attempting to extract zero
-        /// columns.</exception>
-        public static Matrix ExtractColumns(Matrix m, int column, int count)
-        {
-            return RowColumnOperations.ExtractColumns(m, column, count);
-        }
-
-        /// <summary>
-        /// Extract a number of rows from this Matrix, discarding the rest.
-        /// </summary>
-        /// <param name="m">The Matrix to extract rows from.</param>
-        /// <param name="row">The row index to start extraction from.</param>
-        /// <param name="count">The number of rows to extract.</param>
-        /// <returns>A new Matrix containing the extracted rows.</returns>
-        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
-        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
-        /// <exception cref="InvalidMatrixDimensionsException">Thrown when attempting to extract zero
-        /// rows.</exception>
-        public static Matrix ExtractRows(Matrix m, int row, int count)
-        {
-            return RowColumnOperations.ExtractRows(m, row, count);
-        }
         #endregion
 
         #region Transpose
@@ -1637,21 +1626,74 @@ namespace csMatrix
         {
             return Operations.StatisticalReduce(m, dimension, op);
         }
+        #endregion
+
+        #region Extraction
+        /// <summary>
+        /// Extract a number of rows from this Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="m">The Matrix to extract rows from.</param>
+        /// <param name="row">The row index to start extraction from.</param>
+        /// <param name="count">The number of rows to extract.</param>
+        /// <returns>A new Matrix containing the extracted rows.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to remove rows outside
+        /// the range of valid row indices (i.e. 0 to m.Rows).</exception>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when attempting to extract zero
+        /// rows.</exception>
+        public static Matrix ExtractRows(Matrix m, int row, int count)
+        {
+            return RowColumnOperations.ExtractRows(m, row, count);
+        }
 
         /// <summary>
-        /// Extract a new Matrix from an existing one, filling in each column sequentially.
+        /// Extract a number of columns from a Matrix, discarding the rest.
+        /// </summary>
+        /// <param name="m">The Matrix to extract columns from.</param>
+        /// <param name="column">The column index to start extraction from.</param>
+        /// <param name="count">The number of columns to extract.</param>
+        /// <returns>A new Matrix containing the extracted columns.</returns>
+        /// <exception cref="IndexOutOfRangeException">Thrown when attempting to extract columns outside
+        /// the range of valid column indices (i.e. 0 to m.Columns).</exception>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when attempting to extract zero
+        /// columns.</exception>
+        public static Matrix ExtractColumns(Matrix m, int column, int count)
+        {
+            return RowColumnOperations.ExtractColumns(m, column, count);
+        }
+
+        /// <summary>
+        /// Extract a new Matrix from an existing one.
         /// </summary>
         /// <param name="m">The Matrix to extract data from.</param>
         /// <param name="startingIndex">The zero-based starting index of the Matrix to start
         /// extracting data from.</param>
-        /// <param name="newRows">The number of rows in the reshaped Matrix.</param>
-        /// <param name="newColumns">The number of columns in the reshaped Matrix.</param>
-        /// <returns>A reference to this Matrix after reshaping.</returns>
+        /// <param name="rows">The number of rows to extract.</param>
+        /// <param name="columns">The number of columns to extract.</param>
+        /// <returns>The extracted Matrix.</returns>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
         /// enough elements to fill the new Matrix.</exception>
-        public static Matrix Extract(Matrix m, int startingIndex, int newRows, int newColumns)
+        public static Matrix Extract(Matrix m, int startingIndex, int rows, int columns)
         {
-            return Operations.Extract(m, startingIndex, newRows, newColumns);
+            return Operations.Extract(m, startingIndex, rows, columns);
+        }
+
+        /// <summary>
+        /// Extract a new Matrix from an existing one.
+        /// </summary>
+        /// <param name="m">The Matrix to extract data from.</param>
+        /// <param name="startingRow">The zero-based row of the given Matrix to start
+        /// extracting data from.</param>
+        /// <param name="startingColumn">The zero-based column of the given Matrix to start
+        /// extracting data from.</param>
+        /// <param name="rows">The number of rows to extract.</param>
+        /// <param name="columns">The number of columns to extract.</param>
+        /// <returns>The extracted Matrix.</returns>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when there are not
+        /// enough elements to fill the new Matrix.</exception>
+        public static Matrix Extract(Matrix m, int startingRow, int startingColumn, int rows, int columns)
+        {
+            int startingIndex = m.GetIndex(startingRow, startingColumn);
+            return Extract(m, startingIndex, rows, columns);
         }
         #endregion
         #endregion
