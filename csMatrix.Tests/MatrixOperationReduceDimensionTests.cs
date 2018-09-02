@@ -49,6 +49,7 @@ namespace csMatrix.Tests
             Matrix m2 = Matrix.ReduceDimension(Setup.GetTestMatrix1(), MatrixDimension.Rows, (x, y) => x + y);
 
             Matrix expected = new Matrix(new double[,] { { 6.0 }, { 15.0 } });
+            Assert.Equal(6.0, m1[0]);
             Assert.True(m1 == expected);
             Assert.True(m2 == expected);
         }
@@ -90,5 +91,30 @@ namespace csMatrix.Tests
             Assert.True(m1 == expected);
             Assert.True(m2 == expected);
         }
+
+        [Fact]
+        public void MatrixOperationsReduceColumnsMultiplyTwoRows()
+        {
+            Matrix m1 = Setup.GetTestMatrix1();
+            m1.ReduceDimension(MatrixDimension.Columns, (x, y) => x * y);
+            Matrix m2 = Matrix.ReduceDimension(Setup.GetTestMatrix1(), MatrixDimension.Columns, (x, y) => x * y);
+
+            Matrix expected = new Matrix(new double[,] { { 4.0, 10.0, 18.0 } });
+            Assert.True(m1 == expected);
+            Assert.True(m2 == expected);
+        }
+
+        [Fact]
+        public void MatrixOperationsReduceColumnsMultiplyThreeColumns()
+        {
+            Matrix m1 = Setup.GetTestMatrix1();
+            m1.ReduceDimension(MatrixDimension.Rows, (x, y) => x * y);
+            Matrix m2 = Matrix.ReduceDimension(Setup.GetTestMatrix1(), MatrixDimension.Rows, (x, y) => x * y);
+
+            Matrix expected = new Matrix(new double[,] { { 6.0 }, { 120.0 } });
+            Assert.True(m1 == expected);
+            Assert.True(m2 == expected);
+        }
+
     }
 }

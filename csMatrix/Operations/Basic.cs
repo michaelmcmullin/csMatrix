@@ -93,7 +93,8 @@ namespace csMatrix.Operations
                     if (m.Rows == 1 || m.Columns == 1)
                     {
                         result = new Matrix(1, 1);
-                        for (int i = 0; i < m.Size; i++)
+                        result[0] = m[0];
+                        for (int i = 1; i < m.Size; i++)
                             result[0] = op(result[0], m[i]);
                         return result;
                     }
@@ -104,16 +105,27 @@ namespace csMatrix.Operations
                     }
                 case MatrixDimension.Columns:
                     result = new Matrix(1, m.Columns);
-                    for (int i = 0; i < m.Size; i += m.Columns)
-                        for (int j = 0; j < m.Columns; j++)
-                            result[j] = op(result[j], m[i + j]);
+                    // Initialise the result with the first row of values
+                    for (int i = 0; i < m.Columns; i++)
+                    {
+                        result[i] = m[i];
+                    }
+                    for (int rowIndex = m.Columns; rowIndex < m.Size; rowIndex += m.Columns)
+                    {
+                        for (int column = 0; column < m.Columns; column++)
+                            result[column] = op(result[column], m[rowIndex + column]);
+                    }
                     break;
                 case MatrixDimension.Rows:
                     result = new Matrix(m.Rows, 1);
-                    int index = 0;
+                    // Initialise the result with the first column of values
                     for (int i = 0; i < m.Rows; i++)
-                        for (int j = 0; j < m.Columns; j++)
-                            result[i] = op(result[i], m[index++]);
+                    {
+                        result[i] = m[i,0];
+                    }
+                    for (int row = 0; row < m.Rows; row++)
+                        for (int column = 1; column < m.Columns; column++)
+                            result[row] = op(result[row], m[row, column]);
                     break;
                 default:
                     break;

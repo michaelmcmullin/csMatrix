@@ -1146,7 +1146,8 @@ namespace csMatrix
 
         /// <summary>
         /// Run a set of operations on all elements in a particular dimension to reduce that dimension
-        /// to a single row, and then perform an aggregate operation to produce a statistical result.
+        /// to a single row or column, and then perform an aggregate operation to produce a statistical
+        /// result.
         /// </summary>
         /// <param name="dimension">Indicate whether to operate on rows or columns.</param>
         /// <param name="op">The delegate method to operate with.</param>
