@@ -105,7 +105,7 @@ namespace csMatrix.Tests
         }
 
         [Fact]
-        public void MatrixOperationsReduceColumnsMultiplyThreeColumns()
+        public void MatrixOperationsReduceRowsMultiplyThreeColumns()
         {
             Matrix m1 = Setup.GetTestMatrix1();
             m1.ReduceDimension(MatrixDimension.Rows, (x, y) => x * y);
@@ -115,6 +115,5 @@ namespace csMatrix.Tests
             Assert.True(m1 == expected);
             Assert.True(m2 == expected);
         }
-
     }
 }
