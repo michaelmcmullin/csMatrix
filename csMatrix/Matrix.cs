@@ -7,7 +7,7 @@ using System.Text;
 namespace csMatrix
 {
     /// <summary>
-    /// A Matrix class for C#
+    /// Represents a Matrix
     /// </summary>
     public class Matrix : IEnumerable, IEquatable<Matrix>
     {
