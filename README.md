@@ -53,9 +53,12 @@ Matrix m2 = new Matrix(15);
 
 // Create a new Matrix with 5 rows and 10 columns, populating each element with 3.5
  Matrix m3 = new Matrix(5, 10, 3.5);
+
+// Create a new Matrix and specify its contents
+ Matrix m4 = new Matrix(new double[,] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } });
 ```
 
-Changing individual element values can done using indices. Think of a `Matrix` as something
+Changing individual element values can be done using indices. Think of a `Matrix` as something
 similar to a two-dimensional array of `double` values:
 
 ```C#
