@@ -13,11 +13,6 @@ namespace csMatrix
     {
         #region Fields
         /// <summary>
-        /// Storage array for the <c>Matrix</c> data.
-        /// </summary>
-        private double[] data;
-
-        /// <summary>
         /// The number of rows in this <c>Matrix</c>, before transposing.
         /// </summary>
         private int rows;
@@ -58,7 +53,7 @@ namespace csMatrix
             this.Columns = columns;
             Size = rows * columns;
             Dimensions = new int[] { Rows, Columns };
-            data = new double[Size];
+            Data = new double[Size];
             IsTransposed = false;
         }
 
@@ -108,7 +103,7 @@ namespace csMatrix
             {
                 for (int column = 0; column < Columns; column++)
                 {
-                    data[index++] = array[row, column];
+                    Data[index++] = array[row, column];
                 }
             }
         }
@@ -142,14 +137,14 @@ namespace csMatrix
             if (!m.IsTransposed)
             {
                 for (int i = 0; i < Size; i++)
-                    data[i] = m.data[i];
+                    Data[i] = m.Data[i];
             }
             else
             {
                 int i = 0;
                 foreach(double element in m)
                 {
-                    data[i++] = element;
+                    Data[i++] = element;
                 }
             }
         }
@@ -248,7 +243,7 @@ namespace csMatrix
         /// <summary>
         /// Get the backing data array for this <c>Matrix</c>.
         /// </summary>
-        public double[] Data { get { return data; } }
+        public double[] Data { get; private set; }
         #endregion
 
         #region Indexers
@@ -263,11 +258,11 @@ namespace csMatrix
         {
             get
             {
-                return data[GetIndex(row, column)];
+                return Data[GetIndex(row, column)];
             }
             set
             {
-                data[GetIndex(row, column)] = value;
+                Data[GetIndex(row, column)] = value;
             }
         }
 
@@ -282,8 +277,8 @@ namespace csMatrix
         /// loop.</remarks>
         public double this[int index]
         {
-            get { return data[GetTransposedIndex(index)]; }
-            set { data[GetTransposedIndex(index)] = value; }
+            get { return Data[GetTransposedIndex(index)]; }
+            set { Data[GetTransposedIndex(index)] = value; }
         }
         #endregion
 
@@ -463,10 +458,10 @@ namespace csMatrix
                 this.Columns = m.Columns;
                 Size = rows * columns;
                 Dimensions = new int[] { Rows, Columns };
-                data = new double[Size];
+                Data = new double[Size];
                 IsTransposed = m.IsTransposed;
                 for (int i = 0; i < Size; i++)
-                    data[i] = m.data[i];
+                    Data[i] = m.Data[i];
             }
         }
         #endregion
