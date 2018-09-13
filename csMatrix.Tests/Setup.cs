@@ -39,5 +39,17 @@ namespace csMatrix.Tests
                 };
             }
         }
+
+        public static IEnumerable<object[]> GetIMatrixTranspose
+        {
+            get
+            {
+                return new[]
+                {
+                    new IMatrixTransposeOperations[] { new TransposeOperations.Basic() },
+                    new IMatrixTransposeOperations[] { new TransposeOperations.ParallelOperations() }
+                };
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace csMatrix.Arithmetic
 {
     /// <summary>
-    /// Version of Matrix arithmetic operations that works in parallel
+    /// Matrix arithmetic operations that work in parallel
     /// </summary>
     public class ParallelOperations : IMatrixArithmetic
     {
