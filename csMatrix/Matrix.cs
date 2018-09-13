@@ -152,33 +152,64 @@ namespace csMatrix
 
         #region Properties
         /// <summary>
-        /// The class used to perform <c>Matrix</c> arithmetic operations
+        /// Gets or sets the class to use for <c>Matrix</c> arithmetic operations
         /// </summary>
+        /// <value>
+        /// A class instance implementing the <c>IMatrixArithmetic</c> interface
+        /// which is used by the <c>Matrix</c> class to perform arithmetic. It
+        /// defaults to a value of <c>csMatrix.Arithmetic.Basic</c>.
+        /// </value>
         public static IMatrixArithmetic Arithmetic { get; set; }
 
         /// <summary>
-        /// The class used to perform <c>Matrix</c> row/column operations
+        /// Gets or sets the class used to perform <c>Matrix</c> row/column operations
         /// </summary>
+        /// <value>
+        /// A class instance implementing the <c>IMatrixRowColumn</c> interface
+        /// which is used by the <c>Matrix</c> class to manipulate rows and columns.
+        /// It defaults to a value of <c>csMatrix.RowColumnOperations.Basic</c>.
+        /// </value>
         public static IMatrixRowColumn RowColumnOperations { get; set; }
 
         /// <summary>
-        /// The class used to populate a <c>Matrix</c> in different ways
+        /// Gets or sets the class used to populate a <c>Matrix</c> in different ways
         /// </summary>
+        /// <value>
+        /// A class instance implementing the <c>IMatrixPopulate</c> interface which
+        /// is used to provide different ways of populating a <c>Matrix</c> instance.
+        /// It defaults to a value of <c>csMatrix.Populate.Basic</c>.
+        /// </value>
         public static IMatrixPopulate Populate { get; set; }
 
         /// <summary>
-        /// The class used to perform <c>Matrix</c> transpose operations
+        /// Gets or sets the class used to perform <c>Matrix</c> transpose operations
         /// </summary>
+        /// <value>
+        /// A class instance implementing the <c>IMatrixTransposeOperations</c>
+        /// interface which provides the <c>Matrix</c> class with transpose
+        /// operations. It defaults to an instance of
+        /// <c>csMatrix.TransposeOperations.Basic</c>.
+        /// </value>
         public static IMatrixTransposeOperations TransposeOperations { get; set; }
 
         /// <summary>
-        /// The class used to perform inverse <c>Matrix</c> operations
+        /// Gets or sets the class used to perform inverse <c>Matrix</c> operations
         /// </summary>
+        /// <value>
+        /// A class instance implementing the <c>IMatrixInverseOperations</c>
+        /// interface which provides the <c>Matrix</c> class with inverse operations.
+        /// It defaults to an instance of <c>csMatrix.InverseOperations.Basic</c>.
+        /// </value>
         public static IMatrixInverseOperations InverseOperations { get; set; }
 
         /// <summary>
-        /// The class used to perform general <c>Matrix</c> operations
+        /// Gets or sets the class used to perform general <c>Matrix</c> operations
         /// </summary>
+        /// <value>
+        /// A class instance implementing the <c>IMatrixOperations</c> interface
+        /// which provides additional operations to the <c>Matrix</c> class. It
+        /// defaults to <c>csMatrix.Operations.Basic</c>.
+        /// </value>
         public static IMatrixOperations Operations { get; set; }
 
         /// <summary>
