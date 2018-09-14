@@ -13,7 +13,7 @@
     <NeutralLanguage></NeutralLanguage>
     <PackageIconUrl>https://raw.githubusercontent.com/michaelmcmullin/csMatrix/1.0.2/Assets/csMatrix_128x128.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/michaelmcmullin/csMatrix</PackageProjectUrl>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
