@@ -22,6 +22,10 @@ namespace csMatrix.Tests
         {
             return new Matrix(new double[,] { { 22.0, 28.0 }, { 49.0, 64.0 } });
         }
+        public static Matrix GetTestMatrix5()
+        {
+            return new Matrix(new double[,] { { 1.0 }, { 2.0 }, { 3.0 } });
+        }
 
         public static Matrix GetTestMatrix1Transposed()
         {

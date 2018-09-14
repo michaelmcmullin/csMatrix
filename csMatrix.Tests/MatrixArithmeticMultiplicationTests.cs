@@ -14,14 +14,14 @@ namespace csMatrix.Tests
         {
             Matrix.Arithmetic = arithmetic;
             Matrix testMatrix1 = Setup.GetTestMatrix1();
-            Matrix testMatrix3 = Setup.GetTestMatrix3();
+            Matrix testMatrix5 = Setup.GetTestMatrix5();
 
-            Matrix m1 = Matrix.Multiply(testMatrix1, testMatrix3);
-            Matrix m2 = testMatrix1 * testMatrix3;
+            Matrix m1 = Matrix.Multiply(testMatrix1, testMatrix5);
+            Matrix m2 = testMatrix1 * testMatrix5;
             Matrix m3 = new Matrix(testMatrix1);
-            m3.Multiply(testMatrix3);
+            m3.Multiply(testMatrix5);
 
-            Matrix expected = new Matrix(new double[,] { { 22.0, 28.0 }, { 49.0, 64.0 } });
+            Matrix expected = new Matrix(new double[,] { { 14.0 }, { 32.0 } });
 
             Assert.Equal(expected, m1);
             Assert.Equal(expected, m2);

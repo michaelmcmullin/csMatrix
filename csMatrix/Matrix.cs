@@ -631,7 +631,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either <c>Matrix</c> is null.</exception>
         public Matrix Multiply(Matrix m)
         {
-            if (this.Rows != m.Columns) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
+            if (this.Columns != m.Rows) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
             this.Load(Arithmetic.Multiply(this, m));
             return this;
         }
@@ -1392,7 +1392,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when either <c>Matrix</c> is null.</exception>
         public static Matrix Multiply(Matrix m1, Matrix m2)
         {
-            if (m1.Rows != m2.Columns) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
+            if (m1.Columns != m2.Rows) throw new InvalidMatrixDimensionsException("Matrices can only be multiplied if the number of columns in the first Matrix match the number of rows in the second Matrix");
             return Arithmetic.Multiply(m1, m2);
         }
 
