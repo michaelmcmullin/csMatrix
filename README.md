@@ -2,7 +2,15 @@
 
 # csMatrix
 
-A Matrix class library written in C#, targetting .NET Standard 2.0
+A Matrix class library written in C#, targetting .NET Standard 2.0. This means it should be compatible with the following platforms:
+
+* .NET Core 2.0
+* .NET Framework 4.6.1
+* Mono 5.4
+* Xamarin.iOS 10.14
+* Xamarin.Mac 3.8
+* Xamarin.Android 8.0
+* Universal Windows Platform 10.0.16299
 
 ## Installation
 
