@@ -1,0 +1,15 @@
+{
+    "name": "csmatrix",
+    "version": "1.0.0",
+    "description": "Project site for the csMatrix .NET library.",
+    "license": "MIT",
+    "devDependencies": {
+        "grunt": "^1.0.3",
+        "grunt-contrib-jshint": "^1.1.0",
+        "grunt-contrib-nodeunit": "^2.0.0",
+        "grunt-contrib-uglify": "^4.0.0"
+    },
+    "dependencies": {
+        "bootstrap": "^4.1.3"
+    }
+}
