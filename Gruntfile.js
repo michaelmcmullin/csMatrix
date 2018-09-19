@@ -15,7 +15,7 @@ module.exports = function (grunt) {
         sass: {
             dist: {
                 files: {
-                    'css/main.css': 'node_modules/bootstrap/scss/bootstrap.scss'
+                    'css/main.css': 'src/sass/csmatrix.scss'
                 }
             }
         }
