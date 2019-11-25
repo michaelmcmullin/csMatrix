@@ -38,5 +38,19 @@ namespace csMatrix.Tests
             Assert.True(m1 == m2);
             Assert.False(m1 != m2);
         }
+
+        [Fact]
+        public void NullCheck()
+        {
+            Matrix m = null;
+            Assert.True(m == null);
+        }
+
+        [Fact]
+        public void NullCheckNotEqual()
+        {
+            Matrix m = null;
+            Assert.False(m != null);
+        }
     }
 }
