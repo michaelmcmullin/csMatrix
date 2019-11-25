@@ -326,6 +326,7 @@ namespace csMatrix
             {
                 return object.ReferenceEquals(m2, null);
             }
+            if (object.ReferenceEquals(m2, null)) return false;
             return m1.Equals(m2);
         }
 
@@ -337,10 +338,6 @@ namespace csMatrix
         /// <returns><c>true</c> if the values of both matrices differ.</returns>
         public static bool operator !=(Matrix m1, Matrix m2)
         {
-            if(object.ReferenceEquals(m1, null))
-            {
-                return !object.ReferenceEquals(m2, null);
-            }
             return !(m1 == m2);
         }
 
