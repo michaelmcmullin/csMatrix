@@ -34,6 +34,7 @@ namespace csMatrix
             Populate = new csMatrix.Populate.Basic();
             TransposeOperations = new csMatrix.TransposeOperations.Basic();
             InverseOperations = new csMatrix.InverseOperations.Basic();
+            DecompositionOperations = new csMatrix.DecompositionOperations.BasicLU();
             Operations = new csMatrix.Operations.Basic();
         }
 
@@ -201,6 +202,16 @@ namespace csMatrix
         /// It defaults to an instance of <c>csMatrix.InverseOperations.Basic</c>.
         /// </value>
         public static IMatrixInverseOperations InverseOperations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the class used to perform <c>Matrix</c> decomposition operations
+        /// </summary>
+        /// <value>
+        /// A class instance implementing the <c>IMatrixDecompositionOperations</c>
+        /// interface which provides the <c>Matrix</c> class with decomposition operations.
+        /// It defaults to an instance of <c>csMatrix.DecompositionOperations.BasicLU</c>.
+        /// </value>
+        public static IMatrixDecompositionOperations DecompositionOperations { get; set; }
 
         /// <summary>
         /// Gets or sets the class used to perform general <c>Matrix</c> operations
@@ -1059,6 +1070,20 @@ namespace csMatrix
         }
         #endregion
 
+        #region Decompose
+        /// <summary>
+        /// Calculate the decomposition of this <c>Matrix</c>.
+        /// </summary>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when this <c>Matrix</c> is
+        /// not square.</exception>
+        /// <returns>A reference to this <c>Matrix</c> instance after decomposing.</returns>
+        public Matrix Decompose()
+        {
+            Load(DecompositionOperations.Decompose(this));
+            return this;
+        }
+        #endregion
+
         #region Populate
         /// <summary>
         /// Fills this <c>Matrix</c> with a given number.
@@ -1614,6 +1639,20 @@ namespace csMatrix
         /// not square.</exception>
         /// <exception cref="NonInvertibleMatrixException">Thrown when the supplied <c>Matrix</c> is not
         /// invertible.</exception>
+        /// <returns>A new <c>Matrix</c> that is the decomposition of the supplied <c>Matrix</c>.</returns>
+        public static Matrix Decompose(Matrix m)
+        {
+            return DecompositionOperations.Decompose(m);
+        }
+        #endregion
+
+        #region Decompose
+        /// <summary>
+        /// Calculate the decomposition of the given <c>Matrix</c>.
+        /// </summary>
+        /// <param name="m">The <c>Matrix</c> to decompose.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the supplied <c>Matrix</c> is
+        /// not square.</exception>
         /// <returns>A new <c>Matrix</c> that is the inverse of the supplied <c>Matrix</c>.</returns>
         public static Matrix Inverse(Matrix m)
         {

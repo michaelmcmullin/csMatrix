@@ -18,6 +18,32 @@ namespace csMatrix.Tests
         }
 
         [Fact]
+        public void MatrixTimesInverseIsIdentity()
+        {
+            Matrix m1 = new Matrix(new double[,] { { 1, 0, 5 }, { 2, 1, 6 }, { 3, 4, 0 } });
+            Matrix expected = new Matrix(new double[,] { { -24, 20, -5 }, { 18, -15, 4 }, { 5, -4, 1 } });
+            Matrix identity = new Matrix(3).Identity();
+
+            Matrix m2 = Matrix.Inverse(m1);
+            Matrix actual = m1 * m2;
+
+            Assert.Equal(expected, m2);
+            Assert.Equal(identity, actual);
+        }
+
+        [Fact]
+        public void MatrixInverseDifficultMatrix()
+        {
+            Matrix m1 = Setup.GetTestInvertibleMatrix1();
+            Matrix expected = Setup.GetExpectedMatrix1Inverted();
+
+            Matrix m2 = Matrix.Inverse(m1);
+            m1.Inverse();
+            Assert.Equal(expected, m1);
+            Assert.Equal(expected, m2);
+        }
+
+        [Fact]
         public void MatrixInverseSquareNonInvertibleMatrix()
         {
             Matrix m = new Matrix(new double[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } });
