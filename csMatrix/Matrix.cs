@@ -1071,15 +1071,22 @@ namespace csMatrix
         #endregion
 
         #region Decompose
+        public Matrix Decompose()
+        {
+            Matrix result;
+            return this.Decompose(out result, out int[] permutations);
+        }
+
         /// <summary>
         /// Calculate the decomposition of this <c>Matrix</c>.
         /// </summary>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when this <c>Matrix</c> is
         /// not square.</exception>
         /// <returns>A reference to this <c>Matrix</c> instance after decomposing.</returns>
-        public Matrix Decompose()
+        public Matrix Decompose(out Matrix result, out int[] permutations)
         {
-            Load(DecompositionOperations.Decompose(this));
+            DecompositionOperations.Decompose(this, out result, out permutations);
+            Load(result);
             return this;
         }
         #endregion
@@ -1640,9 +1647,9 @@ namespace csMatrix
         /// <exception cref="NonInvertibleMatrixException">Thrown when the supplied <c>Matrix</c> is not
         /// invertible.</exception>
         /// <returns>A new <c>Matrix</c> that is the decomposition of the supplied <c>Matrix</c>.</returns>
-        public static Matrix Decompose(Matrix m)
+        public static Matrix Inverse(Matrix m)
         {
-            return DecompositionOperations.Decompose(m);
+            return InverseOperations.Inverse(m);
         }
         #endregion
 
@@ -1653,10 +1660,26 @@ namespace csMatrix
         /// <param name="m">The <c>Matrix</c> to decompose.</param>
         /// <exception cref="InvalidMatrixDimensionsException">Thrown when the supplied <c>Matrix</c> is
         /// not square.</exception>
-        /// <returns>A new <c>Matrix</c> that is the inverse of the supplied <c>Matrix</c>.</returns>
-        public static Matrix Inverse(Matrix m)
+        /// <returns>A new <c>Matrix</c> that is the decomposition of the supplied <c>Matrix</c>.</returns>
+        public static Matrix Decompose(Matrix m)
         {
-            return InverseOperations.Inverse(m);
+            Decompose(m, out Matrix result, out int[] perm);
+            return result;
+        }
+
+        /// <summary>
+        /// Calculate the decomposition of the given <c>Matrix</c>.
+        /// </summary>
+        /// <param name="m">The <c>Matrix</c> to decompose.</param>
+        /// <param name="result">The decomposed <c>Matrix</c>.</param>
+        /// <param name="permutations">The row permutations calculated during the decomposition.</param>
+        /// <exception cref="InvalidMatrixDimensionsException">Thrown when the supplied <c>Matrix</c> is
+        /// not square.</exception>
+        /// <returns>A value of +1 indicates an even number of row permutations, while -1 indicates an
+        /// odd number.</returns>
+        public static int Decompose(Matrix m, out Matrix result, out int[] permutations)
+        {
+            return DecompositionOperations.Decompose(m, out result, out permutations);
         }
         #endregion
 

@@ -6,6 +6,6 @@ namespace csMatrix
 {
     public interface IMatrixDecompositionOperations
     {
-        Matrix Decompose(Matrix m);
+        int Decompose(Matrix m, out Matrix decomposed, out int[] perm);
     }
 }

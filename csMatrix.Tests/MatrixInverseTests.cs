@@ -13,8 +13,8 @@ namespace csMatrix.Tests
 
             Matrix m2 = Matrix.Inverse(m1);
             m1.Inverse();
-            Assert.Equal(expected, m1);
-            Assert.Equal(expected, m2);
+            Assert.True(m1.NearlyEqual(expected, 0.001));
+            Assert.True(m2.NearlyEqual(expected, 0.001));
         }
 
         [Fact]
@@ -27,8 +27,8 @@ namespace csMatrix.Tests
             Matrix m2 = Matrix.Inverse(m1);
             Matrix actual = m1 * m2;
 
-            Assert.Equal(expected, m2);
-            Assert.Equal(identity, actual);
+            Assert.True(m2.NearlyEqual(expected, 0.001));
+            Assert.True(actual.NearlyEqual(identity, 0.001));
         }
 
         [Fact]
@@ -39,8 +39,8 @@ namespace csMatrix.Tests
 
             Matrix m2 = Matrix.Inverse(m1);
             m1.Inverse();
-            Assert.Equal(expected, m1);
-            Assert.Equal(expected, m2);
+            Assert.True(m1.NearlyEqual(expected, 0.0001));
+            Assert.True(m2.NearlyEqual(expected, 0.0001));
         }
 
         [Fact]
