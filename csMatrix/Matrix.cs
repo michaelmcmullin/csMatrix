@@ -425,7 +425,7 @@ namespace csMatrix
         /// <exception cref="NullReferenceException">Thrown when <c>Matrix</c> is null.</exception>
         public static Matrix operator -(double scalar, Matrix m)
         {
-            return Matrix.Subtract(m, scalar);
+            return Matrix.Subtract(scalar, m);
         }
 
         /// <summary>
@@ -1383,6 +1383,20 @@ namespace csMatrix
         {
             Matrix result = new Matrix(m);
             Arithmetic.ElementOperation(result, scalar, (a, b) => a - b);
+            return result;
+        }
+
+        /// <summary>
+        /// Subtract a each element in a <c>Matrix</c> from a number.
+        /// </summary>
+        /// <param name="scalar">The number to subtract each element in a <c>Matrix</c> from.</param>
+        /// <param name="m">The <c>Matrix</c> to subtract from the number.</param>
+        /// <returns>The result of subracting each element from a given number.</returns>
+        /// <exception cref="NullReferenceException">Thrown when <c>Matrix</c> is null.</exception>
+        public static Matrix Subtract(double scalar, Matrix m)
+        {
+            Matrix result = new Matrix(m);
+            Arithmetic.ElementOperation(result, scalar, (a, b) => b - a);
             return result;
         }
 

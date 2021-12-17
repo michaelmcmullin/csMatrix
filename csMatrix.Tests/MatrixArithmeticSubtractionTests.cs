@@ -127,13 +127,25 @@ namespace csMatrix.Tests
             Matrix m1 = Matrix.Subtract(testMatrix1, scalar);
             Matrix m2 = new Matrix(testMatrix1); m2.Subtract(scalar);
             Matrix m3 = testMatrix1 - scalar;
-            Matrix m4 = scalar - testMatrix1;
 
             Matrix expected = new Matrix(new double[,] { { -2.0, -1.0, 0.0 }, { 1.0, 2.0, 3.0 } });
             Assert.Equal(expected, m1);
             Assert.Equal(expected, m2);
             Assert.Equal(expected, m3);
-            Assert.Equal(expected, m4);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetObjects))]
+        public void MatrixSubtractMatrixFromScalar(IMatrixArithmetic arithmetic)
+        {
+            Matrix.Arithmetic = arithmetic;
+            Matrix testMatrix1 = Setup.GetTestMatrix1();
+
+            double scalar = 3.0;
+            Matrix m1 = scalar - testMatrix1;
+
+            Matrix expected = new Matrix(new double[,] { { 2.0, 1.0, 0.0 }, { -1.0, -2.0, -3.0 } });
+            Assert.Equal(expected, m1);
         }
 
         [Theory]
