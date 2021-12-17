@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Michael McMullin</Authors>
     <PackageLicenseUrl>https://github.com/michaelmcmullin/csMatrix/blob/1.0/LICENSE</PackageLicenseUrl>
     <Description>A class library for creating and manipulating matrices.</Description>
